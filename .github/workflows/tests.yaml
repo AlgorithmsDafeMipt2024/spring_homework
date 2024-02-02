@@ -1,0 +1,27 @@
+name: Tests
+
+on:
+  push: {}
+  pull_request:
+    branches: ["main"]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install gtest manually
+        run: sudo apt-get install libgtest-dev
+
+      - uses: actions/checkout@v3
+
+      - name: run cmake
+        working-directory: ${{github.workspace}}/
+        run: cmake -B./build .
+
+      - name: make
+        working-directory: ${{github.workspace}}/build
+        run: make
