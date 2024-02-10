@@ -1,3 +1,7 @@
 #include <iostream>
 
-int main() { return 0; }
+int main() {
+  int temp = 0;
+  std::cout << temp;
+  return 0;
+}
