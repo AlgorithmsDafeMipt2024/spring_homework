@@ -1,3 +1,6 @@
 #include <iostream>
 
-int main() { return 0; }
+int main() { 
+    std::cout << "1212";
+    return 0; 
+}
