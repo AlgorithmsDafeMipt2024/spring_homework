@@ -1,19 +1,23 @@
 #include "utils.hpp"
 
 #include <cstddef>
+#include <iostream>
+#include <stdexcept>
 #include <utility>
+#include <vector>
 
 std::pair<int, int> FindSummands(const std::vector<int> array, int number) {
-  int ptr_1 = 0;
-  int ptr_2 = array.size() - 1;
+  int first_index = 0;
+  int second_index = array.size() - 1;
 
-  while (ptr_1 < ptr_2) {
-    int summand_1 = array[ptr_1];
-    int summand_2 = array[ptr_2];
-    int sum = summand_1 + summand_2;
-    if (sum == number) return std::pair<int, int>{summand_1, summand_2};
-    if (sum < number) ptr_1++;
-    if (sum > number) ptr_2--;
+  while (first_index < second_index) {
+    int first_summand = array[first_index];
+    int second_summand = array[second_index];
+    int sum = first_summand + second_summand;
+    if (sum == number)
+      return std::pair<int, int>{first_summand, second_summand};
+    if (sum < number) first_index++;
+    if (sum > number) second_index--;
   }
-  return std::pair<int, int>{NULL, NULL};
+  throw std::logic_error("Unable to find the right elements");
 }
