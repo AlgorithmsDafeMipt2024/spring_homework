@@ -1,6 +1,7 @@
 // std libs:
 #include <exception>
 #include <iostream>
+#include <utility>
 #include <vector>
 
 // my libs:
@@ -14,16 +15,19 @@ int main() {
   cout << "That is the programm, that finds 2 numbers" << endl
        << "from sorted array that add up to your given number." << endl;
 
-  long long number;
-  ReadNumberFromConsole(number);
-
   // MEANS: вектор, который вводит пользователь
   std::vector<long long> vec{0, -1};
 
   while (!IsSorted(vec)) {
-    ReadFromConsole(vec);
+    GetFromConsole(vec);
     if (!IsSorted(vec)) cout << "Please, enter sorted array." << endl;
   }
+
+  // PrintToConsole(vec);
+
+  // MEANS: число, которое нужно представить суммой двух
+  long long number;
+  GetNumberFromConsole(number);
 
   try {
     // MEANS: пара чисел из вектора, которые в сумме дадут заданное число
