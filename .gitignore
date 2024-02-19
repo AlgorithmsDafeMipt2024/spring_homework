@@ -10,6 +10,8 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
+output/
+contests/
 .cache/*
 .vscode/*
 build/*
