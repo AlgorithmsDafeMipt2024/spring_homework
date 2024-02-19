@@ -6,6 +6,7 @@ project(${PROJECT_NAME} C CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra")
 
 file(GLOB_RECURSE source_list "src/*.cpp" "src/*.hpp")
 file(GLOB_RECURSE lib_source_list "../lib/src/*.cpp" "../lib/src/*.hpp")
