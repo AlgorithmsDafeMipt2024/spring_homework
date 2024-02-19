@@ -8,7 +8,7 @@ std::pair<int, int> Func(int number, const std::vector<int> array) {
   while (left_ind < right_ind) {
     int sum = array[left_ind] + array[right_ind];
     if (sum == number) {
-      return std::pair<int, int>{left_ind, right_ind};
+      return std::pair<int, int>{array[left_ind], array[right_ind]};
     }
     if (sum < number) {
       left_ind++;
