@@ -31,7 +31,7 @@ inline void PrintToConsole(const std::pair<Type, Type>& par) {
 // ARGS: [Type& numb]: целое число произвольного типа
 // (несколько типов могут описать целое число: short, int, long и т.д.)
 template <typename Type>
-inline void ReadNumberFromConsole(Type& numb) {
+inline void GetNumberFromConsole(Type& numb) {
   std::cout << "Enter number: ";
   std::cin >> numb;
   if (!std::cin) {
@@ -43,7 +43,7 @@ inline void ReadNumberFromConsole(Type& numb) {
 // DOES: перезаписывает элементы вектора из консоли (модифицируя его)
 // ARGS: [vector<Type>&]: вектор элементов произвольного типа
 template <typename Type>
-inline void ReadFromConsole(std::vector<Type>& vec) {
+inline void GetFromConsole(std::vector<Type>& vec) {
   // MEANS: размер вектора
   long size = 0;
 
