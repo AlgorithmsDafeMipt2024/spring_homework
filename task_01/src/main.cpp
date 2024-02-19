@@ -1,6 +1,7 @@
 // std libs:
 #include <exception>
 #include <iostream>
+#include <utility>
 #include <vector>
 
 // my libs:
@@ -21,6 +22,8 @@ int main() {
     GetFromConsole(vec);
     if (!IsSorted(vec)) cout << "Please, enter sorted array." << endl;
   }
+
+  // PrintToConsole(vec);
 
   // MEANS: число, которое нужно представить суммой двух
   long long number;
