@@ -1,3 +1,8 @@
 #include <iostream>
 // внес изменения
-int main() { return 0; }
+int main() {
+  
+  
+
+  return 0;
+}
