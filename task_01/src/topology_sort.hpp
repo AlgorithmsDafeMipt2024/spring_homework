@@ -3,6 +3,6 @@
 
 #include <tuple>
 
-std::tuple<bool, int*, int*> topology_sort(int* arr, int n, int m);
+std::tuple<bool, int*, int*> SummanddsInArray(int* arr, int n, int m);
 
 #endif
