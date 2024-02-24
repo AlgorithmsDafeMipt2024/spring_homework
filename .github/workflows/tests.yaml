@@ -25,3 +25,7 @@ jobs:
       - name: make
         working-directory: ${{github.workspace}}/build
         run: make
+
+      - name: Test task 01
+        working-directory: ${{github.workspace}}/build
+        run: ./task_01/task_01_tests
