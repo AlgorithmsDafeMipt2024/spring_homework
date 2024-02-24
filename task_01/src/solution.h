@@ -4,7 +4,7 @@
 /*
 
 Output - indices of two numbers, which sum is equal to needed number, if there's
-no such numbers, the output is "NO SOLUTION"
+no such numbers, the output is "-1 -1"
 
 Input:
 
