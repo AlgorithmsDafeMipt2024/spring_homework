@@ -19,5 +19,5 @@ std::pair<int, int> FindSummands(const std::vector<int> array, int number) {
     if (sum < number) first_index++;
     if (sum > number) second_index--;
   }
-  throw std::logic_error("Unable to find the right elements");
+  throw NoAnswer("Unable to find the right elements");
 }
