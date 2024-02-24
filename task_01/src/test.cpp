@@ -1,29 +1,8 @@
 
 #include <gtest/gtest.h>
 
-#include <vector>
-
+#include "solution.h"
 #include "topology_sort.hpp"
-
-std::pair<int, int> solution(int number, std::vector<int> v) {
-  bool flag = false;  // in case there are no such numbers
-  std::unordered_map<int, int> mp;
-
-  for (int i = 0; i < v.size(); i++) {
-    if (mp.find(number - v[i]) !=
-        mp.end()) {  // if key "number - t" exists, we have found the solution
-      return {mp[number - v[i]], i};
-      flag = true;
-      break;
-    }
-
-    if (mp.find(v[i]) == mp.end())
-      mp[v[i]] = i;  // We only add keys that weren't in the map before (that
-                     // way we get the least possible sum of i and j)
-  }
-
-  if (!flag) return {-1, -1};
-}
 
 TEST(solution, simple) {
   std::vector<int> v1 = {-2, 2, 3, 3, 5, 9, 11, 13, 14, 15};
