@@ -27,5 +27,5 @@ TEST(SearchingSum, Simple) {
   int sum5 = 0;
   std::vector<int> arr5 = {1, 2, 5, 5, 6, 7, 8, 9, 14};
   std::pair<int, int> ans5 = {-1, -1};
-  ASSERT_EQ(ans2, SearchingSum(sum5, arr5));
+  ASSERT_EQ(ans5, SearchingSum(sum5, arr5));
 }
