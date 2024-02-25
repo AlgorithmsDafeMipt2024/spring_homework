@@ -18,6 +18,6 @@ TEST(utils, Simple) {
             (std::pair<int, int>{60, 1278}));
   ASSERT_EQ(Task1(22, std::vector<int>{10, 10, 11, 11, 12, 15}),
             (std::pair<int, int>{10, 12}));
-  EXPECT_THROW(Task1(22, std::vector<int>{11}), std::logic_error);
-  EXPECT_THROW(Task1(0, std::vector<int>{}), std::logic_error);
+  EXPECT_THROW(Task1(22, std::vector<int>{11}), WrongVector);
+  EXPECT_THROW(Task1(1233, std::vector<int>{}), WrongVector);
 }
