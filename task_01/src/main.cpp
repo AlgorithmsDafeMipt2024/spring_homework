@@ -20,23 +20,25 @@ int main() {
   std::vector<long long> vec{0, -1};
 
   while (!is_sorted(vec.begin(), vec.end())) {
-    GetFromConsole(vec);
+    std::cin >> vec;
     if (!is_sorted(vec.begin(), vec.end()))
       cout << "Please, enter sorted array." << endl;
   }
 
-  // PrintToConsole(vec);
+  // cout << vec << std::endl;
 
   // MEANS: число, которое нужно представить суммой двух
   long long number;
-  GetNumberFromConsole(number);
+  std::cout << "Enter number: ";
+  std::cin >> number;
+  if (!std::cin) std::cerr << "Invalid number input." << std::endl;
 
   try {
     // MEANS: пара чисел из вектора, которые в сумме дадут заданное число
     auto need_pair = TwoElemsGivingSum(vec, number);
 
     cout << "Given number is equal to the sum: ";
-    PrintToConsole(need_pair);
+    cout << need_pair << std::endl;
   } catch (const std::exception& e) {
     cerr << e.what() << endl;
   }
