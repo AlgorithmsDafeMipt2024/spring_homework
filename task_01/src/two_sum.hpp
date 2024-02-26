@@ -1,25 +1,17 @@
 #pragma once
 
 // std libs:
+#include <algorithm>
 #include <iostream>
 #include <stdexcept>
 #include <utility>
 #include <vector>
 
+// std usings:
+using std::is_sorted;
+
 // (написал шаблонизированные функции, так как они крутые)
 // (а так же потому, что не знаю, какой тип нужно использовать под целые числа)
-
-// MEANS: функция, проверяющая вектор на отсортированность по возрастанию
-// ARGS: [const vector<Type>&]: вектор элементов произвольного типа
-// RETURNS: [bool]: факт отсортированности вектора
-template <typename Type>
-inline bool IsSorted(const std::vector<Type>& vec) {
-  for (size_t i = 0; i < vec.size() - 1; i++) {
-    if (vec[i + 1] < vec[i]) return false;
-  }
-
-  return true;
-}
 
 // MEANS: функция, находящая в отсорт. векторе 2 числа, в сумме дающие число
 // (если такие числа найти не удаётся, возбуждает ошибку)
@@ -30,23 +22,25 @@ inline bool IsSorted(const std::vector<Type>& vec) {
 template <typename Type>
 inline std::pair<Type, Type> TwoElemsGivingSum(const std::vector<Type>& vec,
                                                const Type& sum) {
-  if (!IsSorted(vec)) throw std::invalid_argument("Array is not sorted.");
+  if (vec.empty()) throw std::invalid_argument("Empty array.");
+  if (!is_sorted(vec.begin(), vec.end()))
+    throw std::invalid_argument("Array is not sorted.");
 
   // MEANS: индекс, указывающий с начала вектора
-  size_t fir = 0;
+  size_t first = 0;
   // MEANS: индекс, указывающий с конца вектора
   size_t last = vec.size() - 1;
 
-  while (fir != last) {
-    if (vec[fir] + vec[last] == sum)
-      return {vec[fir], vec[last]};
-    else if (vec[fir] + vec[last] < sum)
-      fir++;
-    else if (vec[fir] + vec[last] > sum)
+  while (first != last) {
+    if (vec[first] + vec[last] == sum)
+      return {vec[first], vec[last]};
+    else if (vec[first] + vec[last] < sum)
+      first++;
+    else if (vec[first] + vec[last] > sum)
       last--;
   }
 
-  // если индексы сошлись (fir == last), таких элементов в векторе нет
+  // если индексы сошлись (first == last), таких элементов в векторе нет
   throw std::logic_error("There are no two elements giving such sum.");
 }
 

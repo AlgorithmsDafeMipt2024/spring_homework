@@ -1,4 +1,5 @@
 // std libs:
+#include <algorithm>
 #include <exception>
 #include <iostream>
 #include <utility>
@@ -9,7 +10,7 @@
 #include "utilities.hpp"
 
 // std usings:
-using std::cout, std::cerr, std::endl;
+using std::cout, std::cerr, std::endl, std::is_sorted;
 
 int main() {
   cout << "That is the programm, that finds 2 numbers" << endl
@@ -18,9 +19,10 @@ int main() {
   // MEANS: вектор, который вводит пользователь
   std::vector<long long> vec{0, -1};
 
-  while (!IsSorted(vec)) {
+  while (!is_sorted(vec.begin(), vec.end())) {
     GetFromConsole(vec);
-    if (!IsSorted(vec)) cout << "Please, enter sorted array." << endl;
+    if (!is_sorted(vec.begin(), vec.end()))
+      cout << "Please, enter sorted array." << endl;
   }
 
   // PrintToConsole(vec);
