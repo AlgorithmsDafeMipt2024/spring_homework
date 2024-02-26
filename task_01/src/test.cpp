@@ -17,23 +17,34 @@ TEST(TwoElemsGivingSum, Subtest_1) {
 }
 
 TEST(TwoElemsGivingSum, Subtest_2) {
-  ASSERT_EQ(TwoElemsGivingSum(vector<int>{2, 3, 4, 7, 12}, 10),
-            (pair<int, int>{3, 7}));
+  EXPECT_THROW(TwoElemsGivingSum(vector<int>{1}, 10), logic_error);
 }
 
 TEST(TwoElemsGivingSum, Subtest_3) {
-  ASSERT_EQ(TwoElemsGivingSum(vector<int>{2, 3, 4, 7, 12}, 10),
-            (pair<int, int>{3, 7}));
+  ASSERT_EQ(
+      TwoElemsGivingSum(vector<long>{80000075932, 500000572938502,
+                                     5000005238023000, 6000293805968347500,
+                                     7530021468000003245, 9000568723653790000},
+                        9000568803653865932),
+      (pair<long, long>{80000075932, 9000568723653790000}));
 }
 
 TEST(TwoElemsGivingSum, Subtest_4) {
-  ASSERT_EQ(TwoElemsGivingSum(vector<int>{2, 3, 4, 7, 12}, 10),
-            (pair<int, int>{3, 7}));
+  EXPECT_THROW(
+      TwoElemsGivingSum(
+          vector<long>{2223523523222, 2222225252353222, 65236534764666666,
+                       111850923850111111, 4454897708978644444},
+          4954897708978944494),
+      logic_error);
 }
 
 TEST(TwoElemsGivingSum, Subtest_5) {
-  ASSERT_EQ(TwoElemsGivingSum(vector<int>{2, 3, 4, 7, 12}, 10),
-            (pair<int, int>{3, 7}));
+  EXPECT_THROW(
+      TwoElemsGivingSum(
+          vector<long>{111850923850111111, 2222225252353222, 2223523523222,
+                       4454897708978644444, 65236534764666666},
+          4954897708978944494),
+      invalid_argument);
 }
 
 TEST(TwoElemsGivingSum, Subtest_6) {
