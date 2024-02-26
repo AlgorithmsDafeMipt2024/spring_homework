@@ -8,51 +8,48 @@
 // (написал шаблонизированные функции, так как они крутые)
 // (а так же потому, что не знаю, какой тип нужно использовать под целые числа)
 
-// DOES: выводит все элементы вектора в консоль
+// MEANS: перегрузка, которая выводит все элементы вектора в поток
+// ARGS: [ostream&]: ссылка на поток, в который надо вывести (мод.)
 // ARGS: [const vector<Type>&]: вектор элементов произвольного типа
+// RETURNS: [ostream&]: ссылка на поток, в который вывели
 template <typename Type>
-inline void PrintToConsole(const std::vector<Type>& vec) {
-  std::cout << "[";
+inline std::ostream& operator<<(std::ostream& os,
+                                const std::vector<Type>& vec) {
+  os << "[";
   for (size_t i = 0; i < vec.size(); i++) {
-    std::cout << "'" << vec[i] << "'";
-    if (i != vec.size() - 1) std::cout << ", ";
+    os << "'" << vec[i] << "'";
+    if (i != vec.size() - 1) os << ", ";
   }
-  std::cout << "]" << std::endl;
+  return os << "]";
 }
 
-// DOES: выводит элементы пары в консоль (в формате суммы)
+// MEANS: перегрузка, которая выводит элементы пары в поток (в формате суммы)
+// ARGS: [ostream&]: ссылка на поток, в который надо вывести (мод.)
 // ARGS: [const pair<Type,Type>&]: пара элементов произвольного типа
+// RETURNS: [ostream&]: ссылка на поток, в который вывели
 template <typename Type>
-inline void PrintToConsole(const std::pair<Type, Type>& par) {
-  std::cout << par.first << " + " << par.second << std::endl;
+inline std::ostream& operator<<(std::ostream& os,
+                                const std::pair<Type, Type>& par) {
+  return os << par.first << " + " << par.second;
 }
 
-// DOES: перезаписывает целое число из консоли (модифицируя его)
-// ARGS: [Type& numb]: целое число произвольного типа
-// (несколько типов могут описать целое число: short, int, long и т.д.)
+// MEANS: перегрузка, которая вводит все элементы вектора из потока
+// (работает исключительно с консолью, так как
+// (вывод о текущем состоянии происходит туда)
+// ARGS: [istream&]: ссылка на поток, из которого надо ввести (мод.)
+// ARGS: [vector<Type>&]: вектор элементов произвольного типа (мод.)
+// RETURNS: [istream&]: ссылка на поток, из которого ввели
 template <typename Type>
-inline void GetNumberFromConsole(Type& numb) {
-  std::cout << "Enter number: ";
-  std::cin >> numb;
-  if (!std::cin) {
-    std::cerr << "Invalid number input." << std::endl;
-    return;
-  }
-}
-
-// DOES: перезаписывает элементы вектора из консоли (модифицируя его)
-// ARGS: [vector<Type>&]: вектор элементов произвольного типа
-template <typename Type>
-inline void GetFromConsole(std::vector<Type>& vec) {
+inline std::istream& operator>>(std::istream& is, std::vector<Type>& vec) {
   // MEANS: размер вектора
   long size = 0;
 
   std::cout << "Enter array size: ";
   while (size <= 0) {
-    std::cin >> size;
-    if (!std::cin) {
+    is >> size;
+    if (!is) {
       std::cerr << "Invalid size input." << std::endl;
-      return;
+      return is;
     }
     if (size <= 0) std::cout << "Invalid size input. Try again: ";
   }
@@ -63,13 +60,15 @@ inline void GetFromConsole(std::vector<Type>& vec) {
   vec.clear();  // (для перезаписи нужна отчистка)
   std::cout << "Enter array elements: ";
   for (size_t i = 0; i < size_t(size); i++) {
-    std::cin >> curr;
-    if (!std::cin) {
+    is >> curr;
+    if (!is) {
       std::cerr << "Invalid array input. The entry is incorrect." << std::endl;
-      return;
+      return is;
     }
     vec.push_back(curr);
   }
+
+  return is;
 }
 
 // (и да, я не хочу париться с проверкой на то,)
