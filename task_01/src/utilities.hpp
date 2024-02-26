@@ -38,7 +38,7 @@ inline std::ostream& operator<<(std::ostream& os,
 // (вывод о текущем состоянии происходит туда)
 // ARGS: [istream&]: ссылка на поток, из которого надо ввести (мод.)
 // ARGS: [vector<Type>&]: вектор элементов произвольного типа (мод.)
-// RETURNS: [ostream&]: ссылка на поток, из которыго вывели
+// RETURNS: [istream&]: ссылка на поток, из которого ввели
 template <typename Type>
 inline std::istream& operator>>(std::istream& is, std::vector<Type>& vec) {
   // MEANS: размер вектора
