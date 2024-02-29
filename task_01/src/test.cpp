@@ -28,6 +28,6 @@ TEST(TopologySort, Simple) {
   ASSERT_EQ(FindTargetSumInArray(v3, 10), std::make_pair(1, 7));
   ASSERT_EQ(FindTargetSumInArray(v3, -60), std::make_pair(-1, -1));
   ASSERT_EQ(FindTargetSumInArray(v3, -12), std::make_pair(-1, -1));
-  ASSERT_EQ(FindTargetSumInArray(v3, 17), std::make_pair(-1, -1));
+  ASSERT_EQ(FindTargetSumInArray(v3, 47), std::make_pair(-1, -1));
   ASSERT_EQ(FindTargetSumInArray(v3, 11), std::make_pair(3, 6));
 }
