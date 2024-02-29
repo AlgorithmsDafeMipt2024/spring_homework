@@ -6,8 +6,9 @@ int main() {
   int size;
   std::cin >> size;
   std::vector<int> v(size);
-  for (int i = 0; i < v.size(); i++)
+  for (int i = 0; i < v.size(); i++) {
     std::cin >> v[i];
+  }
   int targetSum;
   std::cin >> targetSum;
   std::pair<int, int> ans = FindTargetSumInArray(v, targetSum);

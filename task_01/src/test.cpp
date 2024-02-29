@@ -10,7 +10,7 @@ TEST(TopologySort, Simple) {
   std::vector<int> v1{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   ASSERT_EQ(FindTargetSumInArray(v1, 0), std::make_pair(-1, -1));
   ASSERT_EQ(FindTargetSumInArray(v1, 1), std::make_pair(0, 1));
-  ASSERT_EQ(FindTargetSumInArray(v1, 9), std::make_pair(4, 5));
+  ASSERT_EQ(FindTargetSumInArray(v1, 9), std::make_pair(0, 9));
   ASSERT_EQ(FindTargetSumInArray(v1, 11), std::make_pair(1, 10));
   ASSERT_EQ(FindTargetSumInArray(v1, -5), std::make_pair(-1, -1));
 
