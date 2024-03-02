@@ -2,7 +2,7 @@
 #include <utility>
 #include <vector>
 
-#include "Searching_sum.hpp"
+#include "searching_sum.hpp"
 
 int main() {
   int n, k;

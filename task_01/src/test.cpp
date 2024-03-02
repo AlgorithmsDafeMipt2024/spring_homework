@@ -1,10 +1,9 @@
-
 #include <gtest/gtest.h>
 
 #include <utility>
 #include <vector>
 
-#include "Searching_sum.hpp"
+#include "searching_sum.hpp"
 
 TEST(TopologySort, Simple) {
   int sum1 = 6;
@@ -41,4 +40,9 @@ TEST(TopologySort, Simple) {
   std::vector<int> vec7{-18, -10, -1, -1, -1, 0, 3, 5, 10};
   std::pair<int, int> ans7{2, 5};
   ASSERT_EQ(SearchingSum(vec7, sum7), ans7);
+
+  int sum8 = 5;
+  std::vector<int> vec8(0);
+  std::pair<int, int> ans8{-1, -1};
+  ASSERT_EQ(SearchingSum(vec8, sum8), ans8);
 }

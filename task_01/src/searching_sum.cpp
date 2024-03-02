@@ -1,4 +1,4 @@
-#include "Searching_sum.hpp"
+#include "searching_sum.hpp"
 
 #include <utility>
 
@@ -7,9 +7,9 @@ std::pair<int, int> SearchingSum(std::vector<int> vec, int num) {
   int end = vec.size() - 1;
   while (start < end) {
     if (vec[start] + vec[end] > num)
-      end--;
+      --end;
     else if (vec[start] + vec[end] < num)
-      start++;
+      ++start;
     else
       return std::make_pair(start, end);
   }
