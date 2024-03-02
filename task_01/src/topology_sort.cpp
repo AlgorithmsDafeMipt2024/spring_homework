@@ -1,30 +1,30 @@
 #include "topology_sort.hpp"
 
 // O(logn)
-int BinSearch(std::vector<int> mas, int num) {
-  int n = mas.size();
-  int l = 0;
-  int r = n - 1;
-  int ind = n / 2;
-  while (r - l >= 0) {
-    if (mas[ind] == num) {
-      return ind;
-    } else if (mas[ind] > num) {
-      r = ind - 1;
-    } else if (mas[ind] < num) {
-      l = ind + 1;
+int BinSearch(std::vector<int> massive, int num) {
+  int length = massive.size();
+  int left = 0;
+  int right = length - 1;
+  int index = length / 2;
+  while (right - left >= 0) {
+    if (massive[index] == num) {
+      return index;
+    } else if (massive[index] > num) {
+      right = index - 1;
+    } else if (massive[index] < num) {
+      left = index + 1;
     }
-    ind = (r + l) / 2;
+    index = (right + left) / 2;
   }
   return -1;
 }
 
 // O(n^2)
-std::tuple<int, int> NSquareSearch(std::vector<int> mas, int num) {
-  int n = mas.size();
-  for (int i = 0; i < n; i++) {
-    for (int j = i + 1; j < n; j++) {
-      if (mas[i] + mas[j] == num) {
+std::tuple<int, int> NSquareSearch(std::vector<int> massive, int num) {
+  int length = massive.size();
+  for (int i = 0; i < length; i++) {
+    for (int j = i + 1; j < length; j++) {
+      if (massive[i] + massive[j] == num) {
         return {i, j};
       }
     }
@@ -33,13 +33,13 @@ std::tuple<int, int> NSquareSearch(std::vector<int> mas, int num) {
 }
 
 // O(nlogn)
-std::tuple<int, int> NLogNSearch(std::vector<int> mas, int num) {
-  int n = mas.size();
-  for (int i = 0; i < n; i++) {
-    int el1 = mas[i];
+std::tuple<int, int> NLogNSearch(std::vector<int> massive, int num) {
+  int length = massive.size();
+  for (int i = 0; i < length; i++) {
+    int el1 = massive[i];
     int el2 = num - el1;
-    int j = BinSearch(mas, el2);
-    if (j != -1) {
+    int j = BinSearch(massive, el2);
+    if (j != -1 && i != j) {
       return {i, j};
     }
   }
@@ -47,18 +47,18 @@ std::tuple<int, int> NLogNSearch(std::vector<int> mas, int num) {
 }
 
 // O(n)
-std::tuple<int, int> NSearch(std::vector<int> mas, int num) {
-  int len = mas.size();
-  int l = 0;
-  int r = len - 1;
-  while (r != l) {
-    int sum = mas[l] + mas[r];
+std::tuple<int, int> NSearch(std::vector<int> massive, int num) {
+  int length = massive.size();
+  int left = 0;
+  int right = length - 1;
+  while (right != left) {
+    int sum = massive[left] + massive[right];
     if (sum == num) {
-      return {l, r};
+      return {left, right};
     } else if (sum < num) {
-      l++;
+      left++;
     } else if (sum > num) {
-      r--;
+      right--;
     }
   }
   return {-1, -1};
