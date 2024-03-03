@@ -1,6 +1,7 @@
 #include "sortings.hpp"
 
 #include <algorithm>
+#include <cstddef>
 #include <experimental/random>
 #include <iostream>
 #include <optional>
@@ -100,13 +101,29 @@ std::vector<int> SelectionSort(std::vector<int> massive) {
   return massive;
 }
 
-std::vector<int> Insert(std::vector<int> massive, int position, int num) {
+std::vector<int> Insert(std::vector<int> massive, int num) {
   std::vector<int> new_massive;
-  for (int i = 0; i < position; i++) {
+  if (num < massive[0]) {
+    new_massive.push_back(num);
+    for (int i = 0; i < massive.size(); i++) {
+      new_massive.push_back(massive[i]);
+    }
+    return new_massive;
+  }
+
+  else if (num > massive[massive.size() - 1]) {
+    massive.push_back(num);
+    return massive;
+  }
+
+  int position = 0;
+  for (int i = 0; num >= massive[i]; i++) {
     new_massive.push_back(massive[i]);
+    position = i;
   }
   new_massive.push_back(num);
-  for (int i = position; i < massive.size(); i++) {
+
+  for (int i = position + 1; i < massive.size(); i++) {
     new_massive.push_back(massive[i]);
   }
   return new_massive;
@@ -117,44 +134,65 @@ std::vector<int> InsertionSort(std::vector<int> massive) {
   std::vector<int> new_massive;
   new_massive.push_back(massive[0]);
   for (int i = 1; i < massive.size(); i++) {
-    bool insertion_done = false;
-    for (int j = 0; j < new_massive.size() - 1; j++) {
-      if (massive[i] > new_massive[j] && massive[i] < new_massive[j + 1]) {
-        new_massive = Insert(new_massive, j + 1, massive[i]);
-        insertion_done = true;
-      }
-    }
-    if (not insertion_done && massive[i] <= new_massive[0]) {
-      new_massive = Insert(new_massive, 0, massive[i]);
-      insertion_done = true;
-
-    } else if (not insertion_done &&
-               massive[i] >= new_massive[new_massive.size() - 1]) {
-      new_massive.push_back(massive[i]);
-      insertion_done = true;
-    }
+    new_massive = Insert(new_massive, massive[i]);
   }
   return new_massive;
 }
 
+std::vector<int> Merge(std::vector<int> part1, std::vector<int> part2) {
+  std::vector<int> result;
+  int index1 = 0;
+  int index2 = 0;
+
+  while (index1 < part1.size() &&
+         index2 < part2.size()) {  // Add elements while each part is not empty
+    if (part1[index1] <= part2[index2]) {
+      result.push_back(part1[index1]);
+      index1++;
+    } else if (part2[index2] < part1[index1]) {
+      result.push_back(part2[index2]);
+      index2++;
+    }
+  }
+  if (index1 < part1.size()) {  // Some elements left in part1
+    while (index1 < part1.size()) {
+      result.push_back(part1[index1]);
+      index1++;
+    }
+  } else if (index2 < part2.size()) {  // Some elements left in part2
+    while (index2 < part2.size()) {
+      result.push_back(part2[index2]);
+      index2++;
+    }
+  }
+  return result;
+}
+
 // O(NlogN)
-std::vector<int> Merge(std::vector<int> massive) {
+std::vector<int> MergeSort(std::vector<int> massive) {
   std::vector<int> part1;
   std::vector<int> part2;
-  if (massive.size() % 2 == 0) {
-    part1 =
-        std::vector<int>(massive.begin(), massive.end() - massive.size() / 2);
-    part2 =
-        std::vector<int>(massive.begin() + (massive.size()) / 2, massive.end());
-  } else {
-    part1 =
-        std::vector<int>(massive.begin(), massive.end() - massive.size() / 2);
-    part2 = std::vector<int>(massive.begin() + (massive.size() + 1) / 2,
-                             massive.end());
+  if (massive.size() != 1) {
+    if (massive.size() % 2 == 0) {
+      part1 =
+          std::vector<int>(massive.begin(), massive.end() - massive.size() / 2);
+      part2 = std::vector<int>(massive.begin() + (massive.size()) / 2,
+                               massive.end());
+    } else {
+      part1 =
+          std::vector<int>(massive.begin(), massive.end() - massive.size() / 2);
+      part2 = std::vector<int>(massive.begin() + (massive.size() + 1) / 2,
+                               massive.end());
+    }
   }
-  if (part1.size() == 1 and part2.size()==1
 
-  std::vector<int> part1 = std::vector<int>(massive.begin(), massive.end() -);
-  ;
-  return;
+  else {
+    return massive;
+  }
+  part1 = MergeSort(part1);
+  part2 = MergeSort(part2);
+
+  std::vector<int> result = Merge(part1, part2);
+
+  return result;
 }
