@@ -196,3 +196,24 @@ std::vector<int> MergeSort_topbottom(std::vector<int> massive) {
 
   return result;
 }
+
+// O(NlogN)
+std::vector<int> MergeSort_bottomup(std::vector<int> massive) {
+  std::vector<std::vector<int>> parts;
+  for (int i = 0; i < massive.size(); i++) {
+    parts.push_back(std::vector<int>{massive[i]});
+  }
+  std::vector<std::vector<int>> new_parts;
+  while (parts.size() > 1) {
+    for (int i = 0; i < parts.size() - 1; i) {
+      new_parts.push_back(Merge(parts[i], parts[i + 1]));
+      i += 2;
+    }
+    if (parts.size() % 2 != 0) {
+      new_parts.push_back(parts[parts.size() - 1]);
+    }
+    parts = new_parts;
+    new_parts.clear();
+  }
+  return parts[0];
+}
