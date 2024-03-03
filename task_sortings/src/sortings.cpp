@@ -169,7 +169,7 @@ std::vector<int> Merge(std::vector<int> part1, std::vector<int> part2) {
 }
 
 // O(NlogN)
-std::vector<int> MergeSort(std::vector<int> massive) {
+std::vector<int> MergeSort_topbottom(std::vector<int> massive) {
   std::vector<int> part1;
   std::vector<int> part2;
   if (massive.size() != 1) {
@@ -189,8 +189,8 @@ std::vector<int> MergeSort(std::vector<int> massive) {
   else {
     return massive;
   }
-  part1 = MergeSort(part1);
-  part2 = MergeSort(part2);
+  part1 = MergeSort_topbottom(part1);
+  part2 = MergeSort_topbottom(part2);
 
   std::vector<int> result = Merge(part1, part2);
 
