@@ -12,5 +12,6 @@ std::tuple<int, int> MySearch(std::vector<int> list, int n) {
     else if (sum > n)
       right--;
   }
+  // testtest;
   return {-1, -1};
 }
