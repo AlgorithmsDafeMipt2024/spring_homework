@@ -11,6 +11,13 @@ using std::string, std::optional;
 
 Node::Node() : parent{nullptr}, left_child{nullptr}, right_child{nullptr} {}
 
+Node::Node(int key)
+    : parent{nullptr},
+      left_child{nullptr},
+      right_child{nullptr},
+      key{key},
+      data{std::to_string(key)} {}
+
 Node::Node(int key, const std::string &data)
     : parent{nullptr},
       left_child{nullptr},
@@ -23,7 +30,8 @@ Node::Node(Node *parent, Node *left_child, Node *right_child)
 
 // class BinarySearchTree
 
-BinarySearchTree::BinarySearchTree(Node *parent) : main_parent_{parent} {}
+BinarySearchTree::BinarySearchTree(Node *main_parent)
+    : main_parent_{main_parent} {}
 
 bool BinarySearchTree::Add(int key, const string &s) {
   return Insert(new Node(key, s));

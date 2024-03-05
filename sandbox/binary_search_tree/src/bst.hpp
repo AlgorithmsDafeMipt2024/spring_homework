@@ -10,6 +10,8 @@ class Node {
  public:
   Node();
 
+  Node(int key);
+
   Node(int key, const std::string& data);
 
   Node(Node* parent, Node* left_child, Node* right_child);
@@ -38,7 +40,7 @@ class BinarySearchTree {
  public:
   // methods
 
-  BinarySearchTree(Node* parent);
+  BinarySearchTree(Node* main_parent);
 
   // MEANS: функция, которая добавляет элемент в дерево
   // ARGS: [int]: ключ
