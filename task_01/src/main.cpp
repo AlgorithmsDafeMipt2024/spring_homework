@@ -4,40 +4,40 @@
 
 #include "topology_sort.hpp"
 
-long long GetSize() {
-  long long c;
+size_t GetSize() {
+  size_t length;
   std::cout << "Enter a length of array: ";
-  std::cin >> c;
-  if (c <= 0) {
-    std::cout << "You need to enter a number greater than 0\n";
+  std::cin >> length;
+  if (length <= 1) {
+    std::cout << "You need to enter a number greater than 1\n";
     GetSize();
   }
-  return c;
+  return length;
 };
 
 long long GetNumber() {
-  long long n;
+  long long number;
   std::cout << "Enter a number: ";
-  std::cin >> n;
-  return n;
+  std::cin >> number;
+  return number;
 };
 
-std::vector<long long> GetArray(long long l) {
+std::vector<long long> GetArray(size_t length) {
   std::vector<long long> nums;
   std::cout << "Enter the array: ";
-  for (int i = 0; i < l; i++) {
-    int c;
-    std::cin >> c;
-    nums.push_back(c);
+  for (int i = 0; i < length; i++) {
+    int number;
+    std::cin >> number;
+    nums.push_back(number);
   }
   return nums;
 }
 
 int main() {
-  long long n = GetNumber();
-  long long l = GetSize();
-  std::vector<long long> nums = GetArray(l);
-  std::pair<long long, long long> res = GetTwoNums(n, nums);
+  long long number = GetNumber();
+  size_t length = GetSize();
+  std::vector<long long> nums = GetArray(length);
+  std::pair<long long, long long> res = GetTwoNums(number, nums);
   std::cout << "Two numbers, which add up to a given number: " << res.first
             << ", " << res.second;
   return 0;

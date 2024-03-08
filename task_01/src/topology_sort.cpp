@@ -1,16 +1,19 @@
 #include "topology_sort.hpp"
 
-std::pair<long long, long long> GetTwoNums(long long n,
+std::pair<long long, long long> GetTwoNums(long long number,
                                            std::vector<long long> nums) {
-  size_t l = 0;
-  size_t r = nums.size() - 1;
-  while (l != r) {
-    if (nums[l] + nums[r] == n)
-      return {nums[l], nums[r]};
-    else if (nums[l] + nums[r] < n)
-      l++;
-    else if (nums[l] + nums[r] > n)
-      r--;
+  if (nums.size() <= 1) {
+    return {-1, -1};
+  }
+  size_t left = 0;
+  size_t right = nums.size() - 1;
+  while (left != right) {
+    if (nums[left] + nums[right] == number)
+      return {nums[left], nums[right]};
+    else if (nums[left] + nums[right] < number)
+      left++;
+    else if (nums[left] + nums[right] > number)
+      right--;
   }
   throw std::logic_error(
       "There are no two elements, which add up to a given number.");

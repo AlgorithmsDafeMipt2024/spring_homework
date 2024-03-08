@@ -60,3 +60,13 @@ TEST(GetTwoNums, Test_8) {
                                                   76, 82, 97, 101}),
             (std::pair<long long, long long>{26, 58}));
 }
+
+TEST(GetTwoNums, Test_9) {
+  ASSERT_EQ(GetTwoNums(12, std::vector<long long>{12}),
+            (std::pair<long long, long long>{-1, -1}));
+}
+
+TEST(GetTwoNums, Test_10) {
+  ASSERT_EQ(GetTwoNums(100, std::vector<long long>{}),
+            (std::pair<long long, long long>{-1, -1}));
+}
