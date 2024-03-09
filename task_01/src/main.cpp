@@ -1,6 +1,8 @@
-#include <bits/stdc++.h>
+#include <iostream>
+
 #include "utils.hpp"
-using namespace std;
+
 int main() {
+  std::cout << "Hello World\n";
   return 0;
 }
