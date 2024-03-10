@@ -13,7 +13,7 @@
 using std::cout, std::cerr, std::endl, std::is_sorted;
 
 int main() {
-  cout << "That is the programm, that finds 2 numbers" << endl
+  cout << "That is the program, that finds 2 numbers" << endl
        << "from sorted array that add up to your given number." << endl;
 
   // MEANS: вектор, который вводит пользователь
@@ -24,8 +24,6 @@ int main() {
     if (!is_sorted(vec.begin(), vec.end()))
       cout << "Please, enter sorted array." << endl;
   }
-
-  // cout << vec << std::endl;
 
   // MEANS: число, которое нужно представить суммой двух
   long long number;
