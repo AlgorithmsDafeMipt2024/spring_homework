@@ -1,16 +1,21 @@
 #include "topology_sort.hpp"
 
-std::tuple<bool, int *, int *> SummanddsInArray(int *arr, int n, int sum) {
-  int *begin = arr, *end = arr + (n - 1);
-  bool found = true;
+#include <optional>
+
+std::optional<std::tuple<int *, int *>> SummanddsInArray(int *arr, int n,
+                                                         int sum) {
+  int *begin = arr;
+  int *end = arr + (n - 1);
   while (begin && end && begin < end && *begin + *end != sum)
     if ((*begin + *end) > sum)
       end--;
     else
       begin++;
-  if ((!begin) || (!end) || (begin >= end) || (*begin + *end != sum)) {
+  if ((!begin) || (!end) || (begin >= end) || (*begin + *end != sum))
     begin = end = nullptr;
-    found = 0;
-  }
-  return std::tuple<bool, int *, int *>{found, begin, end};
+
+  std::optional<std::tuple<int *, int *>> result = std::nullopt;
+  if (begin != nullptr && end != nullptr)
+    result = std::tuple<int *, int *>{begin, end};
+  return result;
 }
