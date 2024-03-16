@@ -56,4 +56,4 @@ jobs:
 
       - name: Test task 08
         working-directory: ${{github.workspace}}/build
-        run: ./task_03/task_08_tests
+        run: ./task_08/task_08_tests
