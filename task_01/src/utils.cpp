@@ -5,7 +5,7 @@
 
 std::pair<int, int> Task1(int num, const std::vector<int> arr) {
   if (arr.size() < 2) {
-    throw WrongVector("");
+    throw WrongVector("Vector is too small");
   }
   for (int i = 0, j = arr.size() - 1; i < j;) {
     auto sum = arr[i] + arr[j];
