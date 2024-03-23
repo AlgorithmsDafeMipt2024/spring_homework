@@ -1,4 +1,3 @@
-
 #include "utils.hpp"
 #include <gtest/gtest.h>
 #include <stdexcept>

@@ -17,5 +17,5 @@ std::pair<int, int> Task1(int num, const std::vector<int> arr) {
       return std::pair<int, int>{arr[i], arr[j]};
     }
   }
-  throw std::logic_error("");
+  throw std::logic_error("There is no sum of elements equal to number");
 }
