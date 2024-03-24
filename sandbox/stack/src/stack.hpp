@@ -12,29 +12,24 @@
 template <typename T>
 class Elem {
  public:
-  Elem();
+  Elem() = default;
   Elem(Elem*, const T&);
   Elem(Elem*);
-
-  // vars
 
   /// @brief указатель на предыдущий элемент
   std::unique_ptr<Elem> prev;
 
   /// @brief значение элемента
   T data;
-
-  static size_t count;
-
-  // ~vars
 };
 
 template <typename T>
 class Stack {
  public:
-  Stack() = default;
+  Stack() : top_{nullptr} {}
   Stack(const Elem<T>&);
   Stack(const Stack<T>&) = default;
+  Stack(const std::stack<T>&);
   Stack(const std::vector<T>&);
   Stack(const std::initializer_list<T>&);
 
@@ -74,14 +69,14 @@ class Stack {
    * расширяет стек значениями элементов другого стека
    * @param stack
    */
-  void PushRange(const Stack<T>& stack);
+  void PushRange(Stack<T> stack);
 
   /**
    * @brief
    * расширяет стек значениями std::stack
    * @param stack
    */
-  void PushRange(const std::stack<T>& stack);
+  void PushRange(std::stack<T> stack);
 
   /**
    * @brief
@@ -112,4 +107,5 @@ class Stack {
  private:
   /// @brief указатель на последний элемент
   std::unique_ptr<Elem<T>> top_;
+  size_t size_;
 };
