@@ -2,8 +2,9 @@
 
 #include <initializer_list>
 #include <iostream>
-#include <memory>
 #include <stack>
+#include <stdexcept>
+#include <string>
 #include <vector>
 
 /**
@@ -60,8 +61,22 @@ class Stack {
    * @brief
    * возвращает верхний элемент стека
    * @return T
+   * @throw std::invalid_argument стек пуст
    */
-  T Top() { return top_->data; }
+  T Top() {
+    if (Empty()) throw std::logic_error("Stack is empty");
+
+    return top_->data;
+  }
+
+  Elem<T>*& Top(const std::string& s) {
+    if (Empty()) throw std::logic_error("Stack is empty");
+
+    if (s == "ptr")
+      return top_;
+    else
+      throw std::logic_error("invalid key string, do you mean 'T& Top(ptr)'?");
+  }
 
   /**
    * @brief
@@ -85,7 +100,7 @@ class Stack {
    */
   void Push(const T& value) {
     auto new_elem = new Elem<T>(top_, value);
-    top_ = std::move(new_elem);
+    top_ = new_elem;
     size_++;
   }
 
@@ -133,8 +148,11 @@ class Stack {
 
   /**
    * @return T: верхний элемент стека
+   * @throw std::invalid_argument стек пуст
    */
   void Pop() {
+    if (Empty()) throw std::logic_error("Stack is empty");
+
     top_ = top_->prev;
     size_--;
   }
@@ -143,8 +161,50 @@ class Stack {
    * @brief
    * меняет все элементы двух стеков местами
    * @param another_stack
+   * @throw std::invalid_argument если размер стеков не совпадает
    */
-  void Swap(Stack<T>& another_stack);
+  void Swap(Stack<T>& another_stack) {
+    if (size_ != another_stack.Size())
+      throw std::invalid_argument("Stacks sizes mismatch");
+
+    std::swap(another_stack.Top("ptr"), top_);
+  }
+
+  /**
+   * @brief
+   * меняет все элементы двух стеков местами
+   * @param another_stack
+   * @throw std::invalid_argument если размер стеков не совпадает
+   */
+  void Swap(std::stack<T>& another_stack) {
+    if (size_ != another_stack.size())
+      throw std::invalid_argument("Stacks and std::stack sizes mismatch");
+
+    // проще особо не сделаешь
+
+    Stack<T> extra_stack_1;
+    Stack<T> extra_stack_2;
+
+    while (!Empty()) {
+      extra_stack_1.Push(Top());
+      Pop();
+    }
+
+    while (!another_stack.empty()) {
+      extra_stack_2.Push(another_stack.top());
+      another_stack.pop();
+    }
+
+    while (!extra_stack_1.Empty()) {
+      another_stack.push(extra_stack_1.Top());
+      extra_stack_1.Pop();
+    }
+
+    while (!extra_stack_2.Empty()) {
+      Push(extra_stack_2.Top());
+      extra_stack_2.Pop();
+    }
+  }
 
  private:
   /// @brief указатель на последний элемент
