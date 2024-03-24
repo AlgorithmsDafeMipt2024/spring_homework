@@ -1,21 +1,40 @@
 #include "stack.hpp"
 
 #include <algorithm>
+#include <memory>
+#include <stdexcept>
 
-void Stack::Push(int value) { data_.push(value); }
+void Stack::Push(int value) {
+  top = std::make_shared<Node>(value, top);
+  size++;
+}
 
 int Stack::Pop() {
-  auto result = data_.top();
-  data_.pop();
-  return result;
+  if (size == 0) throw std::length_error("Stack already empty");
+  int value = top->value;
+  top = std::move(top->next);
+  return value;
 }
 
-void MinStack::Push(int value) { data_.push_back(value); }
+int Stack::Get() {
+  if (size == 0) throw std::out_of_range("Stack is empty");
+  return top->value;
+}
+
+void MinStack::Push(int value) {
+  values.Push(value);
+  if (minimums.size > 0 and value > minimums.Get())
+    minimums.Push(minimums.Get());
+  else
+    minimums.Push(value);
+}
 
 int MinStack::Pop() {
-  auto result = data_.back();
-  data_.pop_back();
-  return result;
+  minimums.Pop();
+  return values.Pop();
 }
 
-int MinStack::GetMin() { return *std::min_element(data_.begin(), data_.end()); }
+int MinStack::GetMin() {
+  if (minimums.size == 0) throw std::out_of_range("Stack is empty");
+  return minimums.Get();
+}
