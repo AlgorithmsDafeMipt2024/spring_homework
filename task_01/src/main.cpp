@@ -1,3 +1,8 @@
 #include <iostream>
 
-int main() { return 0; }
+#include "utils.hpp"
+
+int main() {
+  std::cout << "Hello World\n";
+  return 0;
+}
