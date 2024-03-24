@@ -13,6 +13,7 @@ int Stack::Pop() {
   if (size == 0) throw std::length_error("Stack already empty");
   int value = top->value;
   top = std::move(top->next);
+  size--;
   return value;
 }
 
