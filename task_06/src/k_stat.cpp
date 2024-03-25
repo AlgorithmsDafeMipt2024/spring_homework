@@ -21,7 +21,7 @@ int Partition(std::vector<int> &vec, int l, int r) {
   return j;
 }
 
-int findOrderStatistic(std::vector<int> &vec, int k) {
+int Find_Order_Statistic(std::vector<int> &vec, int k) {
   int left = 0;
   int right = int(vec.size() - 1);
   while (left < vec.size()) {
