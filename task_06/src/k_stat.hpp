@@ -2,6 +2,6 @@
 #include <iostream>
 #include <vector>
 
-int Quick_Sort(std::vector<int> &vec, int low, int high, int k);
+int Partition(std::vector<int> &vec, int l, int r);
 
-int Partition(std::vector<int> &vec, int low, int high);
+int Find_Order_Statistic(std::vector<int> &vec, int k);
