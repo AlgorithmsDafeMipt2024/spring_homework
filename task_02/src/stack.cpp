@@ -2,14 +2,6 @@
 
 #include <algorithm>
 
-void Stack::Push(int value) { data_.push(value); }
-
-int Stack::Pop() {
-  auto result = data_.top();
-  data_.pop();
-  return result;
-}
-
 void MinStack::Push(int value) { data_.push_back(value); }
 
 int MinStack::Pop() {
