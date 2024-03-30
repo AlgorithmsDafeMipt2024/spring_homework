@@ -1,23 +1,28 @@
 #pragma once
+#include <iostream>
+#include <memory>
 
-#include <stack>
-#include <vector>
+struct Node {
+  int value;
+  std::shared_ptr<Node> next;
+  Node(int value) : value(value) {}
+};
 
 class Stack {
- public:
+public:
+  Stack() { top = nullptr; }
   void Push(int value);
   int Pop();
-
- private:
-  std::stack<int> data_;
+  std::shared_ptr<Node> top;
 };
 
 class MinStack {
- public:
+public:
   void Push(int value);
   int Pop();
   int GetMin();
 
- private:
-  std::vector<int> data_;
+private:
+  Stack st1_;
+  Stack st2_;
 };
