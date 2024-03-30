@@ -3,7 +3,7 @@
 #include <utility>
 #include <vector>
 
-std::pair<int, int> Sum_Of_Elements(int num, const std::vector<int> arr) {
+std::pair<int, int> SumOfElements(int num, const std::vector<int> arr) {
   if (arr.size() < 2) {
     throw WrongVector("Vector is too small");
   }
