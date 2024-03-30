@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <functional>
 #include <optional>
 #include <stdexcept>
@@ -49,6 +50,5 @@ class Tree {
  private:
   std::pair<std::string, Node*> Find_Node(Node* current_node, int key);
 
- private:
   Node* head;
 };

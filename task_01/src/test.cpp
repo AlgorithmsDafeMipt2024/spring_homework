@@ -2,7 +2,6 @@
 #include <gtest/gtest.h>
 
 #include "solution.h"
-#include "topology_sort.hpp"
 
 TEST(solution, simple) {
   std::vector<int> v1 = {-2, 2, 3, 3, 5, 9, 11, 13, 14, 15};

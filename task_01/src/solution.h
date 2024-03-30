@@ -21,7 +21,6 @@ Output:
 // Solution below has a time complexity of O(n) and memory complexity of O(n)
 
 std::pair<int, int> solution(int sum, std::vector<int> v) {
-  bool flag = false;  // in case there are no such numbers
   std::unordered_map<int, int> indices_map;  // keeps array numbers as keys and
                                              // indices as values behind keys
 
@@ -30,8 +29,6 @@ std::pair<int, int> solution(int sum, std::vector<int> v) {
         indices_map
             .end()) {  // if key "number - t" exists, we have found the solution
       return {indices_map[sum - v[i]], i};
-      flag = true;
-      break;
     }
 
     if (indices_map.find(v[i]) == indices_map.end())
@@ -40,5 +37,5 @@ std::pair<int, int> solution(int sum, std::vector<int> v) {
               // way we get the least possible sum of i and j)
   }
 
-  if (!flag) return {-1, -1};
+  return {-1, -1};  // in case there are no such numbers
 }
