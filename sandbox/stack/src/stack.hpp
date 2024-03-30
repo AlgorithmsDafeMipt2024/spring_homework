@@ -27,10 +27,10 @@ class Elem {
   Elem<T>& operator=(Elem<T>&&) = default;
   Elem<T>& operator=(const Elem<T>& elem) = default;
 
-  /// @brief указатель на предыдущий элемент
+  // @brief указатель на предыдущий элемент
   std::shared_ptr<Elem<T>> prev;
 
-  /// @brief значение элемента
+  // @brief значение элемента
   T data;
 };
 
@@ -61,7 +61,7 @@ class Stack {
   /**
    * @brief возвращает верхний элемент стека
    * @return T
-   * @throw std::invalid_argument стек пуст
+   * @throw std::logic_error: если стек пуст
    */
   T Top() {
     if (Empty()) throw std::logic_error("Stack is empty");
@@ -95,7 +95,7 @@ class Stack {
    * @brief добавляет новый элемент в стек
    * @param value: значение нового элемента
    */
-  void Push(const T& value) {
+  void Push(const T& value = T()) {
     auto new_elem = std::make_shared<Elem<T>>(top_, value);
     top_ = new_elem;
     size_++;
@@ -140,8 +140,7 @@ class Stack {
   }
 
   /**
-   * @return T: верхний элемент стека
-   * @throw std::invalid_argument стек пуст
+   * @throw std::invalid_argument: если стек пуст
    */
   void Pop() {
     if (Empty()) throw std::logic_error("Stack is empty");
@@ -153,7 +152,7 @@ class Stack {
   /**
    * @brief меняет все элементы двух стеков местами
    * @param another_stack
-   * @throw std::invalid_argument если размер стеков не совпадает
+   * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(Stack<T>& another_stack) {
     if (size_ != another_stack.Size())
@@ -165,7 +164,7 @@ class Stack {
   /**
    * @brief меняет все элементы двух стеков местами
    * @param another_stack
-   * @throw std::invalid_argument если размер стеков не совпадает
+   * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(std::stack<T>& another_stack) {
     if (size_ != another_stack.size())
@@ -198,7 +197,7 @@ class Stack {
   }
 
  private:
-  /// @brief указатель на последний элемент
+  // @brief указатель на последний элемент
   std::shared_ptr<Elem<T>> top_;
   size_t size_;
 };
