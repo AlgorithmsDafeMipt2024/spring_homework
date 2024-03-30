@@ -6,4 +6,4 @@ class WrongVector : public std::runtime_error {
   using std::runtime_error::runtime_error;
 };
 
-std::pair<int, int> Task1(int num, const std::vector<int> arr);
+std::pair<int, int> Sum_Of_Elements(int num, const std::vector<int> arr);
