@@ -103,6 +103,7 @@ class Stack {
 
   /**
    * @brief расширяет стек значениями элементов другого стека
+   * (записывает в обратном порядке стеку в аргументе)
    * @param stack
    */
   void PushRange(Stack<T> stack) {
@@ -114,6 +115,7 @@ class Stack {
 
   /**
    * @brief расширяет стек значениями std::stack
+   * (записывает в обратном порядке стеку в аргументе)
    * @param stack
    */
   void PushRange(std::stack<T> stack) {
