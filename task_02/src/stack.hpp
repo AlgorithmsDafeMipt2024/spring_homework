@@ -1,23 +1,23 @@
 #pragma once
 
-#include <stack>
-#include <vector>
-
-class Stack {
- public:
-  void Push(int value);
-  int Pop();
-
- private:
-  std::stack<int> data_;
+struct Node {
+  int value_ = 0;
+  Node* prev_ = nullptr;
 };
 
-class MinStack {
- public:
+struct Stack {
+  void Push(int value);
+  int Pop();
+  Node* Top();
+
+  Node* top_ = nullptr;
+};
+
+struct MinStack {
   void Push(int value);
   int Pop();
   int GetMin();
 
- private:
-  std::vector<int> data_;
+  Stack s_;
+  Stack m_;
 };
