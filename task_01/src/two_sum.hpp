@@ -10,15 +10,16 @@
 // std usings:
 using std::is_sorted;
 
-// (написал шаблонизированные функции, так как они крутые)
-// (а так же потому, что не знаю, какой тип нужно использовать под целые числа)
-
-// MEANS: функция, находящая в отсорт. векторе 2 числа, в сумме дающие число
-// (если такие числа найти не удаётся, возбуждает ошибку)
-// (также возбуждает ошибку, если на вход подан неотсорт. вектор)
-// ARGS: [const vector<Type>&]: отсорт. вектор элементов произвольного типа
-// ARGS: [const Type&]: число, которое нужно представить суммой
-// RETURNS: [pair<Type, Type>]: пара чисел, дающих в сумме число
+/**
+ * @brief функция, находящая в отсорт. векторе 2 числа, в сумме дающие число
+ * @tparam Type: произвольный тип
+ * (необходимо, чтобы было определено сравнение)
+ * @param vec: отсорт. вектор элементов произвольного типа
+ * @param sum: число, которое нужно представить суммой
+ * @return std::pair<Type, Type>: пара чисел, дающих в сумме число
+ * @throw logic_error: если такие числа найти не удаётся
+ * @throw invalid_argument: массив пуст или не отсортирован
+ */
 template <typename Type>
 inline std::pair<Type, Type> TwoElemsGivingSum(const std::vector<Type>& vec,
                                                const Type& sum) {
@@ -26,9 +27,9 @@ inline std::pair<Type, Type> TwoElemsGivingSum(const std::vector<Type>& vec,
   if (!is_sorted(vec.begin(), vec.end()))
     throw std::invalid_argument("Array is not sorted.");
 
-  // MEANS: индекс, указывающий с начала вектора
+  // @brief: индекс, указывающий с начала вектора
   size_t first = 0;
-  // MEANS: индекс, указывающий с конца вектора
+  // @brief: индекс, указывающий с конца вектора
   size_t last = vec.size() - 1;
 
   while (first != last) {

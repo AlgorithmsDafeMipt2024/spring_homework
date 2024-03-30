@@ -16,7 +16,7 @@ int main() {
   cout << "That is the program, that finds 2 numbers" << endl
        << "from sorted array that add up to your given number." << endl;
 
-  // MEANS: вектор, который вводит пользователь
+  // @brief: вектор, который вводит пользователь
   std::vector<long long> vec{0, -1};
 
   while (!is_sorted(vec.begin(), vec.end())) {
@@ -25,14 +25,14 @@ int main() {
       cout << "Please, enter sorted array." << endl;
   }
 
-  // MEANS: число, которое нужно представить суммой двух
+  // @brief: число, которое нужно представить суммой двух
   long long number;
   std::cout << "Enter number: ";
   std::cin >> number;
   if (!std::cin) std::cerr << "Invalid number input." << std::endl;
 
   try {
-    // MEANS: пара чисел из вектора, которые в сумме дадут заданное число
+    // @brief: пара чисел из вектора, которые в сумме дадут заданное число
     auto need_pair = TwoElemsGivingSum(vec, number);
 
     cout << "Given number is equal to the sum: ";
