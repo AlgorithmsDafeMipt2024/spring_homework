@@ -1,21 +1,51 @@
 #include "stack.hpp"
+#include <memory>
+#include <stdexcept>
 
-#include <algorithm>
-
-void Stack::Push(int value) { data_.push(value); }
+void Stack::Push(int value) {
+  std::shared_ptr<Node> p(new Node(value));
+  if (top == nullptr) {
+    top = p;
+  }
+  if (top != nullptr) {
+    p->next = top;
+  }
+  top = p;
+}
 
 int Stack::Pop() {
-  auto result = data_.top();
-  data_.pop();
-  return result;
+  if (top == nullptr) {
+    throw std::logic_error("Stack Underflow");
+  }
+  int val = top->value;
+  top = top->next;
+  return val;
 }
 
-void MinStack::Push(int value) { data_.push_back(value); }
+void MinStack::Push(int value) {
+  if (st1_.top == nullptr) {
+    st1_.Push(value);
+    st2_.Push(value);
+    return;
+  }
+
+  if (st1_.top->value > value) {
+    st2_.Push(value);
+  } else {
+    st1_.Push(value);
+    st2_.Push(st2_.top->value);
+  }
+}
 
 int MinStack::Pop() {
-  auto result = data_.back();
-  data_.pop_back();
-  return result;
+  if (st1_.top == nullptr) {
+    throw std::logic_error("Stack Underflow");
+  }
+
+  int val = st1_.top->value;
+  st1_.top = st1_.top->next;
+  st2_.top = st2_.top->next;
+  return val;
 }
 
-int MinStack::GetMin() { return *std::min_element(data_.begin(), data_.end()); }
+int MinStack::GetMin() { return st2_.top->value; }
