@@ -48,8 +48,11 @@ class SinglyListStack {
 
   SinglyListStack(const T& value) : top_{new SinglyListElem<T>(value)} {}
 
-  SinglyListStack(const std::stack<T>& stack) {
-    for (const auto& elem : stack) Push(elem);
+  SinglyListStack(std::stack<T> stack) {
+    while (!stack.Empty()) {
+      Push(stack.Top());
+      stack.Pop();
+    }
   }
 
   SinglyListStack(const std::vector<T>& vector) {
