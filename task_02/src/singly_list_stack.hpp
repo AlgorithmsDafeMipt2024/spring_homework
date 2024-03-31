@@ -8,7 +8,7 @@
 #include <vector>
 
 /**
- * @brief Элемент стека (звено в односвязном списке)
+ * @brief элемент стека (звено в односвязном списке)
  * @tparam T: тип значения в стеке
  */
 template <typename T>
@@ -17,11 +17,15 @@ class SinglyListElem {
   SinglyListElem() : prev{nullptr} {}
 
   SinglyListElem(const SinglyListElem<T>& elem) : prev{&elem} {}
+
   SinglyListElem(SinglyListElem<T>* elem) : prev{elem} {}
+
   SinglyListElem(SinglyListElem<T>* elem, const T& value)
       : prev(elem), data{value} {}
+
   SinglyListElem(const std::shared_ptr<SinglyListElem<T>>& elem, const T& value)
       : prev(elem), data{value} {}
+
   SinglyListElem(const T& value) : prev{nullptr}, data{value} {}
 
   SinglyListElem<T>& operator=(SinglyListElem<T>&&) = default;
@@ -41,9 +45,9 @@ class SinglyListElem {
 template <typename T>
 class SinglyListStack {
  public:
-  SinglyListStack() : top_{nullptr}, size_{0} {}
+  SinglyListStack() = default;
 
-  SinglyListStack(const T& value) : top_{new SinglyListElem<T>(value)} {}
+  SinglyListStack(const T& value) { Push(value); }
 
   SinglyListStack(const SinglyListStack<T>& stack) = default;
 
@@ -82,7 +86,8 @@ class SinglyListStack {
     if (key == "ptr")
       return top_;
     else
-      throw std::logic_error("invalid key string, do you mean 'T& Top(ptr)'?");
+      throw std::logic_error(
+          "invalid key string, do you mean 'T& Top('ptr')'?");
   }
 
   /**
@@ -173,9 +178,6 @@ class SinglyListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(SinglyListStack<T>& another_stack) {
-    if (Size() != another_stack.Size())
-      throw std::invalid_argument("Stacks sizes mismatch");
-
     std::swap(another_stack.Top("ptr"), top_);
   }
 
@@ -185,9 +187,6 @@ class SinglyListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(std::stack<T>& another_stack) {
-    if (Size() != another_stack.size())
-      throw std::invalid_argument("Stack and std::stack sizes mismatch");
-
     // проще особо не сделаешь, если хочется сохранить порядок
 
     SinglyListStack<T> extra_stack_1;

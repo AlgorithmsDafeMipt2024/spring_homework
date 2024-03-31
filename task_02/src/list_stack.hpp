@@ -17,11 +17,11 @@ class ListStack {
  public:
   ListStack() = default;
 
-  ListStack(const ListStack<T>&) = default;
-
   ListStack(const T& value) { Push(value); }
 
-  ListStack(std::stack<T> stack) { PushRange(stack); }
+  ListStack(const ListStack<T>&) = default;
+
+  ListStack(const std::stack<T>& stack) { PushRange(stack); }
 
   ListStack(const std::vector<T>& vector) { PushRange(vector); }
 
@@ -123,9 +123,6 @@ class ListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(ListStack<T>& another_stack) {
-    if (Size() != another_stack.Size())
-      throw std::invalid_argument("Stacks sizes mismatch");
-
     // проще особо не сделаешь, если хочется сохранить порядок
 
     ListStack<T> extra_stack_1;
@@ -157,9 +154,6 @@ class ListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(std::stack<T>& another_stack) {
-    if (Size() != another_stack.size())
-      throw std::invalid_argument("Stack and std::stack sizes mismatch");
-
     // проще особо не сделаешь, если хочется сохранить порядок
 
     ListStack<T> extra_stack_1;
