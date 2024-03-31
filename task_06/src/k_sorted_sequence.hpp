@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <stdexcept>
 #include <vector>
 template <typename T>
