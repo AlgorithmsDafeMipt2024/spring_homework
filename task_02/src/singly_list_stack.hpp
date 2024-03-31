@@ -47,19 +47,12 @@ class SinglyListStack {
 
   SinglyListStack(const T& value) : top_{new SinglyListElem<T>(value)} {}
 
-  SinglyListStack(std::stack<T> stack) {
-    while (!stack.Empty()) {
-      Push(stack.Top());
-      stack.Pop();
-    }
-  }
+  SinglyListStack(const std::stack<T>& stack) { PushRange(stack); }
 
-  SinglyListStack(const std::vector<T>& vector) {
-    for (const auto& elem : vector) Push(elem);
-  }
+  SinglyListStack(const std::vector<T>& vector) { PushRange(vector); }
 
   SinglyListStack(const std::initializer_list<T>& init_list) {
-    for (const auto& elem : init_list) Push(elem);
+    PushRange(init_list);
   }
 
   SinglyListStack& operator=(const SinglyListStack<T>&) = default;
@@ -190,7 +183,7 @@ class SinglyListStack {
    */
   void Swap(std::stack<T>& another_stack) {
     if (size_ != another_stack.size())
-      throw std::invalid_argument("Stacks and std::stack sizes mismatch");
+      throw std::invalid_argument("Stack and std::stack sizes mismatch");
 
     // проще особо не сделаешь, если хочется сохранить порядок
 
