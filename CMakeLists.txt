@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.10)
 
 project(homeworks)
 
+# include file with extra project paths
+include(cmake_paths.cmake)
+
+# because of icecream-cpp CMake settings we need to move one file to bin dir
+include(${CMAKESCRIPTS_DIR}/scripts_for_icecream_cpp.cmake)
+move_icecream_hpp_to_build_dir(${CMAKE_CURRENT_SOURCE_DIR})
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/icecream-cpp)
+
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/sandbox)
