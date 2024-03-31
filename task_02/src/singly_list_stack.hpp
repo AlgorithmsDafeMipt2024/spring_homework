@@ -13,22 +13,23 @@
  * @tparam T: тип значения в стеке
  */
 template <typename T>
-class Elem {
+class SinglyListElem {
  public:
-  Elem() : prev{nullptr} {}
+  SinglyListElem() : prev{nullptr} {}
 
-  Elem(const Elem<T>& elem) : prev{&elem} {}
-  Elem(Elem<T>* elem) : prev{elem} {}
-  Elem(Elem<T>* elem, const T& value) : prev(elem), data{value} {}
-  Elem(const std::shared_ptr<Elem<T>>& elem, const T& value)
+  SinglyListElem(const SinglyListElem<T>& elem) : prev{&elem} {}
+  SinglyListElem(SinglyListElem<T>* elem) : prev{elem} {}
+  SinglyListElem(SinglyListElem<T>* elem, const T& value)
       : prev(elem), data{value} {}
-  Elem(const T& value) : prev{nullptr}, data{value} {}
+  SinglyListElem(const std::shared_ptr<SinglyListElem<T>>& elem, const T& value)
+      : prev(elem), data{value} {}
+  SinglyListElem(const T& value) : prev{nullptr}, data{value} {}
 
-  Elem<T>& operator=(Elem<T>&&) = default;
-  Elem<T>& operator=(const Elem<T>& elem) = default;
+  SinglyListElem<T>& operator=(SinglyListElem<T>&&) = default;
+  SinglyListElem<T>& operator=(const SinglyListElem<T>& elem) = default;
 
   // @brief указатель на предыдущий элемент
-  std::shared_ptr<Elem<T>> prev;
+  std::shared_ptr<SinglyListElem<T>> prev;
 
   // @brief значение элемента
   T data;
@@ -39,28 +40,28 @@ class Elem {
  * @tparam T: тип значений элементов стека
  */
 template <typename T>
-class Stack {
+class SinglyListStack {
  public:
-  Stack() : top_{nullptr}, size_{0} {}
+  SinglyListStack() : top_{nullptr}, size_{0} {}
 
-  Stack(const Stack<T>&) = default;
+  SinglyListStack(const SinglyListStack<T>&) = default;
 
-  Stack(const T& value) : top_{new Elem<T>(value)} {}
+  SinglyListStack(const T& value) : top_{new SinglyListElem<T>(value)} {}
 
-  Stack(const std::stack<T>& stack) {
+  SinglyListStack(const std::stack<T>& stack) {
     for (const auto& elem : stack) Push(elem);
   }
 
-  Stack(const std::vector<T>& vector) {
+  SinglyListStack(const std::vector<T>& vector) {
     for (const auto& elem : vector) Push(elem);
   }
 
-  Stack(const std::initializer_list<T>& init_list) {
+  SinglyListStack(const std::initializer_list<T>& init_list) {
     for (const auto& elem : init_list) Push(elem);
   }
 
-  Stack& operator=(const Stack<T>&) = default;
-  Stack& operator=(Stack<T>&&) = default;
+  SinglyListStack& operator=(const SinglyListStack<T>&) = default;
+  SinglyListStack& operator=(SinglyListStack<T>&&) = default;
 
   /**
    * @brief возвращает верхний элемент стека
@@ -73,7 +74,7 @@ class Stack {
     return top_->data;
   }
 
-  std::shared_ptr<Elem<int>>& Top(const std::string& s) {
+  std::shared_ptr<SinglyListElem<int>>& Top(const std::string& s) {
     if (Empty()) throw std::logic_error("Stack is empty");
 
     if (s == "ptr")
@@ -100,7 +101,7 @@ class Stack {
    * @param value: значение нового элемента
    */
   void Push(const T& value = T()) {
-    auto new_elem = std::make_shared<Elem<T>>(top_, value);
+    auto new_elem = std::make_shared<SinglyListElem<T>>(top_, value);
     top_ = new_elem;
     size_++;
   }
@@ -110,7 +111,7 @@ class Stack {
    * (записывает в обратном порядке стеку в аргументе)
    * @param stack
    */
-  void PushRange(Stack<T> stack) {
+  void PushRange(SinglyListStack<T> stack) {
     while (!stack.Empty()) {
       Push(stack.Top());
       stack.Pop();
@@ -160,7 +161,7 @@ class Stack {
    * @param another_stack
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
-  void Swap(Stack<T>& another_stack) {
+  void Swap(SinglyListStack<T>& another_stack) {
     if (size_ != another_stack.Size())
       throw std::invalid_argument("Stacks sizes mismatch");
 
@@ -178,8 +179,8 @@ class Stack {
 
     // проще особо не сделаешь
 
-    Stack<T> extra_stack_1;
-    Stack<T> extra_stack_2;
+    SinglyListStack<T> extra_stack_1;
+    SinglyListStack<T> extra_stack_2;
 
     while (!Empty()) {
       extra_stack_1.Push(Top());
@@ -204,16 +205,6 @@ class Stack {
 
  private:
   // @brief указатель на последний элемент
-  std::shared_ptr<Elem<T>> top_;
+  std::shared_ptr<SinglyListElem<T>> top_;
   size_t size_;
-};
-
-class MinStack {
- public:
-  void Push(int value);
-  int Pop();
-  int GetMin();
-
- private:
-  std::vector<int> data_;
 };
