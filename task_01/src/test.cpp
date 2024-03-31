@@ -1,9 +1,10 @@
 #include <gtest/gtest.h>
 
 #include <iostream>
+#include <stdexcept>
 #include <vector>
 
-#include "topology_sort.hpp"
+#include "get_two_nums.hpp"
 
 TEST(GetTwoNums, Test_1) {
   ASSERT_EQ(GetTwoNums(15, std::vector<long long>{5, 10, 15, 20, 25}),
@@ -62,11 +63,20 @@ TEST(GetTwoNums, Test_8) {
 }
 
 TEST(GetTwoNums, Test_9) {
-  ASSERT_EQ(GetTwoNums(12, std::vector<long long>{12}),
-            (std::pair<long long, long long>{-1, -1}));
+  EXPECT_THROW(GetTwoNums(2, std::vector<long long>{2}), std::length_error);
 }
 
 TEST(GetTwoNums, Test_10) {
-  ASSERT_EQ(GetTwoNums(100, std::vector<long long>{}),
-            (std::pair<long long, long long>{-1, -1}));
+  EXPECT_THROW(GetTwoNums(100, std::vector<long long>{}), std::length_error);
+}
+
+TEST(GetTwoNums, Test_11) {
+  EXPECT_THROW(GetTwoNums(5, std::vector<long long>{1, 2, 5, 7, 9, 11, 23, 55}),
+               std::logic_error);
+}
+
+TEST(GetTwoNums, Test_12) {
+  EXPECT_THROW(GetTwoNums(-10, std::vector<long long>{1, 2, 3, 4, 5, 6, 7, 8, 9,
+                                                      10, 11, 12, 13, 14}),
+               std::logic_error);
 }

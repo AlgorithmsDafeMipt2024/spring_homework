@@ -1,9 +1,9 @@
-#include "topology_sort.hpp"
+#include "get_two_nums.hpp"
 
 std::pair<long long, long long> GetTwoNums(long long number,
                                            std::vector<long long> nums) {
   if (nums.size() <= 1) {
-    return {-1, -1};
+    throw std::length_error("The array size must be greater than 1.");
   }
   size_t left = 0;
   size_t right = nums.size() - 1;

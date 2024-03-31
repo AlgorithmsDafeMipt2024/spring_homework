@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <vector>
 
-#include "topology_sort.hpp"
+#include "get_two_nums.hpp"
 
 size_t GetSize() {
   size_t length;
