@@ -113,25 +113,35 @@ class SinglyListStack {
 
   /**
    * @brief расширяет стек значениями элементов другого стека
-   * (записывает в обратном порядке стеку в аргументе)
    * @param stack
    */
   void PushRange(SinglyListStack<T> stack) {
+    SinglyListStack<T> temp_stack;
     while (!stack.Empty()) {
-      Push(stack.Top());
+      temp_stack.Push(stack.Top());
       stack.Pop();
+    }
+
+    while (!temp_stack.Empty()) {
+      Push(temp_stack.Top());
+      temp_stack.Pop();
     }
   }
 
   /**
    * @brief расширяет стек значениями std::stack
-   * (записывает в обратном порядке стеку в аргументе)
    * @param stack
    */
   void PushRange(std::stack<T> stack) {
+    std::stack<T> temp_stack;
     while (!stack.empty()) {
-      Push(stack.top());
+      temp_stack.push(stack.top());
       stack.pop();
+    }
+
+    while (!temp_stack.empty()) {
+      Push(temp_stack.top());
+      temp_stack.pop();
     }
   }
 

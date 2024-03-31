@@ -191,10 +191,10 @@ TEST(SinglyListStack_test, PushRange_vector_SizePopTop_test_2) {
 TEST(SinglyListStack_test, PushRange_std_stack_SizePopTop_test) {
   auto stack = SinglyListStack<int>();
   std::stack<int> std_stack;
-  std_stack.push(1);
-  std_stack.push(2);
-  std_stack.push(3);
   std_stack.push(4);
+  std_stack.push(3);
+  std_stack.push(2);
+  std_stack.push(1);
   stack.PushRange(std_stack);
   ASSERT_EQ(stack.Size(), 4);
   ASSERT_EQ(stack.Top(), 1);
@@ -215,10 +215,10 @@ TEST(SinglyListStack_test, PushRange_std_stack_SizePopTop_test) {
 TEST(SinglyListStack_test, PushRange_Stack_SizePopTop_test) {
   auto stack = SinglyListStack<int>();
   SinglyListStack<int> my_stack;
-  my_stack.Push(1);
-  my_stack.Push(2);
-  my_stack.Push(3);
   my_stack.Push(4);
+  my_stack.Push(3);
+  my_stack.Push(2);
+  my_stack.Push(1);
   stack.PushRange(my_stack);
   ASSERT_EQ(stack.Size(), 4);
   ASSERT_EQ(stack.Top(), 1);
