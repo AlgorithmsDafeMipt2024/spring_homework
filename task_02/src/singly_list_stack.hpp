@@ -45,7 +45,7 @@ class SinglyListStack {
 
   SinglyListStack(const T& value) : top_{new SinglyListElem<T>(value)} {}
 
-  SinglyListStack(const SinglyListStack<T>& stack) { PushRange(stack); }
+  SinglyListStack(const SinglyListStack<T>& stack) = default;
 
   SinglyListStack(const std::stack<T>& stack) { PushRange(stack); }
 
