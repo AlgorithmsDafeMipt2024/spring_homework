@@ -13,12 +13,12 @@ TEST(k_sorted_sequence, EmptyArray) {
 
 TEST(k_sorted_sequence, SingleElementArray) {
   std::vector<int> array = {42};
-  ASSERT_EQ(FindSortedSequence(array, 1), 42);
+  ASSERT_EQ(FindSortedSequence(array, 0), 42);
 }
 
 TEST(k_sorted_sequence, NegativeNumbers) {
   std::vector<int> array = {-5, -3, -8, -1, -10, -2, -6, -4, -7, -9};
-  ASSERT_EQ(FindSortedSequence(array, 4), -5);
+  ASSERT_EQ(FindSortedSequence(array, 4), -6);
 }
 
 TEST(k_sorted_sequence, SmallRandomArray) {
