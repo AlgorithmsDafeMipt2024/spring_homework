@@ -2,4 +2,5 @@
 #include <stack>
 #include <vector>
 
-std::vector<int> DoWarmingPrediction(std::vector<int>& temperature_data);
+std::vector<unsigned int> DoWarmingPrediction(
+    const std::vector<int>& temperature_data);

@@ -6,26 +6,48 @@
 
 #include "heap.hpp"
 
+TEST(Heap, EmptyHeap) {
+  Heap<int> empty_heap;
+  EXPECT_THROW(empty_heap.Top(), std::runtime_error);
+  EXPECT_THROW(empty_heap.Pop(), std::runtime_error);
+  ASSERT_EQ(empty_heap.Empty(), true);
+  ASSERT_EQ(empty_heap.Size(), 0);
+}
+
 TEST(Heap, Simple) {
-  Heap heap_1;
+  Heap<int> heap;
+  heap.Push(10);
+  heap.Push(5);
+  heap.Push(15);
+  heap.Push(3);
 
-  heap_1.Push(4);
-  heap_1.Push(2);
-  heap_1.Push(5);
-  ASSERT_EQ(heap_1.Pop(), 2);
-  ASSERT_EQ(heap_1.Top(), 4);
-  ASSERT_EQ(heap_1.Pop(), 4);
-  ASSERT_EQ(heap_1.Pop(), 5);
-  EXPECT_THROW(heap_1.Pop(), std::out_of_range);
-  EXPECT_THROW(heap_1.Top(), std::out_of_range);
-  ASSERT_EQ(heap_1.Empty(), true);
+  ASSERT_EQ(heap.Size(), 4);
+  ASSERT_EQ(heap.Top(), 3);
 
-  std::vector<int> array{1, 6, 2, 0, 11, 8, 8, 9, 2, 1};
-  Heap heap_2(array);
+  ASSERT_EQ(heap.Pop(), 3);
+  ASSERT_EQ(heap.Pop(), 5);
 
-  ASSERT_EQ(heap_2.Size(), 10);
-  heap_2.Push(-1);
-  ASSERT_EQ(heap_2.Size(), 11);
-  ASSERT_EQ(heap_2.Top(), -1);
-  ASSERT_EQ(heap_2.Top(), heap_2.Pop());
+  heap.Push(7);
+  ASSERT_EQ(heap.Pop(), 7);
+  ASSERT_EQ(heap.Pop(), 10);
+  ASSERT_EQ(heap.Pop(), 15);
+
+  EXPECT_THROW(heap.Pop(), std::runtime_error);
+}
+
+TEST(Heap, DuplicateData) {
+  Heap<int> heap;
+  heap.Push(5);
+  heap.Push(10);
+  heap.Push(5);
+
+  ASSERT_EQ(heap.Size(), 3);
+
+  ASSERT_EQ(heap.Top(), 5);
+  ASSERT_EQ(heap.Pop(), 5);
+
+  ASSERT_EQ(heap.Top(), 5);
+  ASSERT_EQ(heap.Pop(), 5);
+
+  ASSERT_EQ(heap.Top(), 10);
 }

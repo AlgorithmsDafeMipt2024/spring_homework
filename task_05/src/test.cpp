@@ -5,32 +5,40 @@
 
 #include "quick_sort.hpp"
 
-TEST(quick_sort, Simple) {
-  std::vector<int> array_1 = {-61, 20, -64, -39, 24,  -91, 28,  -69, -78,
-                              7,   16, -97, -12, 29,  8,   -27, 50,  -98,
-                              -37, 42, -72, -19, -25, 23,  96};
-  std::vector<int> sorted_array_1 = {
-      -98, -97, -91, -78, -72, -69, -64, -61, -39, -37, -27, -25, -19,
-      -12, 7,   8,   16,  20,  23,  24,  28,  29,  42,  50,  96};
-  QuickSort(array_1, 0, int(array_1.size() - 1));
-  ASSERT_EQ(array_1, sorted_array_1);
+TEST(quick_sort, EmptyArray) {
+  std::vector<int> array = {};
+  std::vector<int> sorted_array = {};
+  QuickSort(array, 0, int(array.size() - 1));
+  ASSERT_EQ(array, sorted_array);
+}
 
-  std::vector<int> array_2 = {
-      9, 9, 10, 5, 9, 2, 10, 6, 3, 10, 4, 0, 6, 2, 3, 4, 0,  7,  1, 3,
-      4, 5, 9,  0, 9, 1, 3,  2, 4, 0,  4, 6, 4, 3, 4, 5, 10, 10, 2, 6,
-      8, 0, 8,  9, 2, 4, 4,  0, 2, 3,  4, 3, 5, 4, 2, 1, 7,  3,  5, 8,
-      3, 9, 6,  9, 1, 1, 1,  7, 3, 0,  6, 4, 5, 9, 0, 2, 4,  4,  3, 9,
-      0, 0, 1,  8, 6, 7, 7,  3, 7, 3,  4, 0, 8, 4, 7, 8, 4,  8,  2, 2};
-  std::vector<int> sorted_array_2 = {
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,  1,  1,  2,  2,
-      2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3,  3,  3,  3,  3,
-      3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,  4,  4,  5,  5,
-      5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7,  7,  7,  8,  8,
-      8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10};
-  QuickSort(array_2, 0, int(array_2.size() - 1));
-  ASSERT_EQ(array_2, sorted_array_2);
+TEST(quick_sort, AlreadySortedArray) {
+  std::vector<int> array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<int> sorted_array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  QuickSort(array, 0, int(array.size() - 1));
+  ASSERT_EQ(array, sorted_array);
+}
 
-  std::vector<int> array_3 = {
+TEST(quick_sort, ReverseSortedArray) {
+  std::vector<int> array = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+  std::vector<int> sorted_array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  QuickSort(array, 0, int(array.size() - 1));
+  ASSERT_EQ(array, sorted_array);
+}
+
+TEST(quick_sort, SmallRandomArray) {
+  std::vector<int> array = {-61, 20, -64, -39, 24,  -91, 28,  -69, -78,
+                            7,   16, -97, -12, 29,  8,   -27, 50,  -98,
+                            -37, 42, -72, -19, -25, 23,  96};
+  std::vector<int> sorted_array = {-98, -97, -91, -78, -72, -69, -64, -61, -39,
+                                   -37, -27, -25, -19, -12, 7,   8,   16,  20,
+                                   23,  24,  28,  29,  42,  50,  96};
+  QuickSort(array, 0, int(array.size() - 1));
+  ASSERT_EQ(array, sorted_array);
+}
+
+TEST(quick_sort, LargeRandomArray) {
+  std::vector<int> array = {
       -141, -98,  477,  -592, 76,   -815, -826, 97,    -178, -723, 814,  -266,
       374,  602,  40,   -191, -578, 858,  919,  785,   -54,  -706, 294,  -187,
       -239, -946, -8,   -310, 305,  -353, 405,  699,   -767, 798,  -727, -452,
@@ -40,7 +48,7 @@ TEST(quick_sort, Simple) {
       -30,  836,  276,  309,  -225, -193, -623, -1000, -113, 614,  -869, 694,
       -480, -287, -343, 71,   -458, -775, -947, 335,   637,  -627, 43,   -874,
       109,  -805, 567,  927};
-  std::vector<int> sorted_array_3 = {
+  std::vector<int> sorted_array = {
       -1000, -947, -946, -874, -869, -858, -848, -826, -815, -814, -805, -775,
       -767,  -727, -723, -706, -627, -623, -592, -578, -576, -515, -480, -470,
       -463,  -458, -452, -431, -353, -343, -326, -318, -316, -310, -287, -266,
@@ -50,11 +58,6 @@ TEST(quick_sort, Simple) {
       442,   477,  480,  492,  517,  567,  602,  611,  614,  637,  676,  693,
       694,   695,  699,  732,  769,  785,  798,  814,  818,  836,  854,  858,
       915,   919,  927,  953};
-  QuickSort(array_3, 0, int(array_3.size() - 1));
-  ASSERT_EQ(array_3, sorted_array_3);
-
-  std::vector<int> array_4 = {};
-  std::vector<int> sorted_array_4 = {};
-  QuickSort(array_1, 0, int(array_4.size() - 1));
-  ASSERT_EQ(array_1, sorted_array_1);
+  QuickSort(array, 0, int(array.size() - 1));
+  ASSERT_EQ(array, sorted_array);
 }

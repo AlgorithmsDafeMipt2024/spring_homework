@@ -29,6 +29,7 @@ int Partition(std::vector<T> &array, int begin, int end) {
 
 template <typename T>
 void QuickSort(std::vector<T> &array, int begin, int end) {
+  const int InsertionSortThreshold = 25;
   while (begin < end) {
     if (end - begin <= 25) {
       InsertionSort(array, begin, end);
