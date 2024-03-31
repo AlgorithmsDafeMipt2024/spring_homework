@@ -90,7 +90,7 @@ void BSTree<T>::Remove(T value, std::unique_ptr<BSTNode> &node) {
     Remove(value, node->left);
     return;
   }
-  if (value < node->value) {
+  if (value > node->value) {
     Remove(value, node->right);
     return;
   }
