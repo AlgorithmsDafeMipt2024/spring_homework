@@ -1,11 +1,6 @@
-
-#include <gtest/gtest.h>
-
-#include <stack>
-
 #include "singly_list_stack.hpp"
 
-// тесты для SinglyListStackTest
+#include <gtest/gtest.h>
 
 TEST(SinglyListStackTest, Simple) {
   SinglyListStack<int> stack;
