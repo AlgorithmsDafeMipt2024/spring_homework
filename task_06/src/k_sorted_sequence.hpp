@@ -6,7 +6,7 @@ T FindSortedSequence(std::vector<T> array, int k) {
   if (k > end) throw std::out_of_range("k should be less then size of array");
   while (true) {
     int first = begin;
-    int pivot = (rand() % (end - begin) + 1) + begin;
+    int pivot = (rand() % (end - begin + 1)) + begin;
     std::swap(array[pivot], array[end]);
 
     while (array[begin] <= array[end] && begin < end) ++begin;

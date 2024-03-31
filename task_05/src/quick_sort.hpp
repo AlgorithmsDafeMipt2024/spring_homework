@@ -14,7 +14,7 @@ void InsertionSort(std::vector<T> &array, int begin, int end) {
 
 template <typename T>
 int Partition(std::vector<T> &array, int begin, int end) {
-  int pivot_index = (rand() % (end - begin) + 1) + begin;
+  int pivot_index = (rand() % (end - begin + 1)) + begin;
   std::swap(array[pivot_index], array[end]);
   T pivot = array[end];
   while (true) {
