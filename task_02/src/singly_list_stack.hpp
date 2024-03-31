@@ -66,8 +66,7 @@ class SinglyListStack {
   SinglyListStack& operator=(SinglyListStack<T>&&) = default;
 
   /**
-   * @brief возвращает верхний элемент стека
-   * @return T
+   * @return T: верхний элемент стека
    * @throw std::logic_error: если стек пуст
    */
   T Top() {
@@ -76,10 +75,15 @@ class SinglyListStack {
     return top_->data;
   }
 
-  std::shared_ptr<SinglyListElem<int>>& Top(const std::string& s) {
+  /**
+   * @param key: ключ, по которому можно получить Top в виде указателя
+   * @return std::shared_ptr<SinglyListElem<int>>&: ptr на верхний элемент стека
+   * @throw std::logic_error: если ключ != "ptr"
+   */
+  std::shared_ptr<SinglyListElem<int>>& Top(const std::string& key) {
     if (Empty()) throw std::logic_error("Stack is empty");
 
-    if (s == "ptr")
+    if (key == "ptr")
       return top_;
     else
       throw std::logic_error("invalid key string, do you mean 'T& Top(ptr)'?");
@@ -93,8 +97,7 @@ class SinglyListStack {
   bool Empty() { return top_ == nullptr; }
 
   /**
-   * @brief возвращает размер стека
-   * @return size_t
+   * @return size_t: размер стека
    */
   size_t Size() { return size_; }
 
@@ -179,7 +182,7 @@ class SinglyListStack {
     if (size_ != another_stack.size())
       throw std::invalid_argument("Stacks and std::stack sizes mismatch");
 
-    // проще особо не сделаешь
+    // проще особо не сделаешь, если хочется сохранить порядок
 
     SinglyListStack<T> extra_stack_1;
     SinglyListStack<T> extra_stack_2;
