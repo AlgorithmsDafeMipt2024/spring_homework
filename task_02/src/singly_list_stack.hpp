@@ -43,9 +43,9 @@ class SinglyListStack {
  public:
   SinglyListStack() : top_{nullptr}, size_{0} {}
 
-  SinglyListStack(const SinglyListStack<T>&) = default;
-
   SinglyListStack(const T& value) : top_{new SinglyListElem<T>(value)} {}
+
+  SinglyListStack(const SinglyListStack<T>& stack) { PushRange(stack); }
 
   SinglyListStack(const std::stack<T>& stack) { PushRange(stack); }
 
@@ -55,8 +55,11 @@ class SinglyListStack {
     PushRange(init_list);
   }
 
-  SinglyListStack& operator=(const SinglyListStack<T>&) = default;
-  SinglyListStack& operator=(SinglyListStack<T>&&) = default;
+  SinglyListStack& operator=(const SinglyListStack<T>& stack) {
+    PushRange(stack);
+  }
+
+  SinglyListStack& operator=(SinglyListStack<T>&& stack) { PushRange(stack); }
 
   /**
    * @return T: верхний элемент стека
@@ -170,7 +173,7 @@ class SinglyListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(SinglyListStack<T>& another_stack) {
-    if (size_ != another_stack.Size())
+    if (Size() != another_stack.Size())
       throw std::invalid_argument("Stacks sizes mismatch");
 
     std::swap(another_stack.Top("ptr"), top_);
@@ -182,7 +185,7 @@ class SinglyListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(std::stack<T>& another_stack) {
-    if (size_ != another_stack.size())
+    if (Size() != another_stack.size())
       throw std::invalid_argument("Stack and std::stack sizes mismatch");
 
     // проще особо не сделаешь, если хочется сохранить порядок
