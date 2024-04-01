@@ -12,4 +12,8 @@ TEST(heap, Simple) {
   heap.Build_heap(std::vector<int>{1, 3, 5, 7, 9, 12, 324, 5, 47, 457, 9467, -4,
                                    758, -579, -4, 0});
   ASSERT_EQ(heap.Find_Min(), -579);
+  heap.Insert(23);
+  heap.Insert(-1000);
+  ASSERT_EQ(heap.Extract_Min(), -1000);
+  ASSERT_EQ(heap.Find_Min(), -579);
 }
