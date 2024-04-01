@@ -3,7 +3,7 @@
 #include <vector>
 
 int Partition(std::vector<int> &vec, int l, int r) {
-  int piv = vec[(l + r) / 2];
+  int piv = vec[rand() % vec.size()];
   int i = l;
   int j = r;
   while (i <= j) {
@@ -21,7 +21,7 @@ int Partition(std::vector<int> &vec, int l, int r) {
   return j;
 }
 
-int Find_Order_Statistic(std::vector<int> &vec, int k) {
+int FindOrderStatistic(std::vector<int> &vec, int k) {
   int left = 0;
   int right = int(vec.size() - 1);
   while (left < vec.size()) {
@@ -39,3 +39,4 @@ int Find_Order_Statistic(std::vector<int> &vec, int k) {
   }
   throw std::logic_error("Wrong k order statistic");
 }
+

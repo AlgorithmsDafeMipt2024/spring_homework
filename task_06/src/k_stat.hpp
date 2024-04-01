@@ -4,4 +4,4 @@
 
 int Partition(std::vector<int> &vec, int l, int r);
 
-int Find_Order_Statistic(std::vector<int> &vec, int k);
+int FindOrderStatistic(std::vector<int> &vec, int k);
