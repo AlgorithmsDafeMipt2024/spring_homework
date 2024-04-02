@@ -179,6 +179,11 @@ class MinSinglyListStack {
 
     top_ = top_->prev;
     size_--;
+
+    if (Size() > 0)
+      FindNewMin();
+    else
+      is_min_init = false;
   }
 
   /**
@@ -224,13 +229,32 @@ class MinSinglyListStack {
 
   /**
    * @return T: значение минимума стека
+   * @throw std::logic_error: если минимум не проинициализирован
    */
-  T GetMin() { return min_; }
+  T GetMin() {
+    if (!is_min_init) throw std::logic_error("Minimum is not initialized");
+
+    return min_;
+  }
 
  private:
+  /**
+   * @return T: новый минимум
+   * (после удаления)
+   */
+  void FindNewMin() {
+    min_ = top_->data;
+
+    auto iter = top_;
+    while (iter->prev != nullptr) {
+      if (iter->data < min_) min_ = iter->data;
+      iter = iter->prev;
+    }
+  }
+
   // @brief указатель на последний элемент
   std::shared_ptr<SinglyListElem<T>> top_;
-  size_t size_;
+  size_t size_{0};
 
   T min_;
   bool is_min_init{false};

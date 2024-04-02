@@ -248,9 +248,9 @@ TEST(MinSinglyListStack_test, GetMin_PushPop_test_2) {
   stack.Pop();
   stack.Push(0.11);
   stack.Push(0.12);
-  ASSERT_EQ(stack.GetMin(), 0.1);
+  ASSERT_EQ(stack.GetMin(), 0.11);
   stack.Pop();
-  ASSERT_EQ(stack.GetMin(), 0.1);
+  ASSERT_EQ(stack.GetMin(), 0.11);
   stack.Pop();
   stack.Push(0);
   stack.Push(0.123123);
@@ -259,6 +259,6 @@ TEST(MinSinglyListStack_test, GetMin_PushPop_test_2) {
   stack.Push(-3123);
   ASSERT_EQ(stack.GetMin(), -3123);
   stack.Pop();
-  ASSERT_EQ(stack.GetMin(), -3123);
+  ASSERT_EQ(stack.GetMin(), 0);
   stack.Pop();
 }

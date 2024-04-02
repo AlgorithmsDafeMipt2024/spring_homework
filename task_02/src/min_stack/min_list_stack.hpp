@@ -126,6 +126,11 @@ class MinListStack {
     if (Empty()) throw std::logic_error("Stack is empty");
 
     list_.pop_back();
+
+    if (Size() > 0)
+      FindNewMin();
+    else
+      is_min_init = false;
   }
 
   /**
@@ -193,10 +198,25 @@ class MinListStack {
 
   /**
    * @return T: значение минимума стека
+   * @throw std::logic_error: если минимум не проинициализирован
    */
-  T GetMin() { return min_; }
+  T GetMin() {
+    if (!is_min_init) throw std::logic_error("Minimum is not initialized");
+
+    return min_;
+  }
 
  private:
+  /**
+   * @return T: новый минимум
+   * (после удаления)
+   */
+  void FindNewMin() {
+    min_ = list_.front();
+    for (const auto& elem : list_)
+      if (elem < min_) min_ = elem;
+  }
+
   // @brief двусвязный список, на основе которого написан стек
   std::list<T> list_;
 
