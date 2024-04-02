@@ -216,5 +216,5 @@ class SinglyListStack {
  private:
   // @brief указатель на последний элемент
   std::shared_ptr<SinglyListElem<T>> top_;
-  size_t size_;
+  size_t size_{0};
 };
