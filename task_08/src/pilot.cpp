@@ -18,10 +18,7 @@ int main() {
       std::string str1 = "";
       str1.push_back(c1);
       str1.push_back(c2);
-      std::string str2 = "";
-      str2.push_back(c1 + 8);
-      str2.push_back(c2 + 8);
-      ht_str[str1] = str2;
+      ht_str[str1] = str1;
     }
   }
 
@@ -40,5 +37,15 @@ int main() {
     }
   }
   ht_str.print();
+
+  std::cout << "\nstr pop done!\n\n";
+
+  LinkedList<int> ll1 = {1};
+  ll1.print();
+  std::cout << "\n\n";
+  hash_table<int, int> ht_i_lst = {{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6},
+                                   {6, 7}, {7, 8}, {8, 9}, {9, 10}};
+  ht_i_lst.print();
+  std::cout << "initializer_list works\n\n";
   return 0;
 }

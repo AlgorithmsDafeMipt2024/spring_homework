@@ -1,4 +1,6 @@
+#include <cmath>
 #include <cstddef>
+#include <initializer_list>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -6,7 +8,6 @@
 template <typename T>
 struct Node {
   Node() : next{nullptr}, data{} {}
-  ~Node() {}
   Node(T data_) : next{nullptr}, data{data_} {}
   void add_node(T data_);
   Node* next;
@@ -20,30 +21,36 @@ void Node<T>::add_node(T data_) {
 
 template <typename T>
 struct LinkedList {
-  LinkedList() : head{nullptr}, tail{nullptr}, sz{0} {}
-  LinkedList(std::vector<T> v);
+  LinkedList() : head{nullptr}, tail{nullptr}, size_{0} {}
+  // LinkedList(std::vector<T> initializer_vector);
+  LinkedList(std::initializer_list<T> initializer_list);
   ~LinkedList();
   LinkedList(const LinkedList& ll);
+
   void push_back(T elem);
-  bool empty() const { return sz == 0; }
+
+  bool empty() const { return size_ == 0; }
+  size_t size() const { return size_; }
+
   bool find(T elem) const;
-  int size() const { return sz; }
-  T& operator[](int index);
+  T& operator[](size_t index);
   T& back();
-  T& pop(int index);
+  T& pop(size_t index);
+
+  void print();
 
  private:
   Node<T>* head;
   Node<T>* tail;
-  int sz;
+  size_t size_;
 };
 
 template <typename T>
 LinkedList<T>::~LinkedList() {
-  if (sz != 0) {
+  if (size_ != 0) {
     Node<T>* curr = head;
     Node<T>* deletable = curr;
-    for (int i = 0; i < sz; i++) {
+    for (size_t i = 0; i < size_; i++) {
       curr = curr->next;
       delete deletable;
       deletable = curr;
@@ -52,29 +59,53 @@ LinkedList<T>::~LinkedList() {
 }
 
 template <typename T>
-LinkedList<T>::LinkedList(std::vector<T> v) {
-  sz = v.size();
-  if (v.empty()) {
+LinkedList<T>::LinkedList(std::initializer_list<T> initializer_list) {
+  size_ = initializer_list.size();
+  if (size_ == 0) {
     head = nullptr;
     tail = nullptr;
   } else {
-    head = new Node<T>{v[0]};
+    head = new Node<T>{*initializer_list.begin()};
     Node<T>* curr = head;
-    for (int i = 1; i < sz; i++) {
-      curr = curr->next;
-      curr = new Node<T>{v[i]};
+    bool first_iteration_flag = 1;
+    for (const T& i : initializer_list) {
+      if (first_iteration_flag)
+        first_iteration_flag = 0;
+      else {
+        curr->add_node(i);
+        curr = curr->next;
+      }
     }
     tail = curr;
   }
 }
 
+/*
+template <typename T>
+LinkedList<T>::LinkedList(std::vector<T> initializer_vector) {
+  size_ = initializer_vector.size();
+  if (initializer_vector.empty()) {
+    head = nullptr;
+    tail = nullptr;
+  } else {
+    head = new Node<T>{initializer_vector[0]};
+    Node<T>* curr = head;
+    for (size_t i = 1; i < size_; i++) {
+      curr = curr->next;
+      curr = new Node<T>{initializer_vector[i]};
+    }
+    tail = curr;
+  }
+}
+*/
+
 template <typename T>
 LinkedList<T>::LinkedList(const LinkedList& ll) {
-  sz = ll.size();
+  size_ = ll.size();
   head = new Node(head->data);
   Node<T>* curr = ll.head;
   Node<T>* curr_copy = head;
-  for (int i = 1; i < ll.size(); i++) {
+  for (size_t i = 1; i < ll.size(); i++) {
     curr = curr->next;
     curr_copy->add_node(curr->data);
     curr_copy = curr_copy->next;
@@ -91,14 +122,14 @@ void LinkedList<T>::push_back(T elem) {
     tail = new Node<T>(elem);
     head = tail;
   }
-  sz++;
+  size_++;
 }
 
 template <typename T>
-T& LinkedList<T>::operator[](int index) {
-  if (index >= sz) throw std::runtime_error("index is out of range");
+T& LinkedList<T>::operator[](size_t index) {
+  if (index >= size_) throw std::runtime_error("index is out of range");
   Node<T>* curr = head;
-  for (int i = 0; i < index; i++) {
+  for (size_t i = 0; i < index; i++) {
     curr = curr->next;
   }
   return curr->data;
@@ -113,15 +144,15 @@ T& LinkedList<T>::back() {
 }
 
 template <typename T>
-T& LinkedList<T>::pop(int index) {
-  if (index >= sz) throw std::runtime_error("index out of range");
+T& LinkedList<T>::pop(size_t index) {
+  if (index >= size_) throw std::runtime_error("index out of range");
 
-  if (sz == 1) {
+  if (size_ == 1) {
     T& value = head->data;
     delete head;
     head = nullptr;
     tail = nullptr;
-    sz--;
+    size_--;
     return value;
   }
 
@@ -130,14 +161,14 @@ T& LinkedList<T>::pop(int index) {
     Node<T>* prev = head;
     head = head->next;
     delete prev;
-    sz--;
+    size_--;
     return value;
   }
 
   Node<T>* prev = nullptr;
   Node<T>* curr = head;
 
-  for (int i = 0; i < index; i++) {
+  for (size_t i = 0; i < index; i++) {
     prev = curr;
     curr = curr->next;
   }
@@ -146,6 +177,15 @@ T& LinkedList<T>::pop(int index) {
   T& value = curr->data;
   delete curr;
   curr = nullptr;
-  sz--;
+  size_--;
   return value;
+}
+
+template <typename T>
+void LinkedList<T>::print() {
+  Node<T>* curr = head;
+  while (curr != nullptr) {
+    std::cout << curr->data << ' ';
+    curr = curr->next;
+  }
 }
