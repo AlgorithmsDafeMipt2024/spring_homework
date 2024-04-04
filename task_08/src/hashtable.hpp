@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cmath>
 #include <initializer_list>
 #include <stdexcept>
@@ -5,24 +7,22 @@
 #include "linkedlist.hpp"
 
 template <typename K, typename T>
-class hash_table {
+class HashTable {
  public:
-  hash_table()
+  HashTable()
       : array_length{base_length},
         hash_vector{base_length},
         number_of_elements{0},
         fillness_ratio{0},
         default_value{} {}
-  explicit hash_table(T default_value_)
+  explicit HashTable(T default_value_)
       : array_length{base_length},
         hash_vector{base_length},
         number_of_elements{0},
         fillness_ratio{0},
         default_value{default_value_} {}
-  hash_table(std::initializer_list<std::pair<K, T>> initializer_list);
+  HashTable(std::initializer_list<std::pair<K, T>> initializer_list);
 
-  // hash_table(const hash_table& ht);
-  // hash_table& operator=(const hash_table& ht);
   void set_default(T default_value_);
 
   std::vector<std::pair<K, T>> items();
@@ -52,7 +52,7 @@ class hash_table {
 };
 
 template <typename K, typename T>
-hash_table<K, T>::hash_table(
+HashTable<K, T>::HashTable(
     std::initializer_list<std::pair<K, T>> initializer_list) {
   double relative_length = initializer_list.size() / (double)base_length;
   number_of_elements = 0;
@@ -91,40 +91,13 @@ hash_table<K, T>::hash_table(
   fillness_ratio = number_of_elements / (double)array_length;
 }
 
-/*
 template <typename K, typename T>
-hash_table<K, T>::hash_table(const hash_table& ht) {
-  array_length = ht.array_length;
-  number_of_elements = ht.number_of_elements;
-  fillness_ratio = ht.fillness_ratio;
-  hasher = ht.hasher;
-  hash_vector = ht.hash_vector;
-  // for (int i = 0; i < int(ht.hash_vector.size()); i++) {
-  //  hash_vector.push_back(ht.hash_vector[i]);
-  //}
-}
-*/
-
-/*
-template <typename K, typename T>
-hash_table<K, T>& hash_table<K, T>::operator=(const hash_table& ht) {
-  array_length = ht.array_length;
-  number_of_elements = ht.number_of_elements;
-  fillness_ratio = ht.fillness_ratio;
-  hasher = ht.hasher;
-  hash_vector = ht.hash_vector;
-  return *this;
-}
-*/
-
-template <typename K, typename T>
-void hash_table<K, T>::set_default(T default_value_) {
+void HashTable<K, T>::set_default(T default_value_) {
   default_value = default_value_;
 }
 
-// totally can be more effective
 template <typename K, typename T>
-T& hash_table<K, T>::operator[](K key) {
+T& HashTable<K, T>::operator[](K key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[(hasher(key)) % array_length];
 
@@ -159,9 +132,8 @@ T& hash_table<K, T>::operator[](K key) {
   }
 }
 
-// could be more effective
 template <typename K, typename T>
-T& hash_table<K, T>::pop(K key) {
+T& HashTable<K, T>::pop(K key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[(hasher(key)) % array_length];
   for (size_t i = 0; i < key_list.size(); i++) {
@@ -177,7 +149,7 @@ T& hash_table<K, T>::pop(K key) {
 }
 
 template <typename K, typename T>
-bool hash_table<K, T>::has_key(K key) {
+bool HashTable<K, T>::has_key(K key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[hasher(key) % array_length];
   for (size_t i = 0; i < key_list.size(); i++)
@@ -185,9 +157,8 @@ bool hash_table<K, T>::has_key(K key) {
   return false;
 }
 
-// could be more effective
 template <typename K, typename T>
-void hash_table<K, T>::print() {
+void HashTable<K, T>::print() {
   for (size_t i = 0; i < hash_vector.size(); i++) {
     for (size_t j = 0; j < hash_vector[i].size(); j++) {
       std::cout << hash_vector[i][j].second << ' ';
@@ -196,9 +167,8 @@ void hash_table<K, T>::print() {
   }
 }
 
-// could be more effective
 template <typename K, typename T>
-std::vector<std::pair<K, T>> hash_table<K, T>::items() {
+std::vector<std::pair<K, T>> HashTable<K, T>::items() {
   std::vector<std::pair<K, T>> vector;
 
   for (size_t i = 0; i < hash_vector.size(); i++)
@@ -208,9 +178,8 @@ std::vector<std::pair<K, T>> hash_table<K, T>::items() {
   return vector;
 }
 
-// could be more effective
 template <typename K, typename T>
-std::vector<K> hash_table<K, T>::keys() {
+std::vector<K> HashTable<K, T>::keys() {
   std::vector<K> vector;
 
   for (size_t i = 0; i < hash_vector.size(); i++)
@@ -220,9 +189,8 @@ std::vector<K> hash_table<K, T>::keys() {
   return vector;
 }
 
-// could be more effective
 template <typename K, typename T>
-std::vector<T> hash_table<K, T>::values() {
+std::vector<T> HashTable<K, T>::values() {
   std::vector<T> vector;
 
   for (size_t i = 0; i < hash_vector.size(); i++)
@@ -233,7 +201,7 @@ std::vector<T> hash_table<K, T>::values() {
 }
 
 template <typename K, typename T>
-void hash_table<K, T>::clear() {
+void HashTable<K, T>::clear() {
   hash_vector.clear();
   hash_vector.resize(base_length);
   array_length = base_length;
@@ -243,7 +211,7 @@ void hash_table<K, T>::clear() {
 }
 
 template <typename K, typename T>
-void hash_table<K, T>::rehash(rehash_type type) {
+void HashTable<K, T>::rehash(rehash_type type) {
   std::vector<std::pair<K, T>> vector = items();
 
   hash_vector.clear();

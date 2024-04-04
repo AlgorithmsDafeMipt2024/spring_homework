@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cmath>
 #include <cstddef>
 #include <initializer_list>
@@ -22,7 +24,6 @@ void Node<T>::add_node(T data_) {
 template <typename T>
 struct LinkedList {
   LinkedList() : head{nullptr}, tail{nullptr}, size_{0} {}
-  // LinkedList(std::vector<T> initializer_vector);
   LinkedList(std::initializer_list<T> initializer_list);
   ~LinkedList();
   LinkedList(const LinkedList& ll);
@@ -32,7 +33,6 @@ struct LinkedList {
   bool empty() const { return size_ == 0; }
   size_t size() const { return size_; }
 
-  bool find(T elem) const;
   T& operator[](size_t index);
   T& back();
   T& pop(size_t index);
@@ -79,25 +79,6 @@ LinkedList<T>::LinkedList(std::initializer_list<T> initializer_list) {
     tail = curr;
   }
 }
-
-/*
-template <typename T>
-LinkedList<T>::LinkedList(std::vector<T> initializer_vector) {
-  size_ = initializer_vector.size();
-  if (initializer_vector.empty()) {
-    head = nullptr;
-    tail = nullptr;
-  } else {
-    head = new Node<T>{initializer_vector[0]};
-    Node<T>* curr = head;
-    for (size_t i = 1; i < size_; i++) {
-      curr = curr->next;
-      curr = new Node<T>{initializer_vector[i]};
-    }
-    tail = curr;
-  }
-}
-*/
 
 template <typename T>
 LinkedList<T>::LinkedList(const LinkedList& ll) {
