@@ -68,11 +68,11 @@ LinkedList<T>::LinkedList(std::initializer_list<T> initializer_list) {
     head = new Node<T>{*initializer_list.begin()};
     Node<T>* curr = head;
     bool first_iteration_flag = 1;
-    for (const T& i : initializer_list) {
+    for (const T& value : initializer_list) {
       if (first_iteration_flag)
         first_iteration_flag = 0;
       else {
-        curr->add_node(i);
+        curr->add_node(value);
         curr = curr->next;
       }
     }
