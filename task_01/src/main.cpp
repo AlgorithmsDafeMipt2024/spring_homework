@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+// proverka
+
 int main() {
   int a;
   int x;
