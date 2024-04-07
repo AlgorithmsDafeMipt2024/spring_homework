@@ -1,10 +1,5 @@
-// std libs:
-#include <iostream>
-
 // my libs:
 #include "days_before_warming.hpp"
-#include "temperature.hpp"
-#include "utilities.hpp"
 
 // std usings:
 using std::cout, std::cin, std::endl;
