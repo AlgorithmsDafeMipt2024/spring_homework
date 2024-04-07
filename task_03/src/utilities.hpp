@@ -2,6 +2,7 @@
 
 // std libs:
 #include <iostream>
+#include <string>
 #include <vector>
 
 /**
@@ -20,4 +21,21 @@ inline std::ostream& operator<<(std::ostream& os,
     if (i != vec.size() - 1) os << ", ";
   }
   return os << "]";
+}
+
+/**
+ * @brief функция, которая обрезает незнач. нули float при преобр. в строку
+ * @param number: число типа float
+ * @return std::string: итоговое число, записанное в строку
+ */
+std::string ErasedZerosStr(float number) {
+  std::string str = std::to_string(number);
+
+  // удаляем незначащие нули
+  str.erase(str.find_last_not_of('0') + 1, std::string::npos);
+
+  // если последний символ - десятичная точка, удаляем
+  if (str.back() == '.') str.pop_back();
+
+  return str;
 }
