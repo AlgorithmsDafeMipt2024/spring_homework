@@ -1,10 +1,14 @@
+// std libs:
+#include <algorithm>
+#include <exception>
 #include <iostream>
 #include <utility>
 #include <vector>
 
 // my libs:
+#include <util.hpp>
+
 #include "two_sum.hpp"
-#include "utilities.hpp"
 
 // std usings:
 using std::cout, std::cerr, std::endl, std::is_sorted;
@@ -32,7 +36,7 @@ int main() {
     // @brief: пара чисел из вектора, которые в сумме дадут заданное число
     auto need_pair = TwoElemsGivingSum(vec, number);
 
-    cout << "Given number is equal to the sum: ";
+    cout << "Given number is equal to the sum of: ";
     cout << need_pair << std::endl;
   } catch (const std::exception& e) {
     cerr << e.what() << endl;
