@@ -28,7 +28,7 @@ inline std::ostream& operator<<(std::ostream& os,
  * @param number: число типа float
  * @return std::string: итоговое число, записанное в строку
  */
-std::string ErasedZerosStr(float number) {
+inline std::string ErasedZerosStr(float number) {
   std::string str = std::to_string(number);
 
   // удаляем незначащие нули
