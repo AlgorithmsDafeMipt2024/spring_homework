@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 // my libs:
-#include "utilities.hpp"
+#include <util.hpp>
 
 // @brief значение температуры в градусах цельсия
 class Temperature {
