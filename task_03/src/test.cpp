@@ -1,8 +1,8 @@
 
 #include <gtest/gtest.h>
 
-#include "topology_sort.hpp"
+#include "temperatures.hpp"
 
-TEST(TopologySort, Simple) {
+TEST(Temperatures, Simple) {
   ASSERT_EQ(1, 1);  // Stack []
 }
