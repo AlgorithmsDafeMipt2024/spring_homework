@@ -3,6 +3,7 @@
 // std libs:
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 class Temperature {
  public:
@@ -60,3 +61,6 @@ inline std::ostream& operator<<(std::ostream& os, const Temperature& t) {
 inline std::istream& operator>>(std::istream& is, Temperature& t) {
   return is >> t.value_;
 }
+
+std::vector<size_t> DaysUntilWarmingSillyLooping(
+    const std::vector<Temperature>& temperatures);
