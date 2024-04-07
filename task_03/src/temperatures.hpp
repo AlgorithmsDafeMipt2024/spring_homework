@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <vector>
 
+// @brief значение температуры в градусах цельсия
 class Temperature {
  public:
   Temperature(float value) : value_{value} {
@@ -25,10 +26,7 @@ class Temperature {
   friend Temperature& operator-=(Temperature& a, const Temperature& b);
 
   auto operator<=>(const Temperature& b) const = default;
-  bool operator<(float b) const { return value_ < b; }
-  bool operator==(float b) const { return value_ == b; }
-  bool operator>(float b) const { return value_ > b; }
-  bool operator!=(float b) const { return value_ != b; }
+  auto operator<=>(float b) const { return value_ <=> b; }
 
   friend std::ostream& operator<<(std::ostream& os, const Temperature& par);
   friend std::istream& operator>>(std::istream& is, Temperature& vec);
@@ -55,12 +53,9 @@ inline Temperature operator+(Temperature a, Temperature b) { return a += b; }
 inline Temperature operator-(Temperature a, Temperature b) { return a -= b; }
 
 inline std::ostream& operator<<(std::ostream& os, const Temperature& t) {
-  return os << t.value_;
+  return os << t.value_ << " °C";
 }
 
 inline std::istream& operator>>(std::istream& is, Temperature& t) {
   return is >> t.value_;
 }
-
-std::vector<size_t> DaysUntilWarmingSillyLooping(
-    const std::vector<Temperature>& temperatures);
