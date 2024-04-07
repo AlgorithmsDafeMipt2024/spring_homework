@@ -14,4 +14,5 @@ int main() {
                                -1, -5, 8, 31, -9, 58, 36, 5};
   cout << vec << endl;
   cout << DaysUntilWarmingSillyLooping(vec) << endl;
+  cout << DaysUntilWarmingSmarterLooping(vec) << endl;
 }
