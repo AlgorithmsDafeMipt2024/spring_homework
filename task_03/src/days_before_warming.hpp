@@ -1,6 +1,6 @@
 #pragma once
 
-#include "temperatures.hpp"
+#include "temperature.hpp"
 
 // std libs:
 #include <stack>
@@ -13,7 +13,7 @@
  * @param temperatures: вектор температур в исследуемом кол-ве дней
  * @return std::vector<size_t>: вектор дней до потепления для каждого дня
  */
-inline std::vector<size_t> DaysUntilWarmingSillyLooping(
+inline std::vector<size_t> DaysBeforeWarmingSillyLooping(
     const std::vector<Temperature>& temperatures) {
   // @brief кол-во исследуемых дней
   auto days_amount = temperatures.size();
@@ -45,7 +45,7 @@ inline std::vector<size_t> DaysUntilWarmingSillyLooping(
  * @param temperatures: вектор температур в исследуемом кол-ве дней
  * @return std::vector<size_t>: вектор дней до потепления для каждого дня
  */
-inline std::vector<size_t> DaysUntilWarmingSmarterLooping(
+inline std::vector<size_t> DaysBeforeWarmingSmarterLooping(
     const std::vector<Temperature>& temperatures) {
   // @brief кол-во исследуемых дней
   auto days_amount = temperatures.size();
@@ -87,7 +87,7 @@ inline std::vector<size_t> DaysUntilWarmingSmarterLooping(
  * @param temperatures: вектор температур в исследуемом кол-ве дней
  * @return std::vector<size_t>: вектор дней до потепления для каждого дня
  */
-std::vector<size_t> DaysUntilWarmingStackLooping(
+std::vector<size_t> DaysBeforeWarmingStackLooping(
     const std::vector<Temperature>& temperatures) {
   // @brief кол-во исследуемых дней
   auto days_amount = temperatures.size();

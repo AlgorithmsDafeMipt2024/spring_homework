@@ -3,7 +3,7 @@
 
 // my libs:
 #include "days_before_warming.hpp"
-#include "temperatures.hpp"
+#include "temperature.hpp"
 #include "utilities.hpp"
 
 // std usings:
@@ -14,12 +14,12 @@ int main() {
                                -1, -5, 8, 31, -9, 58, 36, 5};
   cout << vec << endl;
 
-  cout << DaysUntilWarmingSillyLooping(vec) << endl;
+  cout << DaysBeforeWarmingSillyLooping(vec) << endl;
   cout << endl;
 
-  cout << DaysUntilWarmingSmarterLooping(vec) << endl;
+  cout << DaysBeforeWarmingSmarterLooping(vec) << endl;
   cout << endl;
 
-  cout << DaysUntilWarmingStackLooping(vec) << endl;
+  cout << DaysBeforeWarmingStackLooping(vec) << endl;
   cout << endl;
 }

@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 
-#include "temperatures.hpp"
+#include "temperature.hpp"
 
 TEST(Temperatures, Simple) {
   ASSERT_EQ(1, 1);  // Stack []
