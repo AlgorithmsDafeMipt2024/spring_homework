@@ -99,6 +99,7 @@ T heap<T>::pop_bottom() {
   T bottom = bottom();
   std::swap(data[0], data.back());
   data.pop_back();
+  heap_size--;
   sift_down(0);
   return bottom;
 }
