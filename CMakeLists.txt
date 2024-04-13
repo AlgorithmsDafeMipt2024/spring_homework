@@ -12,7 +12,7 @@ file(GLOB_RECURSE tasks_dirs LIST_DIRECTORIES true ".")
 
 foreach(dir ${tasks_dirs})
     IF(IS_DIRECTORY ${dir})
-        IF(${dir} MATCHES "task_0[0-9]$" AND NOT ${dir} MATCHES "build")
+        IF((${dir} MATCHES "task_0[0-9]$" OR ${dir} MATCHES "heap_exe$") AND NOT ${dir} MATCHES "build")
             add_subdirectory(${dir})
         ENDIF()
     ELSE()
