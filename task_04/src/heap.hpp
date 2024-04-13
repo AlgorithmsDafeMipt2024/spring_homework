@@ -25,28 +25,31 @@ class heap {
   std::vector<T> data;
 };
 
+// time complexity - O(1)
 template <typename T>
 heap<T>::heap() : data{}, heap_size{0} {
   comparing_function = [](const T& a, const T& b) { return a < b; };
 }
 
+// time complexity - O(1)
 template <typename T>
 heap<T>::heap(std::function<bool(const T&, const T&)> function)
     : data{}, heap_size{0}, comparing_function{function} {}
 
+// time complexity - O(nlogn)
 template <typename T>
 heap<T>::heap(std::initializer_list<T> initializer_list) {
   comparing_function = [](const T& a, const T& b) { return a < b; };
 
-  for (const T& value : initializer_list) data.push_back(value);
-  heap_size = data.size();
+  for (const T& value : initializer_list) push(value);
 }
 
+// time complexity - O(nlogn)
 template <typename T>
 heap<T>::heap(std::initializer_list<T> initializer_list,
               std::function<bool(const T&, const T&)> function)
     : comparing_function{function} {
-  for (const T& value : initializer_list) data.push_back(value);
+  for (const T& value : initializer_list) push(value);
 }
 
 // time complexity - O(logn)
@@ -91,5 +94,10 @@ T heap<T>::extract_bottom_element() {
   return bottom;
 }
 
+// time complexity - O(logn)
 template <typename T>
-void heap<T>::push(T element) {}
+void heap<T>::push(T element) {
+  heap_size++;
+  data[heap_size - 1] = element;
+  sift_up(heap_size - 1);
+}
