@@ -21,7 +21,5 @@ std::pair<int, int> FindSum(int number, const std::vector<int> array) {
       right_index--;
     }
   }
-  if (array[left_index] + array[right_index] != number) {
-    throw std::logic_error("no indexes found");
-  }
+  throw std::logic_error("no indexes found");
 }
