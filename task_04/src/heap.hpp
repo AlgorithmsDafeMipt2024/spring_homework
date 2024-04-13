@@ -1,6 +1,7 @@
 #include <cstddef>
 #include <functional>
 #include <initializer_list>
+#include <stdexcept>
 #include <vector>
 
 // default constructor works only if your custom type is comparable!
@@ -14,7 +15,9 @@ class heap {
        std::function<bool(const T&, const T&)> function);
 
   void push(T element);
-  T extract_bottom_element();
+  T pop_bottom();
+  T bottom();
+  bool empty() { return heap_size == 0; }
 
  private:
   void sift_down(size_t index);
@@ -83,21 +86,27 @@ void heap<T>::sift_up(size_t index) {
   }
 }
 
+// time complexity - O(1)
+template <typename T>
+T heap<T>::bottom() {
+  if (empty()) throw std::runtime_error("heap is empty");
+  return data[0];
+}
+
 // time complexity - O(logn)
 template <typename T>
-T heap<T>::extract_bottom_element() {
-  T bottom = data[0];
-  data[0] = data[heap_size - 1];
-  heap_size--;
+T heap<T>::pop_bottom() {
+  T bottom = bottom();
+  std::swap(data[0], data.back());
+  data.pop_back();
   sift_down(0);
-
   return bottom;
 }
 
 // time complexity - O(logn)
 template <typename T>
 void heap<T>::push(T element) {
+  data.push_back(element);
   heap_size++;
-  data[heap_size - 1] = element;
   sift_up(heap_size - 1);
 }
