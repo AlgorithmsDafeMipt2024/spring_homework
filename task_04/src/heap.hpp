@@ -17,6 +17,7 @@ class heap {
   void push(T element);
   T pop_bottom();
   T bottom();
+  size_t size() { return heap_size; }
   bool empty() { return heap_size == 0; }
 
  private:
