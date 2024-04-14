@@ -1,18 +1,43 @@
+#include <concepts>
 #include <cstddef>
 #include <functional>
 #include <initializer_list>
 #include <stdexcept>
 #include <vector>
 
+// try to deduce if type is comparable (naive solution)
+template <typename T>
+constexpr bool is_comparable() {
+  T a{};
+  try {
+    bool attempt_to_compate = a < a;
+  } catch (...) {
+    return false;
+  }
+  return true;
+}
+
+// try to deduce if type is comparable with a function (naive solution)
+// template <typename T>
+// constexpr bool is_comparable(std::function<bool(const T&, const T&)>
+// function) {
+//   T a{};
+//   function(a, a);
+//   return true;
+// }
+
 // default constructor works only if your custom type is comparable!
 template <typename T>
-class heap {
+requires(is_comparable<T>()) class heap {
  public:
-  heap();
-  heap(std::function<bool(const T&, const T&)> function);
-  heap(std::initializer_list<T> initializer_list);
-  heap(std::initializer_list<T> initializer_list,
-       std::function<bool(const T&, const T&)> function);
+  heap();  // requires(is_comparable<T>());
+  // heap(std::function<bool(const T&, const T&)> function) requires(
+  //     is_comparable<T>(function))
+  explicit heap(std::initializer_list<T>
+                    initializer_list);  // requires(is_comparable<T>());
+  // heap(std::initializer_list<T> initializer_list,
+  //      std::function<bool(const T&, const T&)>
+  //          function) requires(is_comparable<T>(function));
 
   void push(T element);
   T pop_bottom();
@@ -31,34 +56,40 @@ class heap {
 
 // time complexity - O(1)
 template <typename T>
-heap<T>::heap() : data{}, heap_size{0} {
+requires(is_comparable<T>()) heap<T>::heap()  // requires(is_comparable<T>())
+    : data{}, heap_size{0} {
   comparing_function = [](const T& a, const T& b) { return a < b; };
 }
 
 // time complexity - O(1)
-template <typename T>
-heap<T>::heap(std::function<bool(const T&, const T&)> function)
-    : data{}, heap_size{0}, comparing_function{function} {}
+// template <typename T>
+// heap<T>::heap(std::function<bool(const T&, const T&)>
+//                   function)  requires( is_comparable<T>(function))
+//     : data{}, heap_size{0}, comparing_function{function} {}
 
 // time complexity - O(nlogn)
 template <typename T>
-heap<T>::heap(std::initializer_list<T> initializer_list) {
+requires(is_comparable<T>()) heap<T>::heap(
+    std::initializer_list<T> initializer_list)
+    : heap()  // requires( is_comparable<T>())
+{
   comparing_function = [](const T& a, const T& b) { return a < b; };
 
   for (const T& value : initializer_list) push(value);
 }
 
 // time complexity - O(nlogn)
-template <typename T>
-heap<T>::heap(std::initializer_list<T> initializer_list,
-              std::function<bool(const T&, const T&)> function)
-    : comparing_function{function} {
-  for (const T& value : initializer_list) push(value);
-}
+// template <typename T>
+// heap<T>::heap(std::initializer_list<T> initializer_list,
+//               std::function<bool(const T&, const T&)>
+//                   function) requires(is_comparable<T>(function))
+//     : comparing_function{function} {
+//   for (const T& value : initializer_list) push(value);
+// }
 
 // time complexity - O(logn)
 template <typename T>
-void heap<T>::sift_down(size_t index) {
+requires(is_comparable<T>()) void heap<T>::sift_down(size_t index) {
   size_t& index_1 = index;  // for code to be more readable
 
   while (2 * index_1 + 1 < heap_size) {
@@ -80,7 +111,7 @@ void heap<T>::sift_down(size_t index) {
 
 // time complexity - O(logn)
 template <typename T>
-void heap<T>::sift_up(size_t index) {
+requires(is_comparable<T>()) void heap<T>::sift_up(size_t index) {
   while (comparing_function(data[index], data[(index - 1) / 2])) {
     std::swap(data[index], data[(index - 1) / 2]);
     index = (index - 1) / 2;
@@ -89,25 +120,25 @@ void heap<T>::sift_up(size_t index) {
 
 // time complexity - O(1)
 template <typename T>
-T heap<T>::bottom() {
+requires(is_comparable<T>()) T heap<T>::bottom() {
   if (empty()) throw std::runtime_error("heap is empty");
   return data[0];
 }
 
 // time complexity - O(logn)
 template <typename T>
-T heap<T>::pop_bottom() {
-  T bottom = bottom();
+requires(is_comparable<T>()) T heap<T>::pop_bottom() {
+  T bottom_elem = bottom();
   std::swap(data[0], data.back());
   data.pop_back();
   heap_size--;
   sift_down(0);
-  return bottom;
+  return bottom_elem;
 }
 
 // time complexity - O(logn)
 template <typename T>
-void heap<T>::push(T element) {
+requires(is_comparable<T>()) void heap<T>::push(T element) {
   data.push_back(element);
   heap_size++;
   sift_up(heap_size - 1);
