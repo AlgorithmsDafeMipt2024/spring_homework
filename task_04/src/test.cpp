@@ -7,8 +7,6 @@
 
 #include "heap.hpp"
 
-using std::string;
-
 TEST(heap, empty) {
   heap<int> hp1;
   ASSERT_EQ(hp1.empty(), true);
@@ -28,17 +26,6 @@ TEST(heap, comparable_1) {
   ASSERT_EQ(hp2.bottom(), test_array_1);
   ASSERT_EQ(hp2.pop_bottom() == test_array_2, false);
 }
-
-// constexpr bool string_comparasion(const string& str1, const string& str2) {
-//   int sum1{}, sum2{};
-//   for (const char& c : str1) sum1 += c;
-//   for (const char& c : str2) sum2 += c;
-//   return sum1 < sum2;
-// }
-
-// constexpr bool int_comparasion_1(const int& num1, const int& num2) {
-//   return (num1 % 10) < (num2 % 10);
-// }
 
 TEST(heap, without_duplicates) {
   heap<int> hp3{};

@@ -17,28 +17,12 @@ constexpr bool is_comparable() {
   return true;
 }
 
-// try to deduce if type is comparable with a function (naive solution)
-// template <typename T>
-// constexpr bool is_comparable(std::function<bool(const T&, const T&)>
-// function) {
-//   T a{};
-//   function(a, a);
-//   return true;
-// }
-
 // default constructor works only if your custom type is comparable!
 template <typename T>
 requires(is_comparable<T>()) class heap {
  public:
-  heap();  // requires(is_comparable<T>());
-  // heap(std::function<bool(const T&, const T&)> function) requires(
-  //     is_comparable<T>(function))
-  explicit heap(std::initializer_list<T>
-                    initializer_list);  // requires(is_comparable<T>());
-  // heap(std::initializer_list<T> initializer_list,
-  //      std::function<bool(const T&, const T&)>
-  //          function) requires(is_comparable<T>(function));
-
+  heap();
+  explicit heap(std::initializer_list<T> initializer_list);
   void push(T element);
   T pop_bottom();
   T bottom();
@@ -56,16 +40,9 @@ requires(is_comparable<T>()) class heap {
 
 // time complexity - O(1)
 template <typename T>
-requires(is_comparable<T>()) heap<T>::heap()  // requires(is_comparable<T>())
-    : data{}, heap_size{0} {
+requires(is_comparable<T>()) heap<T>::heap() : data{}, heap_size{0} {
   comparing_function = [](const T& a, const T& b) { return a < b; };
 }
-
-// time complexity - O(1)
-// template <typename T>
-// heap<T>::heap(std::function<bool(const T&, const T&)>
-//                   function)  requires( is_comparable<T>(function))
-//     : data{}, heap_size{0}, comparing_function{function} {}
 
 // time complexity - O(nlogn)
 template <typename T>
@@ -77,15 +54,6 @@ requires(is_comparable<T>()) heap<T>::heap(
 
   for (const T& value : initializer_list) push(value);
 }
-
-// time complexity - O(nlogn)
-// template <typename T>
-// heap<T>::heap(std::initializer_list<T> initializer_list,
-//               std::function<bool(const T&, const T&)>
-//                   function) requires(is_comparable<T>(function))
-//     : comparing_function{function} {
-//   for (const T& value : initializer_list) push(value);
-// }
 
 // time complexity - O(logn)
 template <typename T>
