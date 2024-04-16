@@ -3,7 +3,8 @@
 #include <memory>
 
 /// @brief Элемент стека
-template <typename T> struct Element
+template <typename T>
+struct Element
 {
   explicit Element(T data, const std::shared_ptr<Element>& next) : data_(data), next_(next) {}
 
@@ -13,7 +14,8 @@ template <typename T> struct Element
 
 /// @brief Cтек
 /// @tparam Т Тип данных
-template <typename T> class Stack
+template <typename T>
+class Stack
 {
 public:
   explicit Stack() : top_(nullptr), size_{0} {}
@@ -30,7 +32,8 @@ private:
 
 /// @brief Стек с минимумом
 /// @tparam T Тип данных
-template <typename T> class MinStack : public Stack<T>
+template <typename T>
+class MinStack : public Stack<T>
 {
 public:
   explicit MinStack() : Stack<T>(), minimums_stack_() {}

@@ -1,14 +1,17 @@
 #include "stack.hpp"
 
-template <typename T> size_t Stack<T>::Size() const { return size_; }
+template <typename T>
+size_t Stack<T>::Size() const { return size_; }
 
-template <typename T> void Stack<T>::Push(T data)
+template <typename T>
+void Stack<T>::Push(T data)
 {
   top_ = std::make_shared<Element>(data, top_);
   size_++;
 }
 
-template <typename T> T Stack<T>::Pop()
+template <typename T>
+T Stack<T>::Pop()
 {
   if (size_ == 0)
     throw std::runtime_error("Stack is empty");
@@ -18,14 +21,16 @@ template <typename T> T Stack<T>::Pop()
   return removed_value;
 }
 
-template <typename T> T Stack<T>::Top() const
+template <typename T>
+T Stack<T>::Top() const
 {
   if (size_ == 0)
     throw std::runtime_error("Stack is empty");
   return top_->data_;
 }
 
-template <typename T> void MinStack<T>::Push(T data)
+template <typename T>
+void MinStack<T>::Push(T data)
 {
   top_ = std::make_shared<Element>(data, top_);
   size_++;
@@ -35,7 +40,8 @@ template <typename T> void MinStack<T>::Push(T data)
     minimums_stack_.Push(data);
 }
 
-template <typename T> T MinStack<T>::Pop()
+template <typename T>
+T MinStack<T>::Pop()
 {
   if (size_ == 0)
     throw std::runtime_error("Stack is empty");
@@ -46,4 +52,5 @@ template <typename T> T MinStack<T>::Pop()
   return removed_value;
 }
 
-template <typename T> T MinStack<T>::GetMin() const { return minimums_stack_.Top(); }
+template <typename T>
+T MinStack<T>::GetMin() const { return minimums_stack_.Top(); }
