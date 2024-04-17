@@ -6,21 +6,20 @@
 #include <stdexcept>
 #include <vector>
 
-// try to deduce if type is comparable (naive solution)
-template <typename T>
-constexpr bool is_comparable() {
-  T a{};
-  try {
-    bool attempt_to_compate = a < a;
-  } catch (...) {
-    return false;
-  }
-  return true;
-}
+// concept to check if the type is comparable (now obsolete)
+template <typename CustomType>
+concept comparable = requires(CustomType a, CustomType b) {
+  a < b;
+  a <= b;
+  a == b;
+  a >= b;
+  a > b;
+  a != b;
+};
 
 // default constructor works only if your custom type is comparable!
-template <typename T>
-requires(is_comparable<T>()) class heap {
+template <comparable T>
+class heap {
  public:
   heap();
   explicit heap(std::initializer_list<T> initializer_list);
@@ -40,15 +39,14 @@ requires(is_comparable<T>()) class heap {
 };
 
 // time complexity - O(1)
-template <typename T>
-requires(is_comparable<T>()) heap<T>::heap() : data{}, heap_size{0} {
+template <comparable T>
+heap<T>::heap() : data{}, heap_size{0} {
   comparing_function = [](const T& a, const T& b) { return a < b; };
 }
 
 // time complexity - O(nlogn)
-template <typename T>
-requires(is_comparable<T>()) heap<T>::heap(
-    std::initializer_list<T> initializer_list)
+template <comparable T>
+heap<T>::heap(std::initializer_list<T> initializer_list)
     : heap()  // requires( is_comparable<T>())
 {
   comparing_function = [](const T& a, const T& b) { return a < b; };
@@ -57,8 +55,8 @@ requires(is_comparable<T>()) heap<T>::heap(
 }
 
 // time complexity - O(logn)
-template <typename T>
-requires(is_comparable<T>()) void heap<T>::sift_down(size_t index) {
+template <comparable T>
+void heap<T>::sift_down(size_t index) {
   size_t& index_1 = index;  // for code to be more readable
 
   while (2 * index_1 + 1 < heap_size) {
@@ -79,8 +77,8 @@ requires(is_comparable<T>()) void heap<T>::sift_down(size_t index) {
 }
 
 // time complexity - O(logn)
-template <typename T>
-requires(is_comparable<T>()) void heap<T>::sift_up(size_t index) {
+template <comparable T>
+void heap<T>::sift_up(size_t index) {
   while (comparing_function(data[index], data[(index - 1) / 2])) {
     std::swap(data[index], data[(index - 1) / 2]);
     index = (index - 1) / 2;
@@ -88,15 +86,15 @@ requires(is_comparable<T>()) void heap<T>::sift_up(size_t index) {
 }
 
 // time complexity - O(1)
-template <typename T>
-requires(is_comparable<T>()) T heap<T>::bottom() {
+template <comparable T>
+T heap<T>::bottom() {
   if (empty()) throw std::runtime_error("heap is empty");
   return data[0];
 }
 
 // time complexity - O(logn)
-template <typename T>
-requires(is_comparable<T>()) T heap<T>::pop_bottom() {
+template <comparable T>
+T heap<T>::pop_bottom() {
   T bottom_elem = bottom();
   std::swap(data[0], data.back());
   data.pop_back();
@@ -106,8 +104,8 @@ requires(is_comparable<T>()) T heap<T>::pop_bottom() {
 }
 
 // time complexity - O(logn)
-template <typename T>
-requires(is_comparable<T>()) void heap<T>::push(T element) {
+template <comparable T>
+void heap<T>::push(T element) {
   data.push_back(element);
   heap_size++;
   sift_up(heap_size - 1);
