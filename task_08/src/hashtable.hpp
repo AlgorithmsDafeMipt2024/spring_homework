@@ -1,12 +1,18 @@
 #pragma once
 
 #include <cmath>
+#include <concepts>
 #include <initializer_list>
 #include <stdexcept>
 
 #include "linkedlist.hpp"
 
-template <typename K, typename T>
+template <typename K>
+concept hashable = requires(K a) {
+  { std::hash<K>{}(a) } -> std::convertible_to<std::size_t>;
+};
+
+template <hashable K, typename T>
 class HashTable {
  public:
   HashTable()
@@ -51,7 +57,7 @@ class HashTable {
   constexpr static size_t base_length = 8;
 };
 
-template <typename K, typename T>
+template <hashable K, typename T>
 HashTable<K, T>::HashTable(
     std::initializer_list<std::pair<K, T>> initializer_list) {
   double relative_length = initializer_list.size() / (double)base_length;
@@ -91,12 +97,12 @@ HashTable<K, T>::HashTable(
   fillness_ratio = number_of_elements / (double)array_length;
 }
 
-template <typename K, typename T>
+template <hashable K, typename T>
 void HashTable<K, T>::set_default(T default_value_) {
   default_value = default_value_;
 }
 
-template <typename K, typename T>
+template <hashable K, typename T>
 T& HashTable<K, T>::operator[](K key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[(hasher(key)) % array_length];
@@ -132,7 +138,7 @@ T& HashTable<K, T>::operator[](K key) {
   }
 }
 
-template <typename K, typename T>
+template <hashable K, typename T>
 T& HashTable<K, T>::pop(K key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[(hasher(key)) % array_length];
@@ -148,7 +154,7 @@ T& HashTable<K, T>::pop(K key) {
   throw std::runtime_error("deleting a key that doesn't exist");
 }
 
-template <typename K, typename T>
+template <hashable K, typename T>
 bool HashTable<K, T>::has_key(K key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[hasher(key) % array_length];
@@ -157,7 +163,7 @@ bool HashTable<K, T>::has_key(K key) {
   return false;
 }
 
-template <typename K, typename T>
+template <hashable K, typename T>
 void HashTable<K, T>::print() {
   for (size_t i = 0; i < hash_vector.size(); i++) {
     for (size_t j = 0; j < hash_vector[i].size(); j++) {
@@ -167,7 +173,7 @@ void HashTable<K, T>::print() {
   }
 }
 
-template <typename K, typename T>
+template <hashable K, typename T>
 std::vector<std::pair<K, T>> HashTable<K, T>::items() {
   std::vector<std::pair<K, T>> vector;
 
@@ -178,7 +184,7 @@ std::vector<std::pair<K, T>> HashTable<K, T>::items() {
   return vector;
 }
 
-template <typename K, typename T>
+template <hashable K, typename T>
 std::vector<K> HashTable<K, T>::keys() {
   std::vector<K> vector;
 
@@ -189,7 +195,7 @@ std::vector<K> HashTable<K, T>::keys() {
   return vector;
 }
 
-template <typename K, typename T>
+template <hashable K, typename T>
 std::vector<T> HashTable<K, T>::values() {
   std::vector<T> vector;
 
@@ -200,7 +206,7 @@ std::vector<T> HashTable<K, T>::values() {
   return vector;
 }
 
-template <typename K, typename T>
+template <hashable K, typename T>
 void HashTable<K, T>::clear() {
   hash_vector.clear();
   hash_vector.resize(base_length);
@@ -210,7 +216,7 @@ void HashTable<K, T>::clear() {
   fillness_ratio = 0;
 }
 
-template <typename K, typename T>
+template <hashable K, typename T>
 void HashTable<K, T>::rehash(rehash_type type) {
   std::vector<std::pair<K, T>> vector = items();
 
