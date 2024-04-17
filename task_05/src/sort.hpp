@@ -23,11 +23,11 @@ concept comparing = requires(CustomType a, CustomType b, Function f) {
   f(a, b);
 };
 
-template <typename CustomType, comparing<CustomType> Function =
-                                   std::function<bool(CustomType, CustomType)>>
+template <typename CustomType, comparing<CustomType> Function = std::function<
+                                   bool(const CustomType&, const CustomType&)>>
 void merge_two_sorted_arrays(
     CustomType* begin, CustomType* middle, CustomType* end,
-    Function comparing_function = [](CustomType a, CustomType b) {
+    Function comparing_function = [](const CustomType& a, const CustomType& b) {
       return a < b;
     }) {
   size_t size = end - begin;
@@ -58,8 +58,8 @@ void merge_two_sorted_arrays(
   }
 }
 
-template <typename CustomType, comparing<CustomType> Function =
-                                   std::function<bool(CustomType, CustomType)>>
+template <typename CustomType, comparing<CustomType> Function = std::function<
+                                   bool(const CustomType&, const CustomType&)>>
 void merge_sort(
     CustomType* begin, CustomType* end,
     Function comparing_function = [](CustomType a, CustomType b) {
