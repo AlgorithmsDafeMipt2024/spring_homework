@@ -64,12 +64,6 @@ TEST(sort, multiple_elem_2) {
   ASSERT_EQ(vector6, assert_vector6);
 }
 
-// Test below fails to check at compile time bc of use of concepts
-//
-//                              |
-//                              |
-//                              V
-
 TEST(sort, strings) {
   std::vector<string> vector7 = {"bb", "ba", "ab", "aa"};
   std::vector<string> assert_vector7 = vector7;
@@ -77,14 +71,7 @@ TEST(sort, strings) {
   string* begin = &vector7[0];
   string* end = &vector7[vector7.size()];
 
-  // for (int i = 0; i < vector7.size(); i++) std::cout << vector7[i] << ' ';
-  // std::cout << '\n';
-
   merge_sort(begin, end);
-
-  for (int i = 0; i < assert_vector7.size(); i++)
-    std::cout << assert_vector7[i] << ' ';
-  std::cout << '\n';
 
   ASSERT_EQ(vector7 == assert_vector7, true);
 }
