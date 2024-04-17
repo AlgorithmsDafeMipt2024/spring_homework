@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -9,7 +10,8 @@ using std::string;
 
 TEST(sort, empty) {
   std::vector<int> vector1 = {};
-  std::vector<int> assert_vector1 = {};
+  std::vector<int> assert_vector1 = vector1;
+  std::sort(assert_vector1.begin(), assert_vector1.end());
   int* begin = &vector1[0];
   int* end = &vector1[vector1.size()];
   merge_sort(begin, end);
@@ -17,7 +19,8 @@ TEST(sort, empty) {
 }
 TEST(sort, one_elem) {
   std::vector<int> vector2 = {1};
-  std::vector<int> assert_vector2 = {1};
+  std::vector<int> assert_vector2 = vector2;
+  std::sort(assert_vector2.begin(), assert_vector2.end());
   int* begin = &vector2[0];
   int* end = &vector2[vector2.size()];
   merge_sort(begin, end);
@@ -26,7 +29,8 @@ TEST(sort, one_elem) {
 
 TEST(sort, two_elem) {
   std::vector<int> vector3 = {1, 2};
-  std::vector<int> assert_vector3 = {1, 2};
+  std::vector<int> assert_vector3 = vector3;
+  std::sort(assert_vector3.begin(), assert_vector3.end());
   int* begin = &vector3[0];
   int* end = &vector3[vector3.size()];
   merge_sort(begin, end);
@@ -40,13 +44,24 @@ TEST(sort, two_elem) {
   ASSERT_EQ(vector4, assert_vector4);
 }
 
-TEST(sort, multiple_elem) {
+TEST(sort, multiple_elem_1) {
   std::vector<int> vector5 = {1, 3, 2, 5, 4};
-  std::vector<int> assert_vector5 = {1, 2, 3, 4, 5};
+  std::vector<int> assert_vector5 = vector5;
+  std::sort(assert_vector5.begin(), assert_vector5.end());
   int* begin = &vector5[0];
   int* end = &vector5[vector5.size()];
   merge_sort(begin, end);
   ASSERT_EQ(vector5, assert_vector5);
+}
+
+TEST(sort, multiple_elem_2) {
+  std::vector<int> vector6 = {4, 3, 2, 1};
+  std::vector<int> assert_vector6 = vector6;
+  std::sort(assert_vector6.begin(), assert_vector6.end());
+  int* begin = &vector6[0];
+  int* end = &vector6[vector6.size()];
+  merge_sort(begin, end);
+  ASSERT_EQ(vector6, assert_vector6);
 }
 
 // Test below fails to check at compile time bc of use of concepts
@@ -55,13 +70,21 @@ TEST(sort, multiple_elem) {
 //                              |
 //                              V
 
-/*
 TEST(sort, strings) {
-  std::vector<string> vector6 = {"bb", "ba", "ab", "aa"};
-  std::vector<string> assert_vector6 = {"aa", "ab", "ba", "bb"};
-  string* begin = &vector6[0];
-  string* end = &vector6[vector6.size()];
+  std::vector<string> vector7 = {"bb", "ba", "ab", "aa"};
+  std::vector<string> assert_vector7 = vector7;
+  std::sort(assert_vector7.begin(), assert_vector7.end());
+  string* begin = &vector7[0];
+  string* end = &vector7[vector7.size()];
+
+  // for (int i = 0; i < vector7.size(); i++) std::cout << vector7[i] << ' ';
+  // std::cout << '\n';
+
   merge_sort(begin, end);
-  ASSERT_EQ(vector6, assert_vector6);
+
+  for (int i = 0; i < assert_vector7.size(); i++)
+    std::cout << assert_vector7[i] << ' ';
+  std::cout << '\n';
+
+  ASSERT_EQ(vector7 == assert_vector7, true);
 }
-*/
