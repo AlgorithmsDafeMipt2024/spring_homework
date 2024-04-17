@@ -30,8 +30,6 @@ void merge_two_sorted_arrays(
     Function comparing_function = [](CustomType a, CustomType b) {
       return a < b;
     }) {
-  if (begin == end) throw std::runtime_error("merge two empty arrays\n");
-
   size_t size = end - begin;
   CustomType array[size];
   size_t index = 0;
