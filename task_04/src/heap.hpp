@@ -17,15 +17,28 @@ concept comparable = requires(CustomType a, CustomType b) {
   a != b;
 };
 
+// concept to check if the type is comparable with a concrete function
+template <typename Function, typename CustomType>
+concept comparing = requires(CustomType a, CustomType b, Function f) {
+  f(a, b);
+};
+
 // default constructor works only if your custom type is comparable!
-template <comparable T>
+template <typename CustomType,
+          comparing<CustomType> Function =
+              std::function<bool(const CustomType&, const CustomType&)>>
 class heap {
  public:
   heap();
-  explicit heap(std::initializer_list<T> initializer_list);
-  void push(T element);
-  T pop_bottom();
-  T bottom();
+  heap(std::function<bool(const CustomType&, const CustomType&)>
+           comparing_function_);
+  explicit heap(std::initializer_list<CustomType> initializer_list);
+  explicit heap(std::function<bool(const CustomType&, const CustomType&)>
+                    comparing_function_,
+                std::initializer_list<CustomType> initializer_list);
+  void push(CustomType element);
+  CustomType pop_bottom();
+  CustomType bottom();
   size_t size() { return heap_size; }
   bool empty() { return heap_size == 0; }
 
@@ -34,29 +47,52 @@ class heap {
   void sift_up(size_t index);
   size_t heap_size;
 
-  std::function<bool(const T&, const T&)> comparing_function;
-  std::vector<T> data;
+  std::function<bool(const CustomType&, const CustomType&)> comparing_function;
+  std::vector<CustomType> data;
 };
 
 // time complexity - O(1)
-template <comparable T>
-heap<T>::heap() : data{}, heap_size{0} {
-  comparing_function = [](const T& a, const T& b) { return a < b; };
+template <typename CustomType, comparing<CustomType> Function>
+heap<CustomType, Function>::heap() : data{}, heap_size{0} {
+  comparing_function = [](const CustomType& a, const CustomType& b) {
+    return a < b;
+  };
+}
+
+// time complexity - O(1)
+template <typename CustomType, comparing<CustomType> Function>
+heap<CustomType, Function>::heap(
+    std::function<bool(const CustomType&, const CustomType&)>
+        comparing_function_)
+    : data{}, heap_size{0} {
+  comparing_function = comparing_function_;
 }
 
 // time complexity - O(nlogn)
-template <comparable T>
-heap<T>::heap(std::initializer_list<T> initializer_list)
-    : heap()  // requires( is_comparable<T>())
-{
-  comparing_function = [](const T& a, const T& b) { return a < b; };
+template <typename CustomType, comparing<CustomType> Function>
+heap<CustomType, Function>::heap(
+    std::initializer_list<CustomType> initializer_list)
+    : heap() {
+  comparing_function = [](const CustomType& a, const CustomType& b) {
+    return a < b;
+  };
 
-  for (const T& value : initializer_list) push(value);
+  for (const CustomType& value : initializer_list) push(value);
+}
+
+// time complexity - O(nlogn)
+template <typename CustomType, comparing<CustomType> Function>
+heap<CustomType, Function>::heap(
+    std::function<bool(const CustomType&, const CustomType&)>
+        comparing_function_,
+    std::initializer_list<CustomType> initializer_list)
+    : comparing_function{comparing_function_} {
+  for (const CustomType& value : initializer_list) push(value);
 }
 
 // time complexity - O(logn)
-template <comparable T>
-void heap<T>::sift_down(size_t index) {
+template <typename CustomType, comparing<CustomType> Function>
+void heap<CustomType, Function>::sift_down(size_t index) {
   size_t& index_1 = index;  // for code to be more readable
 
   while (2 * index_1 + 1 < heap_size) {
@@ -77,8 +113,8 @@ void heap<T>::sift_down(size_t index) {
 }
 
 // time complexity - O(logn)
-template <comparable T>
-void heap<T>::sift_up(size_t index) {
+template <typename CustomType, comparing<CustomType> Function>
+void heap<CustomType, Function>::sift_up(size_t index) {
   while (comparing_function(data[index], data[(index - 1) / 2])) {
     std::swap(data[index], data[(index - 1) / 2]);
     index = (index - 1) / 2;
@@ -86,16 +122,16 @@ void heap<T>::sift_up(size_t index) {
 }
 
 // time complexity - O(1)
-template <comparable T>
-T heap<T>::bottom() {
+template <typename CustomType, comparing<CustomType> Function>
+CustomType heap<CustomType, Function>::bottom() {
   if (empty()) throw std::runtime_error("heap is empty");
   return data[0];
 }
 
 // time complexity - O(logn)
-template <comparable T>
-T heap<T>::pop_bottom() {
-  T bottom_elem = bottom();
+template <typename CustomType, comparing<CustomType> Function>
+CustomType heap<CustomType, Function>::pop_bottom() {
+  CustomType bottom_elem = bottom();
   std::swap(data[0], data.back());
   data.pop_back();
   heap_size--;
@@ -104,9 +140,9 @@ T heap<T>::pop_bottom() {
 }
 
 // time complexity - O(logn)
-template <comparable T>
-void heap<T>::push(T element) {
+template <typename CustomType, comparing<CustomType> Function>
+void heap<CustomType, Function>::push(CustomType element) {
   data.push_back(element);
   heap_size++;
-  sift_up(heap_size - 1);
+  if (heap_size >= 2) sift_up(heap_size - 1);
 }

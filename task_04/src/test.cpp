@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <string>
 
+using std::string;
+
 #include "heap.hpp"
 
 TEST(heap, empty) {
@@ -55,4 +57,12 @@ TEST(heap, init_list_constructor) {
   ASSERT_EQ(hp5.pop_bottom(), 1);
   ASSERT_EQ(hp5.pop_bottom(), 2);
   ASSERT_EQ(hp5.pop_bottom(), 3);
+}
+
+TEST(string_heap, simple_test) {
+  heap<string> hp6{"azz", "bzz", "zaa", "zab"};
+  ASSERT_EQ(hp6.pop_bottom(), "azz");
+  ASSERT_EQ(hp6.pop_bottom(), "bzz");
+  ASSERT_EQ(hp6.pop_bottom(), "zaa");
+  ASSERT_EQ(hp6.pop_bottom(), "zab");
 }
