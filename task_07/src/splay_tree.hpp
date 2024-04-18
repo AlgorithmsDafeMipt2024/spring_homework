@@ -59,18 +59,19 @@ class SplayTree {
 template <constructable CustomType, comparable Key>
 TreeNode<std::pair<Key, CustomType>>* SplayTree<CustomType, Key>::find(
     Key key) {
+  if (tree_root == nullptr) return nullptr;
   TreeNode<std::pair<Key, CustomType>>* current_node = tree_root;
   for (;;) {
-    if (key == current_node->value)
+    if (key == current_node->value.first)
       return current_node;
-    else if (key > current_node->value) {
-      if (current_node->right == nullptr) return current_node;
-      current_node = current_node->right;
+    else if (key > current_node->value.first) {
+      if (current_node->right_child == nullptr) return current_node;
+      current_node = current_node->right_child;
     }
     // else if for more explicit code
-    else if (key < current_node->value) {
-      if (current_node->left == nullptr) return current_node;
-      current_node = current_node->left;
+    else if (key < current_node->value.first) {
+      if (current_node->left_child == nullptr) return current_node;
+      current_node = current_node->left_child;
     }
   }
 }
@@ -79,7 +80,8 @@ template <constructable CustomType, comparable Key>
 Key SplayTree<CustomType, Key>::rightest_key() {
   if (tree_root == nullptr) throw std::runtime_error("empty tree\n");
   TreeNode<std::pair<Key, CustomType>>* current_node = tree_root;
-  while (current_node->right != nullptr) current_node = current_node->right;
+  while (current_node->right_child != nullptr)
+    current_node = current_node->right_child;
   return current_node->value.first;
 }
 
@@ -91,20 +93,20 @@ void SplayTree<CustomType, Key>::zig(
       parent_node->parent;
 
   if (direction == Direction::right) {
-    TreeNode<std::pair<Key, CustomType>>* x_right_node = x_node->right;
+    TreeNode<std::pair<Key, CustomType>>* x_right_node = x_node->right_child;
 
-    parent_node->left = x_right_node;
-    x_right_node->parent = parent_node;
-    x_node->right = parent_node;
+    parent_node->left_child = x_right_node;
+    if (x_right_node != nullptr) x_right_node->parent = parent_node;
+    x_node->right_child = parent_node;
     parent_node->parent = x_node;
   }
   // else if for more explicit code
   else if (direction == Direction::left) {
-    TreeNode<std::pair<Key, CustomType>>* x_left_node = x_node->left;
+    TreeNode<std::pair<Key, CustomType>>* x_left_node = x_node->left_child;
 
-    parent_node->right = x_left_node;
-    x_left_node->parent = parent_node;
-    x_node->left = parent_node;
+    parent_node->right_child = x_left_node;
+    if (x_left_node != nullptr) x_left_node->parent = parent_node;
+    x_node->left_child = parent_node;
     parent_node->parent = x_node;
   }
 
@@ -150,35 +152,35 @@ ParentsType SplayTree<CustomType, Key>::parents_check(
   else if (x_node->parent == nullptr)
     return ParentsType::no_parents;
   else if (x_node->parent != nullptr) {
-    TreeNode<std::pair<Key, CustomType>> parent_node = x_node->parent;
+    TreeNode<std::pair<Key, CustomType>>* parent_node = x_node->parent;
     if (parent_node->parent == nullptr) {
-      if (parent_node->left == parent_node->right)
+      if (parent_node->left_child == parent_node->right_child)
         throw std::runtime_error(
             "left and right children are the same node!?\n");
-      else if (parent_node->left == x_node)
+      else if (parent_node->left_child == x_node)
         return ParentsType::right;
       // else if for more explicit code
-      else if (parent_node->right == x_node)
+      else if (parent_node->right_child == x_node)
         return ParentsType::left;
     } else {
-      TreeNode<std::pair<Key, CustomType>> parent_parent_node =
+      TreeNode<std::pair<Key, CustomType>>* parent_parent_node =
           parent_node->parent;
-      if (parent_parent_node->left == parent_parent_node->right)
+      if (parent_parent_node->left_child == parent_parent_node->right_child)
         throw std::runtime_error(
             "left and right children are the same node!?\n");
-      if (parent_node->left == x_node) {
-        if (parent_parent_node->left == parent_node)
+      if (parent_node->left_child == x_node) {
+        if (parent_parent_node->left_child == parent_node)
           return ParentsType::right_right;
         // else if for more explicit code
-        else if (parent_parent_node->right == parent_node)
+        else if (parent_parent_node->right_child == parent_node)
           return ParentsType::right_left;
       }
       // else if for more explicit code
-      else if (parent_node->right == x_node) {
-        if (parent_parent_node->left == parent_node)
+      else if (parent_node->right_child == x_node) {
+        if (parent_parent_node->left_child == parent_node)
           return ParentsType::left_right;
         // else if for more explicit code
-        else if (parent_parent_node->right == parent_node)
+        else if (parent_parent_node->right_child == parent_node)
           return ParentsType::left_left;
       }
     }
@@ -193,16 +195,22 @@ void SplayTree<CustomType, Key>::splay(Key key) {
     ParentsType parents_type = parents_check(x_node);
     switch (parents_type) {
       case ParentsType::left:
+        zig(x_node, Direction::left);
+        break;
       case ParentsType::right:
-        zig(x_node);
+        zig(x_node, Direction::right);
         break;
       case ParentsType::left_left:
+        zig_zig(x_node, Direction::left);
+        break;
       case ParentsType::right_right:
-        zig_zig(x_node);
+        zig_zig(x_node, Direction::right);
         break;
       case ParentsType::left_right:
+        zig_zag(x_node, Direction::left);
+        break;
       case ParentsType::right_left:
-        zig_zag(x_node);
+        zig_zag(x_node, Direction::right);
         break;
       default:
         break;
@@ -227,14 +235,14 @@ SplayTree<CustomType, Key> SplayTree<CustomType, Key>::split(Key key) {
   splay(key);
   if (tree_root == nullptr) return SplayTree{nullptr};
   SplayTree right_tree;
-  if (tree_root->value >= key) {
+  if (tree_root->value.first >= key) {
     SplayTree right_tree{tree_root};
-    tree_root = tree_root->left;
+    tree_root = tree_root->left_child;
     if (tree_root != nullptr) tree_root->parent = nullptr;
     right_tree.tree_root->left_child = nullptr;
   } else {
-    SplayTree right_tree{tree_root->right};
-    tree_root->right = nullptr;
+    SplayTree right_tree{tree_root->right_child};
+    tree_root->right_child = nullptr;
     if (right_tree.tree_root != nullptr) right_tree.tree_root->parent = nullptr;
   }
   return right_tree;
@@ -243,13 +251,19 @@ SplayTree<CustomType, Key> SplayTree<CustomType, Key>::split(Key key) {
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::add(Key key, CustomType value) {
   if (tree_root == nullptr) {
-    tree_root->value = {key, value};
+    tree_root = new TreeNode<std::pair<Key, CustomType>>{{key, value}};
     return;
   }
   SplayTree right_tree = split(key);
-  TreeNode<std::pair<Key, CustomType>>* new_root{tree_root, value,
-                                                 right_tree.tree_root};
-  tree_root = new_root;
+  std::pair<Key, CustomType> init_value = {key, value};
+  TreeNode<std::pair<Key, CustomType>>* new_root =
+      new TreeNode<std::pair<Key, CustomType>>{tree_root, init_value,
+                                               right_tree.tree_root};
+  //   new_root->left_child = tree_root;
+  //   tree_root->parent = new_root;
+  //   new_root->right_child = right_tree.tree_root;
+  //   right_tree.tree_root->parent = new_root;
+  //   tree_root = new_root;
 }
 
 template <constructable CustomType, comparable Key>
@@ -273,7 +287,8 @@ template <constructable CustomType, comparable Key>
 CustomType& SplayTree<CustomType, Key>::operator[](Key key) {
   TreeNode<std::pair<Key, CustomType>>* x_node = find(key);
 
-  if (x_node->value.first != key) add(key, CustomType{});
+  if ((x_node == nullptr) || (x_node->value.first != key))
+    add(key, CustomType{});
   TreeNode<std::pair<Key, CustomType>>* value_node = find(key);
 
   return value_node->value.second;
