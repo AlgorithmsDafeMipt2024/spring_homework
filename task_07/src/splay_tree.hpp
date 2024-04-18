@@ -1,5 +1,6 @@
 #pragma once
 #include <cstddef>
+#include <iostream>
 #include <stdexcept>
 
 #include "tree_node.hpp"
@@ -24,6 +25,11 @@ concept comparable = requires(Key a, Key b) {
   a != b;
 };
 
+template <typename CustomType>
+concept printable = requires(CustomType a) {
+  std::cout << a;
+};
+
 template <constructable CustomType, comparable Key = int>
 class SplayTree {
  public:
@@ -36,6 +42,8 @@ class SplayTree {
   SplayTree split(Key key);
   void add(Key key, CustomType value);
   void remove(Key key);
+
+  friend void in_order_depth_first_search(SplayTree<CustomType>& splaytree);
 
   Key rightest_key();
 
@@ -259,11 +267,7 @@ void SplayTree<CustomType, Key>::add(Key key, CustomType value) {
   TreeNode<std::pair<Key, CustomType>>* new_root =
       new TreeNode<std::pair<Key, CustomType>>{tree_root, init_value,
                                                right_tree.tree_root};
-  //   new_root->left_child = tree_root;
-  //   tree_root->parent = new_root;
-  //   new_root->right_child = right_tree.tree_root;
-  //   right_tree.tree_root->parent = new_root;
-  //   tree_root = new_root;
+  tree_root = new_root;
 }
 
 template <constructable CustomType, comparable Key>
@@ -292,4 +296,14 @@ CustomType& SplayTree<CustomType, Key>::operator[](Key key) {
   TreeNode<std::pair<Key, CustomType>>* value_node = find(key);
 
   return value_node->value.second;
+}
+
+template <printable CustomType, comparable Key>
+void in_order_depth_first_search(
+    SplayTree<CustomType, Key>& splaytree,
+    TreeNode<std::pair<Key, CustomType>>* current_node) {
+  if (current_node == nullptr) return;
+  in_order_depth_first_search(splaytree, current_node->left_child);
+  std::cout << current_node->value.second << ' ';
+  in_order_depth_first_search(splaytree, current_node->right_child);
 }
