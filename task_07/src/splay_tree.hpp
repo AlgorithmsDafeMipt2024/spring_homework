@@ -2,11 +2,12 @@
 #include <cstddef>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 #include "tree_node.hpp"
 
 enum class ParentsType : char {
-  no_parents,
+  orphan,
   left,
   right,
   left_left,
@@ -42,8 +43,10 @@ class SplayTree {
   SplayTree split(Key key);
   void add(Key key, CustomType value);
   void remove(Key key);
+  TreeNode<std::pair<Key, CustomType>>* root() { return tree_root; }
 
-  friend void in_order_depth_first_search(SplayTree<CustomType>& splaytree);
+  friend void in_order_depth_first_search(SplayTree<CustomType, Key>& splaytree,
+                                          std::vector<CustomType>& data_vector);
 
   Key rightest_key();
 
@@ -56,8 +59,10 @@ class SplayTree {
   void splay(Key key);
 
   void zig(TreeNode<std::pair<Key, CustomType>>* x_node, Direction direction);
+
   void zig_zig(TreeNode<std::pair<Key, CustomType>>* x_node,
                Direction direction);
+
   void zig_zag(TreeNode<std::pair<Key, CustomType>>* x_node,
                Direction direction);
 
@@ -68,17 +73,20 @@ template <constructable CustomType, comparable Key>
 TreeNode<std::pair<Key, CustomType>>* SplayTree<CustomType, Key>::find(
     Key key) {
   if (tree_root == nullptr) return nullptr;
+
   TreeNode<std::pair<Key, CustomType>>* current_node = tree_root;
   for (;;) {
     if (key == current_node->value.first)
       return current_node;
     else if (key > current_node->value.first) {
       if (current_node->right_child == nullptr) return current_node;
+
       current_node = current_node->right_child;
     }
     // else if for more explicit code
     else if (key < current_node->value.first) {
       if (current_node->left_child == nullptr) return current_node;
+
       current_node = current_node->left_child;
     }
   }
@@ -88,8 +96,10 @@ template <constructable CustomType, comparable Key>
 Key SplayTree<CustomType, Key>::rightest_key() {
   if (tree_root == nullptr) throw std::runtime_error("empty tree\n");
   TreeNode<std::pair<Key, CustomType>>* current_node = tree_root;
+
   while (current_node->right_child != nullptr)
     current_node = current_node->right_child;
+
   return current_node->value.first;
 }
 
@@ -158,7 +168,7 @@ ParentsType SplayTree<CustomType, Key>::parents_check(
   if (x_node == nullptr)
     throw std::runtime_error("x_node is a nullptr\n");
   else if (x_node->parent == nullptr)
-    return ParentsType::no_parents;
+    return ParentsType::orphan;
   else if (x_node->parent != nullptr) {
     TreeNode<std::pair<Key, CustomType>>* parent_node = x_node->parent;
     if (parent_node->parent == nullptr) {
@@ -198,9 +208,12 @@ ParentsType SplayTree<CustomType, Key>::parents_check(
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::splay(Key key) {
   if (tree_root == nullptr) return;
+
   TreeNode<std::pair<Key, CustomType>>* x_node = find(key);
+
   while (!x_node->is_root()) {
     ParentsType parents_type = parents_check(x_node);
+
     switch (parents_type) {
       case ParentsType::left:
         zig(x_node, Direction::left);
@@ -243,14 +256,18 @@ SplayTree<CustomType, Key> SplayTree<CustomType, Key>::split(Key key) {
   splay(key);
   if (tree_root == nullptr) return SplayTree{nullptr};
   SplayTree right_tree;
+
   if (tree_root->value.first >= key) {
     SplayTree right_tree{tree_root};
     tree_root = tree_root->left_child;
+
     if (tree_root != nullptr) tree_root->parent = nullptr;
+
     right_tree.tree_root->left_child = nullptr;
   } else {
     SplayTree right_tree{tree_root->right_child};
     tree_root->right_child = nullptr;
+
     if (right_tree.tree_root != nullptr) right_tree.tree_root->parent = nullptr;
   }
   return right_tree;
@@ -262,11 +279,14 @@ void SplayTree<CustomType, Key>::add(Key key, CustomType value) {
     tree_root = new TreeNode<std::pair<Key, CustomType>>{{key, value}};
     return;
   }
+
   SplayTree right_tree = split(key);
   std::pair<Key, CustomType> init_value = {key, value};
+
   TreeNode<std::pair<Key, CustomType>>* new_root =
       new TreeNode<std::pair<Key, CustomType>>{tree_root, init_value,
                                                right_tree.tree_root};
+
   tree_root = new_root;
 }
 
@@ -275,6 +295,7 @@ void SplayTree<CustomType, Key>::remove(Key key) {
   TreeNode<std::pair<Key, CustomType>>* x_node = find(key);
   if (x_node->value.first != key)
     throw std::runtime_error("removing a non-existing element\n");
+
   splay(key);
   tree_root = x_node->left;
   tree_root->parent = nullptr;
@@ -298,12 +319,22 @@ CustomType& SplayTree<CustomType, Key>::operator[](Key key) {
   return value_node->value.second;
 }
 
-template <printable CustomType, comparable Key>
-void in_order_depth_first_search(
-    SplayTree<CustomType, Key>& splaytree,
-    TreeNode<std::pair<Key, CustomType>>* current_node) {
+template <constructable CustomType, comparable Key>
+void in_order_DFS(TreeNode<std::pair<Key, CustomType>>* current_node,
+                  std::vector<CustomType>& data_vector) {
   if (current_node == nullptr) return;
-  in_order_depth_first_search(splaytree, current_node->left_child);
-  std::cout << current_node->value.second << ' ';
-  in_order_depth_first_search(splaytree, current_node->right_child);
+  if (current_node->parent == nullptr && !data_vector.empty())
+    throw std::runtime_error("data_vector is not empty\n");
+
+  in_order_DFS(current_node->left_child, data_vector);
+  data_vector.push_back(current_node->value.second);
+  in_order_DFS(current_node->right_child, data_vector);
+}
+
+template <constructable CustomType, comparable Key>
+void in_order_depth_first_search(SplayTree<CustomType, Key>& splaytree,
+                                 std::vector<CustomType>& data_vector) {
+  if (!data_vector.empty())
+    throw std::runtime_error("data_vector is not empty\n");
+  in_order_DFS(splaytree.tree_root, data_vector);
 }
