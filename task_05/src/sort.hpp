@@ -23,6 +23,8 @@ concept comparing = requires(CustomType a, CustomType b, Function f) {
   f(a, b);
 };
 
+// function, that merges two sorted arrays, time complexity is O(n+m),
+// where n - length of first array, m - length of second array
 template <typename CustomType, comparing<CustomType> Function = std::function<
                                    bool(const CustomType&, const CustomType&)>>
 void merge_two_sorted_arrays(
@@ -31,6 +33,7 @@ void merge_two_sorted_arrays(
       return a < b;
     }) {
   size_t size = end - begin;
+  // array where sorted data is stored temporary
   CustomType array[size];
   size_t index = 0;
 
@@ -58,6 +61,7 @@ void merge_two_sorted_arrays(
   }
 }
 
+// time complexity - O(nlogn) where n - length of an array
 template <typename CustomType, comparing<CustomType> Function = std::function<
                                    bool(const CustomType&, const CustomType&)>>
 void merge_sort(
