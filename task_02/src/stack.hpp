@@ -5,8 +5,9 @@
 #include <stdexcept>
 #include <vector>
 
-template <typename T>
-concept comparable = requires(T a, T b) {
+// check if type comparasion operators are defined for a class
+template <typename CutsomType>
+concept comparable = requires(CutsomType a, CutsomType b) {
   a < b;
   a <= b;
   a == b;
@@ -15,38 +16,47 @@ concept comparable = requires(T a, T b) {
   a != b;
 };
 
-template <comparable T>
+// simple structure, helps to form a linked list
+template <typename CutsomType>
 struct Node {
   Node() : prev{nullptr}, data{}, next{nullptr} {}
-  Node(T data_) : prev{nullptr}, data{data_}, next{nullptr} {}
-  void add_node(T data_);
+  Node(CutsomType data_) : prev{nullptr}, data{data_}, next{nullptr} {}
+  void add_node(CutsomType data_);
   Node* next;
   Node* prev;
-  T data;
+  CutsomType data;
 };
 
-template <comparable T>
-void Node<T>::add_node(T data_) {
+// method, that allows to add a node with a value to an existing one
+template <typename CutsomType>
+void Node<CutsomType>::add_node(CutsomType data_) {
   next = new Node(data_);
   next->prev = this;
 }
 
-template <comparable T>
+// data structure that can store and retrieve data in such fashion:
+// last element inserted will be retrieved first (last in first out (LIFO))
+template <typename CutsomType>
 class MyStack {
  public:
   MyStack() : top_{nullptr} {}
 
-  void push(T value);
-  T top();
-  T pop();
+  // insert an element at the top of the stack
+  void push(CutsomType value);
+
+  // retrieve last inserted element
+  CutsomType top();
+  // retrieve last inserted element and delete it from the stack
+  CutsomType pop();
+  // check if stack is empty
   bool empty() const { return top_ == nullptr; }
 
  private:
-  Node<T>* top_;
+  Node<CutsomType>* top_;
 };
 
-template <comparable T>
-void MyStack<T>::push(T value) {
+template <typename CutsomType>
+void MyStack<CutsomType>::push(CutsomType value) {
   if (top_ == nullptr)
     top_ = new Node(value);
   else {
@@ -55,56 +65,59 @@ void MyStack<T>::push(T value) {
   }
 }
 
-template <comparable T>
-T MyStack<T>::top() {
+template <typename CutsomType>
+CutsomType MyStack<CutsomType>::top() {
   if (top_ == nullptr)
     throw std::runtime_error("there are no elements in the stack\n");
   return top_->data;
 }
 
-template <comparable T>
-T MyStack<T>::pop() {
+template <typename CutsomType>
+CutsomType MyStack<CutsomType>::pop() {
   if (top_ == nullptr)
     throw std::runtime_error("there are no elements in the stack\n");
-  Node<T>* temp = top_->prev;
-  T& val = top_->data;
+  Node<CutsomType>* temp = top_->prev;
+  CutsomType& val = top_->data;
   delete top_;
   top_ = temp;
   return val;
 }
 
-// works only if your type is comparable!!!
-template <comparable T>
+template <comparable CutsomType>
 class MinStack {
  public:
-  void push(T value);
-  T pop();
-  T min();
-  T top();
+  // insert an element at the top of the stack
+  void push(CutsomType value);
+  // retrieve last inserted element and delete it from the stack
+  CutsomType pop();
+  // retrieve minimal element
+  CutsomType min();
+  // retrieve last inserted element
+  CutsomType top();
 
  private:
-  MyStack<std::pair<T, T>> stack;
+  MyStack<std::pair<CutsomType, CutsomType>> stack;
 };
 
-template <comparable T>
-void MinStack<T>::push(T value) {
+template <comparable CutsomType>
+void MinStack<CutsomType>::push(CutsomType value) {
   if (stack.empty())
     stack.push({value, value});
   else
     stack.push({value, std::min(value, stack.top().second)});
 }
 
-template <comparable T>
-T MinStack<T>::pop() {
+template <comparable CutsomType>
+CutsomType MinStack<CutsomType>::pop() {
   return stack.pop().first;
 }
 
-template <comparable T>
-T MinStack<T>::min() {
+template <comparable CutsomType>
+CutsomType MinStack<CutsomType>::min() {
   return stack.top().second;
 }
 
-template <comparable T>
-T MinStack<T>::top() {
+template <comparable CutsomType>
+CutsomType MinStack<CutsomType>::top() {
   return stack.top().first;
 }
