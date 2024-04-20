@@ -23,13 +23,17 @@ concept comparing = requires(CustomType a, CustomType b, Function f) {
   f(a, b);
 };
 
-// default constructor works only if your custom type is comparable!
+// data structure that allows to retrieve minimal element with O(1) time
+// complexity pop a minimal element with O(logn) time complexity
 template <typename CustomType,
           comparing<CustomType> Function =
               std::function<bool(const CustomType&, const CustomType&)>>
 class heap {
  public:
+  // default constructor works only if your custom type is comparable!
   heap();
+  // this constructor works only if your custom type is comparable with a
+  // fucntion
   heap(std::function<bool(const CustomType&, const CustomType&)>
            comparing_function_);
   explicit heap(std::initializer_list<CustomType> initializer_list);
