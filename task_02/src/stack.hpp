@@ -36,6 +36,7 @@ void Node<CutsomType>::add_node(CutsomType data_) {
 
 // data structure that can store and retrieve data in such fashion:
 // last element inserted will be retrieved first (last in first out (LIFO))
+// insertion, deletion and retrieval has time complexity of O(1)
 template <typename CutsomType>
 class MyStack {
  public:
