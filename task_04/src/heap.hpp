@@ -30,7 +30,7 @@ concept comparing = requires(CustomType a, CustomType b, Function f) {
 };
 
 // data structure that allows to retrieve minimal element with O(1) time
-// complexity pop a minimal element with O(logn) time complexity
+// complexity and pop a minimal element with O(logn) time complexity
 template <constructable CustomType,
           comparing<CustomType> Function =
               std::function<bool(const CustomType&, const CustomType&)>>
@@ -39,21 +39,29 @@ class heap {
   // default constructor works only if your custom type is comparable!
   heap();
   // this constructor works only if your custom type is comparable with a
-  // fucntion
+  // function
   heap(std::function<bool(const CustomType&, const CustomType&)>
            comparing_function_);
   explicit heap(std::initializer_list<CustomType> initializer_list);
   explicit heap(std::function<bool(const CustomType&, const CustomType&)>
                     comparing_function_,
                 std::initializer_list<CustomType> initializer_list);
+  // push an element into heap, O(logn) time complexity
   void push(CustomType element);
+  // pop a minimal element from heap, O(logn) time complexity
   CustomType pop_bottom();
+  // retrieve a minimal element from heap, O(1) time complexity
   CustomType bottom();
+  // return size of heap
   size_t size() { return heap_size; }
+  // check if heap is empty
   bool empty() { return heap_size == 0; }
 
  private:
+  // bring minimal element back to place if element with given index is
+  // increased
   void sift_down(size_t index);
+  // bring minimal element back to place if element with given index is decreaed
   void sift_up(size_t index);
   size_t heap_size;
 
