@@ -1,10 +1,10 @@
-#include "topology_sort.hpp"
+#include "temperature.hpp"
 
-std::vector<int> solve(std::vector<int> temperature) {
+std::vector<int> Solve(std::vector<int> temperature) {
   int max_temp = -10000000;
   std::vector<int> result(temperature.size(), 0);
 
-  for (int i = temperature.size(); i >= 0; i--) {
+  for (int i = temperature.size() - 1; i >= 0; i--) {
     int cur_temperature = temperature[i];
 
     if (max_temp < cur_temperature) {
