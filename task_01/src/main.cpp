@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include "topology_sort.hpp"
+#include "sum_of_two.hpp"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ int main() {
   }
   long long s;
   cin >> s;
-  pair<long long, long long> p = solve(a, s);
+  pair<long long, long long> p = Solve(a, s);
   cout << p.first << ' ' << p.second;
   return 0;
 }
