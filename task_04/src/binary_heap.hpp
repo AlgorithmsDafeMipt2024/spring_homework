@@ -3,7 +3,7 @@
 #include <vector>
 
 /**
- * @brief реализация двоичной min-heap на std::vector
+ * @brief реализация двоичной min-data_ на std::vector
  * @tparam T: тип значений двоичной кучи
  */
 template <typename T>
@@ -40,7 +40,7 @@ class BinaryMinHeap {
    */
   void Add(T elem) {
     data_.push_back(elem);
-    Heapify();
+    Simplify();
   }
 
   /**
@@ -61,20 +61,28 @@ class BinaryMinHeap {
    * @param index: индекс элемента, левее которого нужное значение
    * @return T: элемент, который находится левее
    */
-  T LeftOf(size_t index) const { return (2 * index + 1); }
+  T LeftChildOf(size_t index) const { return (2 * index + 1); }
 
   /**
    * @brief Возвращает элемент, который находится правее
    * @param index: индекс элемента, правее которого нужное значение
    * @return T: элемент, который находится правее
    */
-  T RightOf(size_t index) const { return (2 * index + 2); }
+  T RightChildOf(size_t index) const { return (2 * index + 2); }
 
   /**
    * @brief Вырезает минимум (корень) из кучи
    * @return T: значение этого минимума (корня)
    */
-  T ExtractMin();
+  T ExtractMin() {
+    auto res = Data()[0];
+
+    std::swap(data_[0], data_[Size() - 1]);
+    data_.pop_back();
+    Heapify(0);
+
+    return res;
+  }
 
   /**
    * @brief Вырезает корень (минимум) из кучи
@@ -100,11 +108,13 @@ class BinaryMinHeap {
    */
   void SetValue(size_t index);
 
+  size_t Size() { return data_.size(); }
+
  private:
-  ///@brief Приводит кучу в валидное состояние
-  void Heapify() {
+  /// @brief Приводит кучу в валидное состояние после добавления
+  void Simplify() {
     // идем с конца по родителям
-    size_t i = Data().size() - 1;
+    size_t i = Size() - 1;
 
     // пока следующий родитель больше, меняем местами
     while (i > 0 && data_[ParentOf(i)] > data_[i]) {
@@ -113,12 +123,40 @@ class BinaryMinHeap {
     }
   }
 
+  /// @brief Приводит кучу в валидное состояние
+  void Heapify(size_t index = 0) {
+    while (index < Size()) {
+      size_t smallest = index;  // smallest = корень поддерева
+
+      // если левый потомок существует и меньше текущего наименьшего элемента
+      if (LeftChildOf(index) < Size() &&
+          data_[LeftChildOf(index)] < data_[smallest]) {
+        smallest = LeftChildOf(index);
+      }
+
+      // если правый потомок существует и меньше текущего наименьшего элемента
+      if (RightChildOf(index) < Size() &&
+          data_[RightChildOf(index)] < data_[smallest]) {
+        smallest = RightChildOf(index);
+      }
+
+      // если текущий элемент не меньше своих потомков, завершаем итерацию
+      if (smallest == index) break;
+
+      // меняем местами текущий элемент с наименьшим из потомков
+      std::swap(data_[index], data_[smallest]);
+
+      // переходим вниз по дереву к потомку, с которым произвели обмен
+      index = smallest;
+    }
+  }
+
   /// @brief Данные кучи
   std::vector<T> data_;
 };
 
 /**
- * @brief реализация двоичной max-heap на std::vector
+ * @brief реализация двоичной max-data_ на std::vector
  * @tparam T: тип значений двоичной кучи
  */
 template <typename T>
@@ -155,7 +193,7 @@ class BinaryMaxHeap {
    */
   void Add(T elem) {
     data_.push_back(elem);
-    Heapify();
+    Simplify();
   }
 
   /**
@@ -176,20 +214,28 @@ class BinaryMaxHeap {
    * @param index: индекс элемента, левее которого нужное значение
    * @return T: элемент, который находится левее
    */
-  T LeftOf(size_t index) const { return (2 * index + 1); }
+  T LeftChildOf(size_t index) const { return (2 * index + 1); }
 
   /**
    * @brief Возвращает элемент, который находится правее
    * @param index: индекс элемента, правее которого нужное значение
    * @return T: элемент, который находится правее
    */
-  T RightOf(size_t index) const { return (2 * index + 2); }
+  T RightChildOf(size_t index) const { return (2 * index + 2); }
 
   /**
    * @brief Вырезает максимум (корень) из кучи
    * @return T: значение этого максимума (корня)
    */
-  T ExtractMax();
+  T ExtractMax() {
+    auto res = Data()[0];
+
+    std::swap(data_[0], data_[Size() - 1]);
+    data_.pop_back();
+    Heapify(0);
+
+    return res;
+  }
 
   /**
    * @brief Вырезает корень (максимум) из кучи
@@ -215,16 +261,46 @@ class BinaryMaxHeap {
    */
   void SetValue(size_t index);
 
- private:
-  ///@brief Приводит кучу в валидное состояние
-  void Heapify() {
-    // идем с конца по родителям
-    size_t i = Data().size() - 1;
+  size_t Size() { return data_.size(); }
 
-    // пока следующий родитель меньше, меняем местами
+ private:
+  /// @brief Приводит кучу в валидное состояние после добавления
+  void Simplify() {
+    // идем с конца по родителям
+    size_t i = Size() - 1;
+
+    // пока следующий родитель больше, меняем местами
     while (i > 0 && data_[ParentOf(i)] < data_[i]) {
       std::swap(data_[i], data_[ParentOf(i)]);
       i = ParentOf(i);
+    }
+  }
+
+  /// @brief Приводит кучу в валидное состояние
+  void Heapify(size_t index = 0) {
+    while (index < Size()) {
+      size_t largest = index;  // largest = корень поддерева
+
+      // если левый потомок существует и больше текущего лучшего элемента
+      if (LeftChildOf(index) < Size() &&
+          data_[LeftChildOf(index)] > data_[largest]) {
+        largest = LeftChildOf(index);
+      }
+
+      // если правый потомок существует и больше текущего лучшего элемента
+      if (RightChildOf(index) < Size() &&
+          data_[RightChildOf(index)] > data_[largest]) {
+        largest = RightChildOf(index);
+      }
+
+      // если текущий элемент не больше своих потомков, завершаем итерацию
+      if (largest == index) break;
+
+      // меняем местами текущий элемент с наибольшим из потомков
+      std::swap(data_[index], data_[largest]);
+
+      // переходим вниз по дереву к потомку, с которым произвели обмен
+      index = largest;
     }
   }
 
