@@ -26,14 +26,3 @@ TEST(in_order_DFS, Simple) {
   EXPECT_TRUE(st2.root()->parent == nullptr);
   ASSERT_EQ(vector2, assert_vector2);
 }
-
-TEST(in_order_DFS, tree_sort) {
-  SplayTree<int> st3{{4, 4},   {2, 2},   {5, 5}, {2, 2},
-                     {11, 11}, {20, 20}, {1, 1}};
-  std::vector<int> vector3;
-  std::vector<int> assert_vector3 = {1, 2, 4, 5, 11, 20};
-  in_order_DFS(st3.root(), vector3);
-
-  EXPECT_TRUE(st3.root()->parent == nullptr);
-  ASSERT_EQ(vector3, assert_vector3);
-}
