@@ -255,7 +255,6 @@ template <constructable CustomType, comparable Key>
 SplayTree<CustomType, Key> SplayTree<CustomType, Key>::split(Key key) {
   splay(key);
   if (tree_root == nullptr) return SplayTree{nullptr};
-  SplayTree right_tree;
 
   if (tree_root->value.first >= key) {
     SplayTree right_tree{tree_root};
@@ -264,28 +263,27 @@ SplayTree<CustomType, Key> SplayTree<CustomType, Key>::split(Key key) {
     if (tree_root != nullptr) tree_root->parent = nullptr;
 
     right_tree.tree_root->left_child = nullptr;
+    return right_tree;
   } else {
     SplayTree right_tree{tree_root->right_child};
     tree_root->right_child = nullptr;
 
     if (right_tree.tree_root != nullptr) right_tree.tree_root->parent = nullptr;
+    return right_tree;
   }
-  return right_tree;
 }
 
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::add(Key key, CustomType value) {
-  if (tree_root == nullptr) {
-    tree_root = new TreeNode<std::pair<Key, CustomType>>{{key, value}};
-    return;
-  }
-
+  // if (tree_root == nullptr) {
+  //   tree_root = new TreeNode<std::pair<Key, CustomType>>{{key, value}};
+  //   return;
+  // }
   SplayTree right_tree = split(key);
-  std::pair<Key, CustomType> init_value = {key, value};
 
   TreeNode<std::pair<Key, CustomType>>* new_root =
-      new TreeNode<std::pair<Key, CustomType>>{tree_root, init_value,
-                                               right_tree.tree_root};
+      new TreeNode<std::pair<Key, CustomType>>{
+          tree_root, {key, value}, right_tree.tree_root};
 
   tree_root = new_root;
 }
@@ -329,12 +327,4 @@ void in_order_DFS(TreeNode<std::pair<Key, CustomType>>* current_node,
   in_order_DFS(current_node->left_child, data_vector);
   data_vector.push_back(current_node->value.second);
   in_order_DFS(current_node->right_child, data_vector);
-}
-
-template <constructable CustomType, comparable Key>
-void in_order_depth_first_search(SplayTree<CustomType, Key>& splaytree,
-                                 std::vector<CustomType>& data_vector) {
-  if (!data_vector.empty())
-    throw std::runtime_error("data_vector is not empty\n");
-  in_order_DFS(splaytree.tree_root, data_vector);
 }

@@ -18,7 +18,7 @@ TEST(SplayTree, Simple) {
 
 TEST(in_order_DFS, Simple) {
   SplayTree<int> st2{};
-  for (int i = 1; i <= 10; i++) st2[i] = i * i;
+  for (int i = 10; i >= 1; i--) st2[i] = i * i;
   std::cout << '\n';
   std::vector<int> vector2;
   std::vector<int> assert_vector2 = {1, 4, 9, 16, 25, 36, 49, 64, 81, 100};
