@@ -1,29 +1,33 @@
 #include <initializer_list>
+#include <iostream>
 #include <stdexcept>
 #include <utility>
 #include <vector>
 
 /**
- * @brief реализация двоичной min-data_ на std::vector
+ * @brief реализация двоичной min-heap на std::vector
  * @tparam T: тип значений двоичной кучи
  */
 template <typename T>
 class BinaryMinHeap {
  public:
   BinaryMinHeap() = default;
-  BinaryMinHeap(const std::vector<T>& data) : data_{data} { SiftDown(); }
-  BinaryMinHeap(const std::initializer_list<T>& data) : data_{data} {
-    SiftDown();
+  BinaryMinHeap(const std::vector<T>& data) {
+    for (const auto& elem : data) Add(elem);
+  }
+
+  BinaryMinHeap(const std::initializer_list<T>& data) {
+    for (const auto& elem : data) Add(elem);
   }
 
   /**
    * @brief Доступ к копиям элементов кучи по индексу
    * @param index
    * @return T: элемент по индексу
-   * @throw std::invalid_argument: если индекс больше размера кучи
+   * @throw std::out_of_range: если индекс больше размера кучи
    */
   T operator[](size_t index) const {
-    if (index > Size) throw std::invalid_argument("invalid index");
+    if (index > Size) throw std::out_of_range("invalid index");
 
     return data_[index];
   }
@@ -52,10 +56,10 @@ class BinaryMinHeap {
   /**
    * @brief Вырезает минимум (корень) из кучи
    * @return T: значение этого минимума (корня)
-   * @throw std::logic_error: если куча пуста
+   * @throw std::out_of_range: если куча пуста
    */
   T ExtractMin() {
-    if (Empty()) throw std::logic_error("empty heap");
+    if (Empty()) throw std::out_of_range("empty heap");
 
     auto res = Data()[0];
 
@@ -76,10 +80,10 @@ class BinaryMinHeap {
   /**
    * @brief Возвращает значение минимума (корня)
    * @return T: значение минимума (корня)
-   * @throw std::logic_error: если куча пуста
+   * @throw std::out_of_range: если куча пуста
    */
   T GetMin() const {
-    if (Empty()) throw std::logic_error("empty heap");
+    if (Empty()) throw std::out_of_range("empty heap");
 
     return Data()[0];
   }
@@ -129,10 +133,7 @@ class BinaryMinHeap {
   }
 
   /// @brief Приводит кучу в валидное состояние после удаления
-  void SiftDown() {
-    // идем с начала по потомкам
-    size_t index = 0;
-
+  void SiftDown(size_t index = 0) {
     while (index < Size()) {
       size_t smallest = index;  // smallest = корень поддерева
 
@@ -164,26 +165,30 @@ class BinaryMinHeap {
 };
 
 /**
- * @brief реализация двоичной max-data_ на std::vector
+ * @brief реализация двоичной max-heap на std::vector
  * @tparam T: тип значений двоичной кучи
  */
 template <typename T>
 class BinaryMaxHeap {
  public:
   BinaryMaxHeap() = default;
-  BinaryMaxHeap(const std::vector<T>& data) : data_{data} { SiftDown(); }
-  BinaryMaxHeap(const std::initializer_list<T>& data) : data_{data} {
-    SiftDown();
+  BinaryMaxHeap(const std::vector<T>& data) {
+    for (const auto& elem : data) Add(elem);
+  }
+
+  BinaryMaxHeap(const std::initializer_list<T>& data) {
+    for (const auto& elem : data) Add(elem);
   }
 
   /**
    * @brief Доступ к копиям элементов кучи по индексу
    * @param index
    * @return T: элемент по индексу
-   * @throw std::invalid_argument: если индекс больше размера кучи
+   * @throw std::out_of_range: если индекс больше размера кучи
    */
   T operator[](size_t index) const {
-    if (index > Size) throw std::invalid_argument("invalid index");
+    if (index > Size) throw std::out_of_range("invalid index");
+
     return data_[index];
   }
 
@@ -211,10 +216,10 @@ class BinaryMaxHeap {
   /**
    * @brief Вырезает максимум (корень) из кучи
    * @return T: значение этого максимума (корня)
-   * @throw std::logic_error: если куча пуста
+   * @throw std::out_of_range: если куча пуста
    */
   T ExtractMax() {
-    if (Empty()) throw std::logic_error("empty heap");
+    if (Empty()) throw std::out_of_range("empty heap");
 
     auto res = Data()[0];
 
@@ -235,10 +240,10 @@ class BinaryMaxHeap {
   /**
    * @brief Возвращает значение максимума (корня)
    * @return T: значение максимума (корня)
-   * @throw std::logic_error: если куча пуста
+   * @throw std::out_of_range: если куча пуста
    */
   T GetMax() const {
-    if (Empty()) throw std::logic_error("empty heap");
+    if (Empty()) throw std::out_of_range("empty heap");
 
     return Data()[0];
   }
@@ -288,10 +293,7 @@ class BinaryMaxHeap {
   }
 
   /// @brief Приводит кучу в валидное состояние после удаления
-  void SiftDown() {
-    // идем с начала по потомкам
-    size_t index = 0;
-
+  void SiftDown(size_t index = 0) {
     while (index < Size()) {
       size_t largest = index;  // largest = корень поддерева
 
