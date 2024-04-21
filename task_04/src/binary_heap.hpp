@@ -1,3 +1,5 @@
+#include <initializer_list>
+#include <utility>
 #include <vector>
 
 /**
@@ -8,6 +10,10 @@ template <typename T>
 class BinaryMinHeap {
  public:
   BinaryMinHeap() = default;
+  BinaryMinHeap(const std::vector<T>& data) : data_{data} { Heapify(); }
+  BinaryMinHeap(const std::initializer_list<T>& data) : data_{data} {
+    Heapify();
+  }
 
   /**
    * @brief Доступ к копиям элементов кучи по индексу
@@ -32,7 +38,10 @@ class BinaryMinHeap {
    * @brief Добавляет элемент в кучу
    * @param elem: значение элемента
    */
-  void Add(T elem);
+  void Add(T elem) {
+    data_.push_back(elem);
+    Heapify();
+  }
 
   /**
    * @brief Удаляет элемент из кучи по индексу
@@ -92,6 +101,19 @@ class BinaryMinHeap {
   void SetValue(size_t index);
 
  private:
+  ///@brief Приводит кучу в валидное состояние
+  void Heapify() {
+    // идем с конца по родителям
+    size_t i = Data().size() - 1;
+
+    // пока следующий родитель больше, меняем местами
+    while (i > 0 && data_[ParentOf(i)] > data_[i]) {
+      std::swap(data_[i], data_[ParentOf(i)]);
+      i = ParentOf(i);
+    }
+  }
+
+  /// @brief Данные кучи
   std::vector<T> data_;
 };
 
@@ -103,6 +125,10 @@ template <typename T>
 class BinaryMaxHeap {
  public:
   BinaryMaxHeap() = default;
+  BinaryMaxHeap(const std::vector<T>& data) : data_{data} { Heapify(); }
+  BinaryMaxHeap(const std::initializer_list<T>& data) : data_{data} {
+    Heapify();
+  }
 
   /**
    * @brief Доступ к копиям элементов кучи по индексу
@@ -127,7 +153,10 @@ class BinaryMaxHeap {
    * @brief Добавляет элемент в кучу
    * @param elem: значение элемента
    */
-  void Add(T elem);
+  void Add(T elem) {
+    data_.push_back(elem);
+    Heapify();
+  }
 
   /**
    * @brief Удаляет элемент из кучи по индексу
@@ -187,5 +216,18 @@ class BinaryMaxHeap {
   void SetValue(size_t index);
 
  private:
+  ///@brief Приводит кучу в валидное состояние
+  void Heapify() {
+    // идем с конца по родителям
+    size_t i = Data().size() - 1;
+
+    // пока следующий родитель меньше, меняем местами
+    while (i > 0 && data_[ParentOf(i)] < data_[i]) {
+      std::swap(data_[i], data_[ParentOf(i)]);
+      i = ParentOf(i);
+    }
+  }
+
+  /// @brief Данные кучи
   std::vector<T> data_;
 };
