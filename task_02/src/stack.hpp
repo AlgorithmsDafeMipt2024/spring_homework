@@ -37,7 +37,7 @@ class Stack {
 
 template <typename T>
 void Stack<T>::Push(T value) {
-  Element new_data{value, std::make_shared<Element>(data_)};
+  Element new_data{value, std::make_shared<Element<T>>(data_)};
   size_ += 1;
   data_ = new_data;
 }
