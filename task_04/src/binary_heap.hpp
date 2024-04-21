@@ -1,4 +1,5 @@
 #include <initializer_list>
+#include <stdexcept>
 #include <utility>
 #include <vector>
 
@@ -19,8 +20,13 @@ class BinaryMinHeap {
    * @brief Доступ к копиям элементов кучи по индексу
    * @param index
    * @return T: элемент по индексу
+   * @throw std::invalid_argument: если индекс больше размера кучи
    */
-  T operator[](size_t index) const { return data_[index]; }
+  T operator[](size_t index) const {
+    if (index > Size) throw std::invalid_argument("invalid index");
+
+    return data_[index];
+  }
 
   /**
    * @brief Доступ к данным кучи (const &)
@@ -46,8 +52,11 @@ class BinaryMinHeap {
   /**
    * @brief Вырезает минимум (корень) из кучи
    * @return T: значение этого минимума (корня)
+   * @throw std::logic_error: если куча пуста
    */
   T ExtractMin() {
+    if (Empty()) throw std::logic_error("empty heap");
+
     auto res = Data()[0];
 
     // меняем местами минимум с последним
@@ -67,8 +76,13 @@ class BinaryMinHeap {
   /**
    * @brief Возвращает значение минимума (корня)
    * @return T: значение минимума (корня)
+   * @throw std::logic_error: если куча пуста
    */
-  T GetMin() const { return Data()[0]; }
+  T GetMin() const {
+    if (Empty()) throw std::logic_error("empty heap");
+
+    return Data()[0];
+  }
 
   /**
    * @brief Возвращает значение корня (минимума)
@@ -76,9 +90,9 @@ class BinaryMinHeap {
    */
   T GetRoot() const { return GetMin(); }
 
-  size_t Size() { return data_.size(); }
+  size_t Size() const { return data_.size(); }
 
-  bool Empty() { return Size() > 0; }
+  bool Empty() const { return Size() == 0; }
 
  private:
   /**
@@ -166,8 +180,12 @@ class BinaryMaxHeap {
    * @brief Доступ к копиям элементов кучи по индексу
    * @param index
    * @return T: элемент по индексу
+   * @throw std::invalid_argument: если индекс больше размера кучи
    */
-  T operator[](size_t index) const { return data_[index]; }
+  T operator[](size_t index) const {
+    if (index > Size) throw std::invalid_argument("invalid index");
+    return data_[index];
+  }
 
   /**
    * @brief Доступ к данным кучи (const &)
@@ -193,8 +211,11 @@ class BinaryMaxHeap {
   /**
    * @brief Вырезает максимум (корень) из кучи
    * @return T: значение этого максимума (корня)
+   * @throw std::logic_error: если куча пуста
    */
   T ExtractMax() {
+    if (Empty()) throw std::logic_error("empty heap");
+
     auto res = Data()[0];
 
     // меняем местами максимум с последним
@@ -214,8 +235,13 @@ class BinaryMaxHeap {
   /**
    * @brief Возвращает значение максимума (корня)
    * @return T: значение максимума (корня)
+   * @throw std::logic_error: если куча пуста
    */
-  T GetMax() const { return Data()[0]; }
+  T GetMax() const {
+    if (Empty()) throw std::logic_error("empty heap");
+
+    return Data()[0];
+  }
 
   /**
    * @brief Возвращает значение корня (максимума)
@@ -223,9 +249,9 @@ class BinaryMaxHeap {
    */
   T GetRoot() const { return GetMax(); }
 
-  size_t Size() { return data_.size(); }
+  size_t Size() const { return data_.size(); }
 
-  bool Empty() { return Size() > 0; }
+  bool Empty() const { return Size() == 0; }
 
  private:
   /**
