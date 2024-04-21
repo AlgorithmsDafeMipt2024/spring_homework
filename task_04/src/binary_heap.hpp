@@ -44,21 +44,16 @@ class BinaryMinHeap {
   }
 
   /**
-   * @brief Удаляет элемент из кучи по индексу
-   * @param index: индекс удаляемого элемента
-   */
-  void Remove(size_t index);
-
-  /**
    * @brief Вырезает минимум (корень) из кучи
    * @return T: значение этого минимума (корня)
    */
   T ExtractMin() {
     auto res = Data()[0];
 
+    // меняем местами минимум с последним
     std::swap(data_[0], data_[Size() - 1]);
     data_.pop_back();
-    SiftDown(0);
+    SiftDown();
 
     return res;
   }
@@ -81,13 +76,9 @@ class BinaryMinHeap {
    */
   T GetRoot() const { return GetMin(); }
 
-  /**
-   * @brief Устанавливает значение элемента кучи по индексу
-   * @param index: индекс изменяемого элемента
-   */
-  void SetValue(size_t index);
-
   size_t Size() { return data_.size(); }
+
+  bool Empty() { return Size() > 0; }
 
  private:
   /**
@@ -114,17 +105,20 @@ class BinaryMinHeap {
   /// @brief Приводит кучу в валидное состояние после добавления
   void SiftUp() {
     // идем с конца по родителям
-    size_t i = Size() - 1;
+    size_t index = Size() - 1;
 
     // пока следующий родитель больше, меняем местами
-    while (i > 0 && data_[ParentOf(i)] > data_[i]) {
-      std::swap(data_[i], data_[ParentOf(i)]);
-      i = ParentOf(i);
+    while (index > 0 && data_[ParentOf(index)] > data_[index]) {
+      std::swap(data_[index], data_[ParentOf(index)]);
+      index = ParentOf(index);
     }
   }
 
   /// @brief Приводит кучу в валидное состояние после удаления
-  void SiftDown(size_t index = 0) {
+  void SiftDown() {
+    // идем с начала по потомкам
+    size_t index = 0;
+
     while (index < Size()) {
       size_t smallest = index;  // smallest = корень поддерева
 
@@ -197,21 +191,16 @@ class BinaryMaxHeap {
   }
 
   /**
-   * @brief Удаляет элемент из кучи по индексу
-   * @param index: индекс удаляемого элемента
-   */
-  void Remove(size_t index);
-
-  /**
    * @brief Вырезает максимум (корень) из кучи
    * @return T: значение этого максимума (корня)
    */
   T ExtractMax() {
     auto res = Data()[0];
 
+    // меняем местами максимум с последним
     std::swap(data_[0], data_[Size() - 1]);
     data_.pop_back();
-    SiftDown(0);
+    SiftDown();
 
     return res;
   }
@@ -234,13 +223,9 @@ class BinaryMaxHeap {
    */
   T GetRoot() const { return GetMax(); }
 
-  /**
-   * @brief Устанавливает значение элемента кучи по индексу
-   * @param index: индекс изменяемого элемента
-   */
-  void SetValue(size_t index);
-
   size_t Size() { return data_.size(); }
+
+  bool Empty() { return Size() > 0; }
 
  private:
   /**
@@ -267,17 +252,20 @@ class BinaryMaxHeap {
   /// @brief Приводит кучу в валидное состояние после добавления
   void SiftUp() {
     // идем с конца по родителям
-    size_t i = Size() - 1;
+    size_t index = Size() - 1;
 
     // пока следующий родитель больше, меняем местами
-    while (i > 0 && data_[ParentOf(i)] < data_[i]) {
-      std::swap(data_[i], data_[ParentOf(i)]);
-      i = ParentOf(i);
+    while (index > 0 && data_[ParentOf(index)] < data_[index]) {
+      std::swap(data_[index], data_[ParentOf(index)]);
+      index = ParentOf(index);
     }
   }
 
   /// @brief Приводит кучу в валидное состояние после удаления
-  void SiftDown(size_t index = 0) {
+  void SiftDown() {
+    // идем с начала по потомкам
+    size_t index = 0;
+
     while (index < Size()) {
       size_t largest = index;  // largest = корень поддерева
 
