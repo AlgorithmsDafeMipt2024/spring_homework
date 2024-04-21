@@ -26,7 +26,7 @@ class BinaryMinHeap {
    * @brief Доступ к данным кучи (const &)
    * @return const std::vector<T>&: вектор всех элементов
    */
-  operator const std::vector<T>&() const { return Data(); }
+  explicit operator const std::vector<T>&() const { return Data(); }
 
   /**
    * @brief Добавляет элемент в кучу
@@ -45,21 +45,21 @@ class BinaryMinHeap {
    * @param index: индекс элемента, выше которого нужное значение
    * @return T: элемент, который находится выше
    */
-  T ParentOf(size_t index) const;
+  T ParentOf(size_t index) const { return (index - 1) / 2; }
 
   /**
    * @brief Возвращает элемент, который находится левее
    * @param index: индекс элемента, левее которого нужное значение
    * @return T: элемент, который находится левее
    */
-  T LeftOf(size_t index) const;
+  T LeftOf(size_t index) const { return (2 * index + 1); }
 
   /**
    * @brief Возвращает элемент, который находится правее
    * @param index: индекс элемента, правее которого нужное значение
    * @return T: элемент, который находится правее
    */
-  T RightOf(size_t index) const;
+  T RightOf(size_t index) const { return (2 * index + 2); }
 
   /**
    * @brief Вырезает минимум (корень) из кучи
@@ -77,7 +77,7 @@ class BinaryMinHeap {
    * @brief Возвращает значение минимума (корня)
    * @return T: значение минимума (корня)
    */
-  T GetMin() const;
+  T GetMin() const { return Data()[0]; }
 
   /**
    * @brief Возвращает значение корня (минимума)
@@ -121,7 +121,7 @@ class BinaryMaxHeap {
    * @brief Доступ к данным кучи (const &)
    * @return const std::vector<T>&: вектор всех элементов
    */
-  operator const std::vector<T>&() const { return Data(); }
+  explicit operator const std::vector<T>&() const { return Data(); }
 
   /**
    * @brief Добавляет элемент в кучу
@@ -140,21 +140,21 @@ class BinaryMaxHeap {
    * @param index: индекс элемента, выше которого нужное значение
    * @return T: элемент, который находится выше
    */
-  T ParentOf(size_t index) const;
+  T ParentOf(size_t index) const { return (index - 1) / 2; }
 
   /**
    * @brief Возвращает элемент, который находится левее
    * @param index: индекс элемента, левее которого нужное значение
    * @return T: элемент, который находится левее
    */
-  T LeftOf(size_t index) const;
+  T LeftOf(size_t index) const { return (2 * index + 1); }
 
   /**
    * @brief Возвращает элемент, который находится правее
    * @param index: индекс элемента, правее которого нужное значение
    * @return T: элемент, который находится правее
    */
-  T RightOf(size_t index) const;
+  T RightOf(size_t index) const { return (2 * index + 2); }
 
   /**
    * @brief Вырезает максимум (корень) из кучи
@@ -172,7 +172,7 @@ class BinaryMaxHeap {
    * @brief Возвращает значение максимума (корня)
    * @return T: значение максимума (корня)
    */
-  T GetMax() const;
+  T GetMax() const { return Data()[0]; }
 
   /**
    * @brief Возвращает значение корня (максимума)
