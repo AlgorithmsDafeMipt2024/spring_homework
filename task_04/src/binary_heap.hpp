@@ -10,9 +10,9 @@ template <typename T>
 class BinaryMinHeap {
  public:
   BinaryMinHeap() = default;
-  BinaryMinHeap(const std::vector<T>& data) : data_{data} { Heapify(); }
+  BinaryMinHeap(const std::vector<T>& data) : data_{data} { SiftDown(); }
   BinaryMinHeap(const std::initializer_list<T>& data) : data_{data} {
-    Heapify();
+    SiftDown();
   }
 
   /**
@@ -40,7 +40,7 @@ class BinaryMinHeap {
    */
   void Add(T elem) {
     data_.push_back(elem);
-    Simplify();
+    SiftUp();
   }
 
   /**
@@ -48,27 +48,6 @@ class BinaryMinHeap {
    * @param index: индекс удаляемого элемента
    */
   void Remove(size_t index);
-
-  /**
-   * @brief Возвращает элемент, который находится выше
-   * @param index: индекс элемента, выше которого нужное значение
-   * @return T: элемент, который находится выше
-   */
-  T ParentOf(size_t index) const { return (index - 1) / 2; }
-
-  /**
-   * @brief Возвращает элемент, который находится левее
-   * @param index: индекс элемента, левее которого нужное значение
-   * @return T: элемент, который находится левее
-   */
-  T LeftChildOf(size_t index) const { return (2 * index + 1); }
-
-  /**
-   * @brief Возвращает элемент, который находится правее
-   * @param index: индекс элемента, правее которого нужное значение
-   * @return T: элемент, который находится правее
-   */
-  T RightChildOf(size_t index) const { return (2 * index + 2); }
 
   /**
    * @brief Вырезает минимум (корень) из кучи
@@ -79,7 +58,7 @@ class BinaryMinHeap {
 
     std::swap(data_[0], data_[Size() - 1]);
     data_.pop_back();
-    Heapify(0);
+    SiftDown(0);
 
     return res;
   }
@@ -111,8 +90,29 @@ class BinaryMinHeap {
   size_t Size() { return data_.size(); }
 
  private:
+  /**
+   * @brief Возвращает элемент, который находится выше
+   * @param index: индекс элемента, выше которого нужное значение
+   * @return T: элемент, который находится выше
+   */
+  T ParentOf(size_t index) const { return (index - 1) / 2; }
+
+  /**
+   * @brief Возвращает элемент, который находится левее
+   * @param index: индекс элемента, левее которого нужное значение
+   * @return T: элемент, который находится левее
+   */
+  T LeftChildOf(size_t index) const { return (2 * index + 1); }
+
+  /**
+   * @brief Возвращает элемент, который находится правее
+   * @param index: индекс элемента, правее которого нужное значение
+   * @return T: элемент, который находится правее
+   */
+  T RightChildOf(size_t index) const { return (2 * index + 2); }
+
   /// @brief Приводит кучу в валидное состояние после добавления
-  void Simplify() {
+  void SiftUp() {
     // идем с конца по родителям
     size_t i = Size() - 1;
 
@@ -123,8 +123,8 @@ class BinaryMinHeap {
     }
   }
 
-  /// @brief Приводит кучу в валидное состояние
-  void Heapify(size_t index = 0) {
+  /// @brief Приводит кучу в валидное состояние после удаления
+  void SiftDown(size_t index = 0) {
     while (index < Size()) {
       size_t smallest = index;  // smallest = корень поддерева
 
@@ -163,9 +163,9 @@ template <typename T>
 class BinaryMaxHeap {
  public:
   BinaryMaxHeap() = default;
-  BinaryMaxHeap(const std::vector<T>& data) : data_{data} { Heapify(); }
+  BinaryMaxHeap(const std::vector<T>& data) : data_{data} { SiftDown(); }
   BinaryMaxHeap(const std::initializer_list<T>& data) : data_{data} {
-    Heapify();
+    SiftDown();
   }
 
   /**
@@ -193,7 +193,7 @@ class BinaryMaxHeap {
    */
   void Add(T elem) {
     data_.push_back(elem);
-    Simplify();
+    SiftUp();
   }
 
   /**
@@ -201,27 +201,6 @@ class BinaryMaxHeap {
    * @param index: индекс удаляемого элемента
    */
   void Remove(size_t index);
-
-  /**
-   * @brief Возвращает элемент, который находится выше
-   * @param index: индекс элемента, выше которого нужное значение
-   * @return T: элемент, который находится выше
-   */
-  T ParentOf(size_t index) const { return (index - 1) / 2; }
-
-  /**
-   * @brief Возвращает элемент, который находится левее
-   * @param index: индекс элемента, левее которого нужное значение
-   * @return T: элемент, который находится левее
-   */
-  T LeftChildOf(size_t index) const { return (2 * index + 1); }
-
-  /**
-   * @brief Возвращает элемент, который находится правее
-   * @param index: индекс элемента, правее которого нужное значение
-   * @return T: элемент, который находится правее
-   */
-  T RightChildOf(size_t index) const { return (2 * index + 2); }
 
   /**
    * @brief Вырезает максимум (корень) из кучи
@@ -232,7 +211,7 @@ class BinaryMaxHeap {
 
     std::swap(data_[0], data_[Size() - 1]);
     data_.pop_back();
-    Heapify(0);
+    SiftDown(0);
 
     return res;
   }
@@ -264,8 +243,29 @@ class BinaryMaxHeap {
   size_t Size() { return data_.size(); }
 
  private:
+  /**
+   * @brief Возвращает элемент, который находится выше
+   * @param index: индекс элемента, выше которого нужное значение
+   * @return T: элемент, который находится выше
+   */
+  T ParentOf(size_t index) const { return (index - 1) / 2; }
+
+  /**
+   * @brief Возвращает элемент, который находится левее
+   * @param index: индекс элемента, левее которого нужное значение
+   * @return T: элемент, который находится левее
+   */
+  T LeftChildOf(size_t index) const { return (2 * index + 1); }
+
+  /**
+   * @brief Возвращает элемент, который находится правее
+   * @param index: индекс элемента, правее которого нужное значение
+   * @return T: элемент, который находится правее
+   */
+  T RightChildOf(size_t index) const { return (2 * index + 2); }
+
   /// @brief Приводит кучу в валидное состояние после добавления
-  void Simplify() {
+  void SiftUp() {
     // идем с конца по родителям
     size_t i = Size() - 1;
 
@@ -276,8 +276,8 @@ class BinaryMaxHeap {
     }
   }
 
-  /// @brief Приводит кучу в валидное состояние
-  void Heapify(size_t index = 0) {
+  /// @brief Приводит кучу в валидное состояние после удаления
+  void SiftDown(size_t index = 0) {
     while (index < Size()) {
       size_t largest = index;  // largest = корень поддерева
 

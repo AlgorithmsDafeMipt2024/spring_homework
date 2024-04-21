@@ -4,6 +4,7 @@
 
 int main() {
   auto bminh = BinaryMinHeap({3, 2, 1});
+  std::cout << bminh.Data() << std::endl;
   bminh.Add(1);
   std::cout << bminh.Data() << std::endl;
   bminh.Add(4);
@@ -20,6 +21,7 @@ int main() {
   std::cout << std::endl;
 
   auto bmaxh = BinaryMaxHeap({1, 2, 3});
+  std::cout << bmaxh.Data() << std::endl;
   bmaxh.Add(1);
   std::cout << bmaxh.Data() << std::endl;
   bmaxh.Add(4);
