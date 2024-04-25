@@ -64,7 +64,7 @@ void AVLTree<T>::UpdateHeight(std::unique_ptr<AVLNode> &node) {
 }
 
 template <typename T>
-std::unique_ptr<struct AVLTree<T>::AVLNode> AVLTree<T>::RotateRight(
+std::unique_ptr<typename AVLTree<T>::AVLNode> AVLTree<T>::RotateRight(
     std::unique_ptr<AVLNode> &original_node) {
   std::unique_ptr<AVLNode> new_node = std::move(original_node->left);
   original_node->left = std::move(new_node->right);
@@ -74,11 +74,10 @@ std::unique_ptr<struct AVLTree<T>::AVLNode> AVLTree<T>::RotateRight(
   UpdateHeight(new_node);
 
   return new_node;
-
 }
 
 template <typename T>
-std::unique_ptr<struct AVLTree<T>::AVLNode> AVLTree<T>::RotateLeft(
+std::unique_ptr<typename AVLTree<T>::AVLNode> AVLTree<T>::RotateLeft(
     std::unique_ptr<AVLNode> &original_node) {
   std::unique_ptr<AVLNode> new_node = std::move(original_node->right);
   original_node->right = std::move(new_node->left);
@@ -91,7 +90,7 @@ std::unique_ptr<struct AVLTree<T>::AVLNode> AVLTree<T>::RotateLeft(
 }
 
 template <typename T>
-std::unique_ptr<struct AVLTree<T>::AVLNode> AVLTree<T>::ReBalance(
+std::unique_ptr<typename AVLTree<T>::AVLNode> AVLTree<T>::ReBalance(
     std::unique_ptr<AVLNode> &node) {
   int balance = BalanceFactor(node);
   if (balance > 1) {
@@ -106,14 +105,14 @@ std::unique_ptr<struct AVLTree<T>::AVLNode> AVLTree<T>::ReBalance(
 }
 
 template <typename T>
-std::unique_ptr<struct AVLTree<T>::AVLNode> AVLTree<T>::SearchMin(
+std::unique_ptr<typename AVLTree<T>::AVLNode> AVLTree<T>::SearchMin(
     std::unique_ptr<AVLNode> &node) {
   if (!node->left) return std::move(node);
   return SearchMin(node->left);
 }
 
 template <typename T>
-std::unique_ptr<struct AVLTree<T>::AVLNode> AVLTree<T>::Insert(
+std::unique_ptr<typename AVLTree<T>::AVLNode> AVLTree<T>::Insert(
     T value, std::unique_ptr<AVLNode> &node) {
   if (!node) return std::make_unique<AVLNode>(value);
   if (value < node->value)
@@ -135,7 +134,7 @@ bool AVLTree<T>::Contains(T value, const std::unique_ptr<AVLNode> &node) const {
 }
 
 template <typename T>
-std::unique_ptr<struct AVLTree<T>::AVLNode> AVLTree<T>::Remove(
+std::unique_ptr<typename AVLTree<T>::AVLNode> AVLTree<T>::Remove(
     T value, std::unique_ptr<AVLNode> &node) {
   if (!node) return nullptr;
   if (value < node->value)
@@ -151,7 +150,6 @@ std::unique_ptr<struct AVLTree<T>::AVLNode> AVLTree<T>::Remove(
   }
   UpdateHeight(node);
   return ReBalance(node);
-
 }
 
 template <typename T>
