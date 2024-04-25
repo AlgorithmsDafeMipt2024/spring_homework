@@ -8,7 +8,7 @@ template <typename T>
 class Heap {
  public:
   Heap() : heap_array_(std::vector<T>{}){};
-  explicit Heap(std::vector<T>& array) {
+  explicit Heap(std::vector<T>&& array) {
     heap_array_ = std::move(array);
     for (size_t node = heap_array_.size(); node > 0; --node) SiftDown(node);
   }

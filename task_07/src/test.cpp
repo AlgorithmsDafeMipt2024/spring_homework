@@ -1,9 +1,9 @@
-
 #include <gtest/gtest.h>
 
+#include "avl_tree.hpp"
 #include "bs_tree.hpp"
 
-TEST(bs_tree, Simple) {
+TEST(BSTreeTest, Simple) {
   BSTree<int> tree;
   tree.Insert(10);
   tree.Insert(5);
@@ -43,7 +43,7 @@ TEST(bs_tree, Simple) {
   ASSERT_EQ(tree.Contains(25), true);
 }
 
-TEST(bs_tree, DuplicateData) {
+TEST(BSTreeTest, DuplicateData) {
   BSTree<int> Tree;
 
   ASSERT_EQ(Tree.Contains(10), false);
@@ -61,4 +61,78 @@ TEST(bs_tree, DuplicateData) {
   ASSERT_EQ(Tree.Contains(1), false);
   ASSERT_EQ(Tree.Contains(2), false);
   ASSERT_EQ(Tree.Contains(3), false);
+}
+
+TEST(AVLTreeTest, InsertAndFind) {
+  AVLTree<int> tree;
+
+  tree.Insert(10);
+  ASSERT_TRUE(tree.Contains(10));
+  ASSERT_FALSE(tree.Contains(20));
+
+  tree.Insert(20);
+  ASSERT_TRUE(tree.Contains(10));
+  ASSERT_TRUE(tree.Contains(20));
+
+  tree.Insert(30);
+  ASSERT_TRUE(tree.Contains(10));
+  ASSERT_TRUE(tree.Contains(20));
+  ASSERT_TRUE(tree.Contains(30));
+
+  tree.Insert(5);
+  ASSERT_TRUE(tree.Contains(5));
+  ASSERT_TRUE(tree.Contains(10));
+  ASSERT_TRUE(tree.Contains(20));
+  ASSERT_TRUE(tree.Contains(30));
+
+  tree.Insert(15);
+  ASSERT_TRUE(tree.Contains(5));
+  ASSERT_TRUE(tree.Contains(10));
+  ASSERT_TRUE(tree.Contains(15));
+  ASSERT_TRUE(tree.Contains(20));
+  ASSERT_TRUE(tree.Contains(30));
+}
+
+TEST(AVLTreeTest, Remove) {
+  AVLTree<int> tree;
+
+  tree.Insert(10);
+  tree.Insert(20);
+  tree.Insert(30);
+
+  tree.Remove(20);
+  ASSERT_TRUE(tree.Contains(10));
+  ASSERT_FALSE(tree.Contains(20));
+  ASSERT_TRUE(tree.Contains(30));
+
+  tree.Remove(10);
+  ASSERT_FALSE(tree.Contains(10));
+  ASSERT_TRUE(tree.Contains(30));
+
+  tree.Remove(30);
+  ASSERT_FALSE(tree.Contains(10));
+  ASSERT_FALSE(tree.Contains(20));
+  ASSERT_FALSE(tree.Contains(30));
+
+  tree.Insert(10);
+  tree.Insert(20);
+  tree.Insert(30);
+  tree.Insert(5);
+  tree.Insert(15);
+
+  tree.Remove(20);
+  ASSERT_TRUE(tree.Contains(10));
+  ASSERT_TRUE(tree.Contains(15));
+  ASSERT_TRUE(tree.Contains(30));
+  ASSERT_TRUE(tree.Contains(5));
+
+  tree.Remove(10);
+  ASSERT_TRUE(tree.Contains(15));
+  ASSERT_TRUE(tree.Contains(30));
+  ASSERT_TRUE(tree.Contains(5));
+}
+
+TEST(AVLTreeTest, ContainsEmptyTree) {
+  AVLTree<int> tree;
+  ASSERT_FALSE(tree.Contains(10));
 }

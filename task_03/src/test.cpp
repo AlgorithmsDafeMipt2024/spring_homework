@@ -1,6 +1,8 @@
 
 #include <gtest/gtest.h>
 
+#include <stdexcept>
+
 #include "warming_prediction.hpp"
 TEST(warming_prediction, Simple) {
   ASSERT_EQ(DoWarmingPrediction(std::vector<int>{23, 29, 12, 16, 45, 10, -8,
@@ -23,6 +25,9 @@ TEST(warming_prediction, Simple) {
       (std::vector<unsigned int>{0, 0, 0, 0, 0, 0, 0, 0, 0}));
 
   ASSERT_EQ(DoWarmingPrediction(
-                std::vector<int>{4, 12, 8, 7, 9, 1, 11, 9, 9, 10, 11, 12}),
+                std::vector<float>{4, 12, 8, 7, 9, 1, 11, 9, 9, 10, 11, 12}),
             (std::vector<unsigned int>{1, 0, 2, 1, 2, 1, 5, 2, 1, 1, 1, 0}));
+
+  EXPECT_THROW(DoWarmingPrediction(std::vector<std::string>{"1"}),
+               std::logic_error);
 }
