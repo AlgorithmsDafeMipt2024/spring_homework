@@ -1,7 +1,9 @@
-#include "k_stat.hpp"
 #include <gtest/gtest.h>
+
 #include <numeric>
 #include <stdexcept>
+
+#include "k_stat.hpp"
 
 // Простое тестирование
 TEST(k_stat, Simple) {
@@ -72,7 +74,7 @@ TEST(k_stat, OutOfBounds) {
 TEST(k_stat, LargeArray) {
   std::vector<int> vec(1000);
   std::iota(vec.begin(), vec.end(),
-            1); // Заполнение массива числами от 1 до 1000
-  std::random_shuffle(vec.begin(), vec.end()); // Перемешивание элементов
+            1);  // Заполнение массива числами от 1 до 1000
+  std::random_shuffle(vec.begin(), vec.end());  // Перемешивание элементов
   ASSERT_EQ(FindOrderStatistic(vec, 499), 484);
 }

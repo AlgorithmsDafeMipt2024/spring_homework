@@ -9,7 +9,7 @@ struct Node {
 };
 
 class Stack {
-public:
+ public:
   Stack() { top = nullptr; }
   void Push(int value);
   int Pop();
@@ -17,12 +17,12 @@ public:
 };
 
 class MinStack {
-public:
+ public:
   void Push(int value);
   int Pop();
   int GetMin();
 
-private:
+ private:
   Stack st1_;
   Stack st2_;
 };

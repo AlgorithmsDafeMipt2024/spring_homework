@@ -1,7 +1,8 @@
+#include <gtest/gtest.h>
+
+#include <numeric>
 
 #include "sort.hpp"
-#include <gtest/gtest.h>
-#include <numeric>
 
 TEST(Quick_Sort, Simple) {
   std::vector<int> vec1{9, 8, 7, 6, 5, 4, 2, 3, 1, 0};
@@ -72,8 +73,8 @@ TEST(Quick_Sort, ZerosAndNegatives) {
 TEST(Quick_Sort, LargeArray) {
   std::vector<int> vec(1000);
   std::iota(vec.begin(), vec.end(),
-            -500); // Заполнение вектора числами от -500 до 499
-  std::random_shuffle(vec.begin(), vec.end()); // Перемешивание элементов
+            -500);  // Заполнение вектора числами от -500 до 499
+  std::random_shuffle(vec.begin(), vec.end());  // Перемешивание элементов
   std::vector<int> sorted_vec(vec);
   std::sort(sorted_vec.begin(), sorted_vec.end());
   ASSERT_EQ(Quick_Sort(vec, 0, vec.size() - 1), sorted_vec);

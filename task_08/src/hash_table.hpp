@@ -3,7 +3,7 @@
 #include <vector>
 
 class HashTable {
-public:
+ public:
   HashTable() {
     used_cell_ = 0;
     size_ = 0;
@@ -22,7 +22,7 @@ public:
 
   size_t Size();
 
-private:
+ private:
   enum class Condition { Fill, Deleted, Empty };
   constexpr static const double rehashCoefficient = 0.7;
   constexpr static const double hashCoefficient = 0.618033989;

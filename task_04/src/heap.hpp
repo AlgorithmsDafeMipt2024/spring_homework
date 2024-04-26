@@ -4,7 +4,7 @@
 #include <vector>
 
 class Heap {
-public:
+ public:
   void SiftDown(int i);
   void SiftUp(int i);
   void Insert(int value);
@@ -13,7 +13,7 @@ public:
   int Extract_Min();
   std::vector<int> Copy_Heap();
 
-private:
+ private:
   std::vector<int> vec_;
 };
 

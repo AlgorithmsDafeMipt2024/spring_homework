@@ -1,5 +1,6 @@
-#include "heap.hpp"
 #include <gtest/gtest.h>
+
+#include "heap.hpp"
 
 // Простое тестирование
 TEST(heap, Simple) {

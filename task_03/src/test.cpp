@@ -1,4 +1,3 @@
-
 #include <gtest/gtest.h>
 
 #include "topology_sort.hpp"

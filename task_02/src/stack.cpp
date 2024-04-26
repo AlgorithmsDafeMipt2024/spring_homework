@@ -1,4 +1,5 @@
 #include "stack.hpp"
+
 #include <memory>
 #include <stdexcept>
 

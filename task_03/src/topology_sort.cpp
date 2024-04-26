@@ -1,10 +1,11 @@
 #include "topology_sort.hpp"
+
 #include <iostream>
 #include <stack>
 #include <vector>
 
 class Day {
-public:
+ public:
   int number_of_day;
   int temperature;
   Day(int number_of_day, int temperature) {

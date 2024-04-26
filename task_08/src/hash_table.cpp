@@ -1,6 +1,7 @@
 #include "hash_table.hpp"
 
 #include <math.h>
+
 #include <memory>
 #include <stdexcept>
 

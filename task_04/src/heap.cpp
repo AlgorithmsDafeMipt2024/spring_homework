@@ -1,4 +1,5 @@
 #include "heap.hpp"
+
 #include <iostream>
 #include <vector>
 
@@ -7,10 +8,8 @@ void Heap::SiftDown(int i) {
     int left = 2 * i + 1;
     int right = 2 * i + 2;
     int j = left;
-    if ((right < vec_.size()) && vec_[right] < vec_[left])
-      j = right;
-    if (vec_[i] <= vec_[j])
-      break;
+    if ((right < vec_.size()) && vec_[right] < vec_[left]) j = right;
+    if (vec_[i] <= vec_[j]) break;
     std::swap(vec_[i], vec_[j]);
     i = j;
   }

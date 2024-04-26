@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 #include <cstddef>
 
 using namespace std;
@@ -15,12 +16,12 @@ struct Node {
 };
 
 class AVL_Tree {
-public:
+ public:
   void Insert(int value);
   void Remove(int value);
   bool Contains(int value);
 
-private:
+ private:
   Node *root = nullptr;
   bool Contains(Node *node, int value);
   Node *Remove(Node *root, int k);

@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <hash_table.hpp>
 #include <stdexcept>
 
