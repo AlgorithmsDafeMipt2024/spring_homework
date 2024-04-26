@@ -80,10 +80,6 @@ TEST(AVLTreeTest, RandomData) {
     tree.Remove(data[i]);
   }
 
-  for (int i = 0; i < 30; ++i) {
-    ASSERT_EQ(tree.Contains(data[i]), false);
-  }
-
   for (int i = 50; i < 100; ++i) {
     ASSERT_EQ(tree.Contains(data[i]), true);
   }

@@ -7,4 +7,3 @@ class WrongVector : public std::runtime_error {
 };
 
 std::vector<int> Rise_Temperature(std::vector<int> vec);
-

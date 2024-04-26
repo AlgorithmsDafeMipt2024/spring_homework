@@ -12,6 +12,7 @@ int MinMoney(std::vector<int> vec, int money) {
       }
     }
   }
+
   if (abs(table[money]) == abs(mon)) {
     return 0;
   }
