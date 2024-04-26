@@ -1,5 +1,6 @@
 #include "k_stat.hpp"
 #include <iostream>
+#include <stdexcept>
 #include <vector>
 
 int Partition(std::vector<int> &vec, int l, int r) {
@@ -22,6 +23,9 @@ int Partition(std::vector<int> &vec, int l, int r) {
 }
 
 int FindOrderStatistic(std::vector<int> &vec, int k) {
+  if (k >= vec.size() || k < 0) {
+    throw std::logic_error("Wrong k order statistic");
+  }
   int left = 0;
   int right = int(vec.size() - 1);
   while (left < vec.size()) {
@@ -39,4 +43,3 @@ int FindOrderStatistic(std::vector<int> &vec, int k) {
   }
   throw std::logic_error("Wrong k order statistic");
 }
-

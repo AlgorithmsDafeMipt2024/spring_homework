@@ -4,7 +4,7 @@
 
 struct Node {
   int value;
-  std::shared_ptr<Node> next;
+  std::shared_ptr<Node> next{nullptr};
   Node(int value) : value(value) {}
 };
 
