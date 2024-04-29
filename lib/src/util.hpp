@@ -16,7 +16,7 @@ template <typename Type>
 inline std::ostream& operator<<(std::ostream& os,
                                 const std::vector<Type>& vec) {
   os << "[";
-  for (size_t i = 0; i < vec.size(); i++) {
+  for (std::size_t i = 0; i < vec.size(); i++) {
     os << "'" << vec[i] << "'";
     if (i != vec.size() - 1) os << ", ";
   }
@@ -72,7 +72,7 @@ inline std::istream& operator>>(std::istream& is, std::vector<Type>& vec) {
 
   vec.clear();  // (для перезаписи нужна отчистка)
   std::cout << "Enter array elements: ";
-  for (size_t i = 0; i < size_t(size); i++) {
+  for (std::size_t i = 0; i < std::size_t(size); i++) {
     is >> curr;
     if (!is) {
       std::cerr << "Invalid array input. The entry is incorrect." << std::endl;
