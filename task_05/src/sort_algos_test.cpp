@@ -14,7 +14,7 @@
 // my libs:
 #include <util.hpp>
 
-TEST(Sort, Simple) {
+TEST(SortAlgos, Simple) {
   std::vector<int> a{5, 3, 4, 1, 2};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -24,7 +24,7 @@ TEST(Sort, Simple) {
   EXPECT_TRUE(std::is_sorted(b.begin(), b.end()));
 }
 
-TEST(Sort, Empty) {
+TEST(SortAlgos, Empty) {
   std::vector<int> a;
   HeapSort(a);
   EXPECT_TRUE(a.empty());
@@ -34,7 +34,7 @@ TEST(Sort, Empty) {
   EXPECT_TRUE(b.empty());
 }
 
-TEST(Sort, Sorted) {
+TEST(SortAlgos, Sorted) {
   std::vector<int> a{1, 2, 3, 4, 5};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -44,7 +44,7 @@ TEST(Sort, Sorted) {
   EXPECT_TRUE(std::is_sorted(b.begin(), b.end()));
 }
 
-TEST(Sort, Double) {
+TEST(SortAlgos, Double) {
   std::vector<double> a{5.3, 3.1, 4.7, 1.2, 2.8};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -54,7 +54,7 @@ TEST(Sort, Double) {
   EXPECT_TRUE(std::is_sorted(b.begin(), b.end()));
 }
 
-TEST(Sort, Strings) {
+TEST(SortAlgos, Strings) {
   std::vector<std::string> a{"apple", "banana", "cherry", "date", "elderberry"};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -64,7 +64,7 @@ TEST(Sort, Strings) {
   EXPECT_TRUE(std::is_sorted(b.begin(), b.end()));
 }
 
-TEST(Sort, Duplicates) {
+TEST(SortAlgos, Duplicates) {
   std::vector<int> a{5, 3, 4, 1, 2, 3, 1, 4};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -74,7 +74,7 @@ TEST(Sort, Duplicates) {
   EXPECT_TRUE(std::is_sorted(b.begin(), b.end()));
 }
 
-TEST(Sort, NegativeNumbers) {
+TEST(SortAlgos, NegativeNumbers) {
   std::vector<int> a{-5, -3, -4, -1, -2};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -84,7 +84,7 @@ TEST(Sort, NegativeNumbers) {
   EXPECT_TRUE(std::is_sorted(b.begin(), b.end()));
 }
 
-TEST(Sort, Characters) {
+TEST(SortAlgos, Characters) {
   std::vector<char> a{'e', 'a', 'c', 'b', 'd'};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -99,7 +99,7 @@ struct TestType {
   auto operator<=>(const TestType& other) const = default;
 };
 
-TEST(Sort, CustomTestType) {
+TEST(SortAlgos, CustomTestType) {
   std::vector<TestType> a{{5}, {3}, {4}, {1}, {2}};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -114,7 +114,7 @@ struct NegativeTestType {
   auto operator<=>(const NegativeTestType& other) const = default;
 };
 
-TEST(Sort, CustomNegativeTestType) {
+TEST(SortAlgos, CustomNegativeTestType) {
   std::vector<NegativeTestType> a{{-5}, {-3}, {-4}, {-1}, {-2}};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -129,7 +129,7 @@ struct FloatTestType {
   auto operator<=>(const FloatTestType& other) const = default;
 };
 
-TEST(Sort, CustomFloatTestType) {
+TEST(SortAlgos, CustomFloatTestType) {
   std::vector<FloatTestType> a{{5.3f}, {3.1f}, {4.7f}, {1.2f}, {2.8f}};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -145,7 +145,7 @@ struct PairTestType {
   auto operator<=>(const PairTestType& other) const = default;
 };
 
-TEST(Sort, CustomPairTestType) {
+TEST(SortAlgos, CustomPairTestType) {
   std::vector<PairTestType> a{
       {5, 3.14}, {3, 2.71}, {4, 1.62}, {1, 0.57}, {2, 6.28}};
   HeapSort(a);
@@ -162,7 +162,7 @@ struct BoolTestType {
   auto operator<=>(const BoolTestType& other) const = default;
 };
 
-TEST(Sort, CustomBoolTestType) {
+TEST(SortAlgos, CustomBoolTestType) {
   std::vector<BoolTestType> a{{true}, {false}, {true}, {false}, {true}};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -177,7 +177,7 @@ struct CharTestType {
   auto operator<=>(const CharTestType& other) const = default;
 };
 
-TEST(Sort, CustomCharTestType) {
+TEST(SortAlgos, CustomCharTestType) {
   std::vector<CharTestType> a{{'e'}, {'a'}, {'c'}, {'b'}, {'d'}};
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
@@ -187,7 +187,7 @@ TEST(Sort, CustomCharTestType) {
   EXPECT_TRUE(std::is_sorted(b.begin(), b.end()));
 }
 
-TEST(Sort, VeryLargeNumbers) {
+TEST(SortAlgos, VeryLargeNumbers) {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<int64_t> dis(
@@ -209,7 +209,7 @@ TEST(Sort, VeryLargeNumbers) {
   EXPECT_TRUE(std::is_sorted(b.begin(), b.end()));
 }
 
-TEST(Sort, VeryLongStrings) {
+TEST(SortAlgos, VeryLongStrings) {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<char> dis('a', 'z');
