@@ -1,6 +1,5 @@
-#include <algorithm>
-#include <cstdlib>
-#include <iostream>
+#include <functional>
+#include <random>
 #include <vector>
 
 /**
@@ -10,21 +9,24 @@
  * @return size_t: случайный индекс в диапазоне [left, right]
  */
 static size_t RandomPivotIndex(size_t left, size_t right) {
-  return left + rand() % (right - left + 1);
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(left, right);
+  return dis(gen);
 }
 
 /**
  * @brief Разбиение массива вокруг опорного элемента (пивота)
  * @tparam T: тип элементов вектора
- * @param arr: ссылка на вектор
+ * @param data: ссылка на вектор
  * @param left: левая граница диапазона разбиения
  * @param right: правая граница диапазона разбиения
  * @return size_t: индекс опорного элемента после разбиения
  */
 template <typename T>
 static size_t Partition(std::vector<T>& data, size_t left, size_t right) {
-  size_t pivotIndex = RandomPivotIndex(left, right);
-  std::swap(data[pivotIndex], data[right]);
+  size_t pivot_index = RandomPivotIndex(left, right);
+  std::swap(data[pivot_index], data[right]);
   size_t storeIndex = left;
 
   for (size_t i = left; i < right; i++) {
@@ -49,13 +51,18 @@ static size_t Partition(std::vector<T>& data, size_t left, size_t right) {
  * @param data: сортируемый вектор
  */
 template <typename T>
-static void QuickSort(std::vector<T>& data) {
+void QuickSort(std::vector<T>& data) {
   size_t left = 0;
   size_t right = data.size() - 1;
 
-  if (left < right) {
-    size_t pivotIndex = Partition(data, left, right);
-    QuickSort(data, left, pivotIndex - 1);
-    QuickSort(data, pivotIndex + 1, right);
-  }
+  std::function<void(size_t, size_t)> QuickSortRecursive = [&](size_t l,
+                                                               size_t r) {
+    if (l < r) {
+      size_t pivot_index = Partition(data, l, r);
+      QuickSortRecursive(l, pivot_index - 1);
+      QuickSortRecursive(pivot_index + 1, r);
+    }
+  };
+
+  QuickSortRecursive(left, right);
 }

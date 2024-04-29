@@ -1,6 +1,12 @@
-#include <heap_sort.hpp>
+// std libs:
 #include <iostream>
+
+// sort algos:
+#include <heap_sort.hpp>
 #include <merge_sort.hpp>
+#include <quick_sort.hpp>
+
+// my libs:
 #include <util.hpp>
 
 int main() {
@@ -13,5 +19,10 @@ int main() {
   MergeSort(b);
   std::cout << b << std::endl;
   std::cout << std::is_sorted(b.begin(), b.end()) << std::endl;
+
+  std::vector<int> c{5, 3, 4, 1, 2};
+  QuickSort(c);
+  std::cout << c << std::endl;
+  std::cout << std::is_sorted(c.begin(), c.end()) << std::endl;
   return 0;
 }
