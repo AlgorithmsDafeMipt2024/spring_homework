@@ -109,6 +109,8 @@ static void SiftDownHeap(std::vector<T>& data, size_t start, size_t end) {
  */
 template <typename T>
 void HeapSort(std::vector<T>& data) {
+  if (data.empty()) return;
+
   data = GetHeap(data);
   auto n = data.size();
   auto index = data.size();

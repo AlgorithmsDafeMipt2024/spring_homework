@@ -52,6 +52,8 @@ static size_t Partition(std::vector<T>& data, size_t left, size_t right) {
  */
 template <typename T>
 void QuickSort(std::vector<T>& data) {
+  if (data.empty()) return;
+
   size_t left = 0;
   size_t right = data.size() - 1;
 

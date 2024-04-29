@@ -56,6 +56,8 @@ static void Merge(std::vector<T>& data, size_t left, size_t mid, size_t right) {
  */
 template <typename T>
 void MergeSort(std::vector<T>& data) {
+  if (data.empty()) return;
+
   auto n = data.size();
 
   for (size_t i = 1; i < n; i *= 2)
