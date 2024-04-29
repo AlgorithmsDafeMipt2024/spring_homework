@@ -9,9 +9,10 @@
  * @param right: индекс конца второй отсортированной части
  */
 template <typename T>
-static void Merge(std::vector<T>& data, size_t left, size_t mid, size_t right) {
-  size_t index_1 = 0;  /// @brief индекс для первой части
-  size_t index_2 = 0;  /// @brief индекс для второй части
+static void Merge(std::vector<T>& data, std::size_t left, std::size_t mid,
+                  std::size_t right) {
+  std::size_t index_1 = 0;  /// @brief индекс для первой части
+  std::size_t index_2 = 0;  /// @brief индекс для второй части
 
   /// @brief временный вектор для слияния
   std::vector<T> res(right - left);
@@ -43,7 +44,7 @@ static void Merge(std::vector<T>& data, size_t left, size_t mid, size_t right) {
   }
 
   // копируем результат слияния обратно в исходный вектор
-  for (size_t i = 0; i < index_1 + index_2; i++) data[left + i] = res[i];
+  for (std::size_t i = 0; i < index_1 + index_2; i++) data[left + i] = res[i];
 }
 
 // MARK: MergeSort
@@ -60,7 +61,7 @@ void MergeSort(std::vector<T>& data) {
 
   auto n = data.size();
 
-  for (size_t i = 1; i < n; i *= 2)
-    for (size_t j = 0; j < n - i; j += 2 * i)
+  for (std::size_t i = 1; i < n; i *= 2)
+    for (std::size_t j = 0; j < n - i; j += 2 * i)
       Merge(data, j, j + i, std::min(j + 2 * i, n));
 }

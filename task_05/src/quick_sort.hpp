@@ -6,9 +6,9 @@
  * @brief Выбор случайного опорного элемента (пивота)
  * @param left: левая граница диапазона
  * @param right: правая граница диапазона
- * @return size_t: случайный индекс в диапазоне [left, right]
+ * @return std::size_t: случайный индекс в диапазоне [left, right]
  */
-static size_t RandomPivotIndex(size_t left, size_t right) {
+static std::size_t RandomPivotIndex(std::size_t left, std::size_t right) {
   static std::random_device rd;
   static std::mt19937 gen(rd());
   std::uniform_int_distribution<> dis(left, right);
@@ -21,15 +21,16 @@ static size_t RandomPivotIndex(size_t left, size_t right) {
  * @param data: ссылка на вектор
  * @param left: левая граница диапазона разбиения
  * @param right: правая граница диапазона разбиения
- * @return size_t: индекс опорного элемента после разбиения
+ * @return std::size_t: индекс опорного элемента после разбиения
  */
 template <typename T>
-static size_t Partition(std::vector<T>& data, size_t left, size_t right) {
-  size_t pivot_index = RandomPivotIndex(left, right);
+static std::size_t Partition(std::vector<T>& data, std::size_t left,
+                             std::size_t right) {
+  std::size_t pivot_index = RandomPivotIndex(left, right);
   std::swap(data[pivot_index], data[right]);
-  size_t storeIndex = left;
+  std::size_t storeIndex = left;
 
-  for (size_t i = left; i < right; i++) {
+  for (std::size_t i = left; i < right; i++) {
     if (data[i] < data[right]) {
       std::swap(data[i], data[storeIndex]);
       storeIndex++;
@@ -54,17 +55,17 @@ template <typename T>
 void QuickSort(std::vector<T>& data) {
   if (data.empty()) return;
 
-  size_t left = 0;
-  size_t right = data.size() - 1;
+  std::size_t left = 0;
+  std::size_t right = data.size() - 1;
 
-  std::function<void(size_t, size_t)> QuickSortRecursive = [&](size_t l,
-                                                               size_t r) {
-    if (l < r) {
-      size_t pivot_index = Partition(data, l, r);
-      QuickSortRecursive(l, pivot_index - 1);
-      QuickSortRecursive(pivot_index + 1, r);
-    }
-  };
+  std::function<void(std::size_t, std::size_t)> QuickSortRecursive =
+      [&](std::size_t l, std::size_t r) {
+        if (l < r) {
+          std::size_t pivot_index = Partition(data, l, r);
+          QuickSortRecursive(l, pivot_index - 1);
+          QuickSortRecursive(pivot_index + 1, r);
+        }
+      };
 
   QuickSortRecursive(left, right);
 }
