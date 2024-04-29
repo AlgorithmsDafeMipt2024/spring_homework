@@ -5,21 +5,21 @@
  * @param index: индекс элемента, выше которого нужное значение
  * @return T: элемент, который находится выше
  */
-static size_t ParentOf(size_t index) { return (index - 1) / 2; }
+static std::size_t ParentOf(std::size_t index) { return (index - 1) / 2; }
 
 /**
  * @brief Возвращает элемент, который находится левее
  * @param index: индекс элемента, левее которого нужное значение
  * @return T: элемент, который находится левее
  */
-static size_t LeftChildOf(size_t index) { return (2 * index + 1); }
+static std::size_t LeftChildOf(std::size_t index) { return (2 * index + 1); }
 
 /**
  * @brief Возвращает элемент, который находится правее
  * @param index: индекс элемента, правее которого нужное значение
  * @return T: элемент, который находится правее
  */
-static size_t RightChildOf(size_t index) { return (2 * index + 2); }
+static std::size_t RightChildOf(std::size_t index) { return (2 * index + 2); }
 
 /**
  * @brief Приводит кучу в валидное состояние после добавления
@@ -29,7 +29,7 @@ static size_t RightChildOf(size_t index) { return (2 * index + 2); }
 template <typename T>
 static void SiftUpHeap(std::vector<T>& data) {
   // идем с конца по родителям
-  size_t index = data.size() - 1;
+  std::size_t index = data.size() - 1;
 
   // пока следующий родитель больше, меняем местами
   while (index > 0 && data[ParentOf(index)] < data[index]) {
@@ -71,9 +71,10 @@ static std::vector<T> GetHeap(const std::vector<T>& data) {
  * @param end
  */
 template <typename T>
-static void SiftDownHeap(std::vector<T>& data, size_t start, size_t end) {
+static void SiftDownHeap(std::vector<T>& data, std::size_t start,
+                         std::size_t end) {
   while (start < end) {
-    size_t largest = start;  // largest = корень поддерева
+    std::size_t largest = start;  // largest = корень поддерева
 
     // если левый потомок существует и больше текущего лучшего элемента
     if (LeftChildOf(start) < end && data[LeftChildOf(start)] > data[largest]) {
@@ -115,7 +116,7 @@ void HeapSort(std::vector<T>& data) {
   auto n = data.size();
   auto index = data.size();
 
-  for (size_t i = 0; i < n - 1; i++) {
+  for (std::size_t i = 0; i < n - 1; i++) {
     std::swap(data[0], data[n - 1 - i]);
     index--;
     SiftDownHeap(data, 0, index);
