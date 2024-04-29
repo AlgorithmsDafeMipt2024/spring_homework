@@ -5,21 +5,21 @@
  * @param index: индекс элемента, выше которого нужное значение
  * @return T: элемент, который находится выше
  */
-size_t ParentOf(size_t index) { return (index - 1) / 2; }
+static size_t ParentOf(size_t index) { return (index - 1) / 2; }
 
 /**
  * @brief Возвращает элемент, который находится левее
  * @param index: индекс элемента, левее которого нужное значение
  * @return T: элемент, который находится левее
  */
-size_t LeftChildOf(size_t index) { return (2 * index + 1); }
+static size_t LeftChildOf(size_t index) { return (2 * index + 1); }
 
 /**
  * @brief Возвращает элемент, который находится правее
  * @param index: индекс элемента, правее которого нужное значение
  * @return T: элемент, который находится правее
  */
-size_t RightChildOf(size_t index) { return (2 * index + 2); }
+static size_t RightChildOf(size_t index) { return (2 * index + 2); }
 
 /**
  * @brief Приводит кучу в валидное состояние после добавления
@@ -27,7 +27,7 @@ size_t RightChildOf(size_t index) { return (2 * index + 2); }
  * @param data: вектор, представляющий собой кучу
  */
 template <typename T>
-void SiftUpHeap(std::vector<T>& data) {
+static void SiftUpHeap(std::vector<T>& data) {
   // идем с конца по родителям
   size_t index = data.size() - 1;
 
@@ -45,7 +45,7 @@ void SiftUpHeap(std::vector<T>& data) {
  * @param elem: значение элемента
  */
 template <typename T>
-void AddToHeap(std::vector<T>& data, T elem) {
+static void AddToHeap(std::vector<T>& data, T elem) {
   data.push_back(elem);
   SiftUpHeap(data);
 }
@@ -57,7 +57,7 @@ void AddToHeap(std::vector<T>& data, T elem) {
  * @return std::vector<T>: созданная куча в виде вектора
  */
 template <typename T>
-std::vector<T> GetHeap(const std::vector<T>& data) {
+static std::vector<T> GetHeap(const std::vector<T>& data) {
   std::vector<T> res;
   for (const auto& elem : data) AddToHeap(res, elem);
   return res;
@@ -71,7 +71,7 @@ std::vector<T> GetHeap(const std::vector<T>& data) {
  * @param end
  */
 template <typename T>
-void SiftDownHeap(std::vector<T>& data, size_t start, size_t end) {
+static void SiftDownHeap(std::vector<T>& data, size_t start, size_t end) {
   while (start < end) {
     size_t largest = start;  // largest = корень поддерева
 
@@ -97,6 +97,8 @@ void SiftDownHeap(std::vector<T>& data, size_t start, size_t end) {
   }
 }
 
+// MARK: HeapSort
+
 /**
  * @brief Сортировка кучей, пирамидальная сортировка (англ. Heapsort) — алгоритм
  сортировки, использующий структуру данных двоичная куча. Это неустойчивый
@@ -110,7 +112,9 @@ void HeapSort(std::vector<T>& data) {
   data = GetHeap(data);
   auto n = data.size();
   auto index = data.size();
-  for (size_t i = 0; i < n - 1; i++) std::swap(data[0], data[n - 1 - i]);
-  index--;
-  SiftDownHeap(data, 0, index);
+  for (size_t i = 0; i < n - 1; i++) {
+    std::swap(data[0], data[n - 1 - i]);
+    index--;
+    SiftDownHeap(data, 0, index);
+  }
 }
