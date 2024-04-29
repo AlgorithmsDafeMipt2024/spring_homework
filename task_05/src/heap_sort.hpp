@@ -112,6 +112,7 @@ void HeapSort(std::vector<T>& data) {
   data = GetHeap(data);
   auto n = data.size();
   auto index = data.size();
+
   for (size_t i = 0; i < n - 1; i++) {
     std::swap(data[0], data[n - 1 - i]);
     index--;
