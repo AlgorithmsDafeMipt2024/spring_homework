@@ -104,21 +104,21 @@ class BinaryMinHeap {
    * @param index: индекс элемента, выше которого нужное значение
    * @return T: элемент, который находится выше
    */
-  T ParentOf(size_t index) const { return (index - 1) / 2; }
+  size_t ParentOf(size_t index) const { return (index - 1) / 2; }
 
   /**
    * @brief Возвращает элемент, который находится левее
    * @param index: индекс элемента, левее которого нужное значение
    * @return T: элемент, который находится левее
    */
-  T LeftChildOf(size_t index) const { return (2 * index + 1); }
+  size_t LeftChildOf(size_t index) const { return (2 * index + 1); }
 
   /**
    * @brief Возвращает элемент, который находится правее
    * @param index: индекс элемента, правее которого нужное значение
    * @return T: элемент, который находится правее
    */
-  T RightChildOf(size_t index) const { return (2 * index + 2); }
+  size_t RightChildOf(size_t index) const { return (2 * index + 2); }
 
   /// @brief Приводит кучу в валидное состояние после добавления
   void SiftUp() {
@@ -264,21 +264,21 @@ class BinaryMaxHeap {
    * @param index: индекс элемента, выше которого нужное значение
    * @return T: элемент, который находится выше
    */
-  T ParentOf(size_t index) const { return (index - 1) / 2; }
+  size_t ParentOf(size_t index) const { return (index - 1) / 2; }
 
   /**
    * @brief Возвращает элемент, который находится левее
    * @param index: индекс элемента, левее которого нужное значение
    * @return T: элемент, который находится левее
    */
-  T LeftChildOf(size_t index) const { return (2 * index + 1); }
+  size_t LeftChildOf(size_t index) const { return (2 * index + 1); }
 
   /**
    * @brief Возвращает элемент, который находится правее
    * @param index: индекс элемента, правее которого нужное значение
    * @return T: элемент, который находится правее
    */
-  T RightChildOf(size_t index) const { return (2 * index + 2); }
+  size_t RightChildOf(size_t index) const { return (2 * index + 2); }
 
   /// @brief Приводит кучу в валидное состояние после добавления
   void SiftUp() {
