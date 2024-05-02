@@ -1,0 +1,25 @@
+// #include "solution.h"
+
+// unsigned int coin_change(unsigned int amount, std::vector<unsigned int>
+// coins) {
+//   if (amount == 0) return 0;
+//   std::sort(coins.begin(), coins.end());
+//   std::vector<int> dp(amount + 1);
+
+//   for (int i = 0; i < amount + 1; i++) dp[i] = 0;
+
+//   for (int i = 1; i < dp.size(); i++) {
+//     for (int j = coins.size() - 1; j >= 0; j--) {
+//       if (i - coins[j] == 0) {
+//         dp[i] = 1;
+//         break;
+//       } else if (i - coins[j] > 0 && dp[i - coins[j]] != 0) {
+//         if (dp[i] == 0)
+//           dp[i] = dp[i - coins[j]] + 1;
+//         else
+//           dp[i] = std::min(dp[i], dp[i - coins[j]] + 1);
+//       }
+//     }
+//   }
+//   return dp[amount] == 0 ? -1 : dp[amount];
+// }
