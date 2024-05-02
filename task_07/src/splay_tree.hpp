@@ -336,29 +336,3 @@ void in_order_DFS(TreeNode<std::pair<Key, CustomType>>* current_node,
   data_vector.push_back(current_node->value.second);
   in_order_DFS(current_node->right_child, data_vector);
 }
-
-template <constructable CustomType, comparable Key>
-void breadth_first_search(TreeNode<std::pair<Key, CustomType>>* tree_root,
-                          std::vector<std::vector<CustomType>>& data_vector) {
-  if (tree_root == nullptr) return;
-  std::queue<TreeNode<std::pair<Key, CustomType>>*> search_queue;
-  search_queue.push(tree_root);
-  while (!search_queue.empty()) {
-    std::vector<CustomType> current_row;
-    std::vector<TreeNode<std::pair<Key, CustomType>>*> next_row;
-    while (!search_queue.empty()) {
-      if (search_queue.front() != nullptr) {
-        current_row.push_back(search_queue.front()->value.second);
-        next_row.push_back(search_queue.front()->left_child);
-        next_row.push_back(search_queue.front()->right_child);
-        search_queue.pop();
-      }
-    }
-
-    data_vector.push_back(current_row);
-
-    for (const TreeNode<std::pair<Key, CustomType>>*& tree_node : next_row) {
-      search_queue.push(tree_node);
-    }
-  }
-}
