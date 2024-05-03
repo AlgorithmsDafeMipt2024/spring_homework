@@ -10,17 +10,20 @@ long long coin_change(long long amount, std::vector<size_t> coins) {
   std::sort(coins.begin(), coins.end());
   std::vector<int> dp(amount + 1);
 
-  for (int i = 0; i < amount + 1; i++) dp[i] = 0;
+  for (int current_amount = 0; current_amount < amount + 1; current_amount++)
+    dp[current_amount] = 0;
 
-  for (int i = 1; i < dp.size(); i++) {
-    for (int j = coins.size() - 1; j >= 0; j--) {
-      if (i - coins[j] == 0)
-        dp[i] = 1;
-      else if (i - coins[j] > 0 && dp[i - coins[j]] != 0) {
-        if (dp[i] == 0)
-          dp[i] = dp[i - coins[j]] + 1;
+  for (int current_amount = 1; current_amount < dp.size(); current_amount++) {
+    for (int coin_index = coins.size() - 1; coin_index >= 0; coin_index--) {
+      if (current_amount - coins[coin_index] == 0)
+        dp[current_amount] = 1;
+      else if (current_amount - coins[coin_index] > 0 &&
+               dp[current_amount - coins[coin_index]] != 0) {
+        if (dp[current_amount] == 0)
+          dp[current_amount] = dp[current_amount - coins[coin_index]] + 1;
         else
-          dp[i] = std::min(dp[i], dp[i - coins[j]] + 1);
+          dp[current_amount] = std::min(
+              dp[current_amount], dp[current_amount - coins[coin_index]] + 1);
       }
     }
   }
