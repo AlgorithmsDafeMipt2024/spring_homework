@@ -6,10 +6,10 @@
 template <typename T>
 struct Node {
   T key;
-  unsigned int height = 1 ;
+  unsigned int height = 1;
   Node* left = nullptr;
   Node* right = nullptr;
-  Node(T k):key{k}{};
+  Node(T k) : key{k} {};
 };
 
 template <typename T>
@@ -48,10 +48,14 @@ bool Tree<T>::Contains(int k) {
 }
 
 template <typename T>
-unsigned int Tree<T>::Height(Node<T>* n) { return n ? n->height : 0; }
+unsigned int Tree<T>::Height(Node<T>* n) {
+  return n ? n->height : 0;
+}
 
 template <typename T>
-int Tree<T>::BFactor(Node<T>* n) { return Height(n->right) - Height(n->left); }
+int Tree<T>::BFactor(Node<T>* n) {
+  return Height(n->right) - Height(n->left);
+}
 
 template <typename T>
 void Tree<T>::FixHeight(Node<T>* n) {
@@ -105,7 +109,9 @@ Node<T>* Tree<T>::Insert(Node<T>* n, T k) {
 }
 
 template <typename T>
-Node<T>* Tree<T>::FindMin(Node<T>* n) { return n->left ? FindMin(n->left) : n; }
+Node<T>* Tree<T>::FindMin(Node<T>* n) {
+  return n->left ? FindMin(n->left) : n;
+}
 
 template <typename T>
 Node<T>* Tree<T>::RemoveMin(Node<T>* n) {
