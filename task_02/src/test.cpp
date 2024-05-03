@@ -49,3 +49,9 @@ TEST(MinStackTest, Simple) {
   ASSERT_EQ(stack.pop(), 3);  // Stack [1]
   ASSERT_EQ(stack.pop(), 1);  // Stack []
 }
+
+TEST(StackTest, Empty) {
+  MyStack<int> stack;
+  EXPECT_THROW(stack.top(), std::runtime_error);
+  EXPECT_THROW(stack.pop(), std::runtime_error);
+}
