@@ -24,7 +24,13 @@ void Heap::SiftDown(int index) {
   }
 }
 
-int Heap::Min() { return heap_[0]; }
+int Heap::Min() {
+  int m = heap_[0];
+  std::swap(heap_[0], heap_[heap_.size() - 1]);
+  heap_.pop_back();
+  SiftDown(0);
+  return m;
+}
 
 void Heap::Insert(int value) {
   heap_.push_back(value);
