@@ -303,17 +303,19 @@ void SplayTree<CustomType, Key>::remove(Key key) {
     throw std::runtime_error("removing a non-existing element\n");
 
   splay(key);
-  tree_root = x_node->left;
-  tree_root->parent = nullptr;
-  x_node->left = nullptr;
-  SplayTree right_tree{x_node->right};
-  x_node->right = nullptr;
-  right_tree.tree_root->parent = nullptr;
+  x_node = tree_root;
+  tree_root = x_node->left_child;
+  if (tree_root != nullptr) tree_root->parent = nullptr;
+
+  x_node->left_child = nullptr;
+  SplayTree right_tree{x_node->right_child};
+  x_node->right_child = nullptr;
+  if (right_tree.tree_root != nullptr) right_tree.tree_root->parent = nullptr;
+
   delete x_node;
 
   merge(right_tree);
 }
-
 template <constructable CustomType, comparable Key>
 CustomType& SplayTree<CustomType, Key>::operator[](Key key) {
   TreeNode<std::pair<Key, CustomType>>* x_node = find(key);

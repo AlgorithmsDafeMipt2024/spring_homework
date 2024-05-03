@@ -26,3 +26,39 @@ TEST(in_order_DFS, Simple) {
   EXPECT_TRUE(st2.root()->parent == nullptr);
   ASSERT_EQ(vector2, assert_vector2);
 }
+
+TEST(tree_sort, Simple) {
+  SplayTree<int> st3{};
+  std::vector<int> data_vector1 = {2, 3, 1, 4, 5};
+  for (const int& value : data_vector1) st3[value] = value;
+  std::vector<int> vector3;
+  std::vector<int> assert_vector3 = {1, 2, 3, 4, 5};
+  in_order_DFS(st3.root(), vector3);
+
+  EXPECT_TRUE(st3.root()->parent == nullptr);
+  ASSERT_EQ(vector3, assert_vector3);
+}
+
+TEST(string_tree, Simple) {
+  SplayTree<std::string> st4{};
+  st4[1] = "hello";
+  st4[5] = "this";
+  st4[10] = "is";
+  st4[11] = "string";
+  st4[20] = "tree";
+
+  ASSERT_EQ(st4[1], "hello");
+  ASSERT_EQ(st4[5], "this");
+  ASSERT_EQ(st4[10], "is");
+  ASSERT_EQ(st4[11], "string");
+  ASSERT_EQ(st4[20], "tree");
+}
+
+TEST(string_tree, String_keys) {
+  SplayTree<std::string, std::string> st5{};
+  st5["this"] = "is";
+  st5["even"] = "crazier";
+
+  ASSERT_EQ(st5["this"], "is");
+  ASSERT_EQ(st5["even"], "crazier");
+}
