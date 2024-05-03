@@ -39,40 +39,51 @@ class SplayTree {
   SplayTree() : tree_root{nullptr} {}
   SplayTree(TreeNode<std::pair<Key, CustomType>>* tree_root_)
       : tree_root{tree_root_} {}
+  // time complexity - O(nlogn)
   explicit SplayTree(
       std::initializer_list<std::pair<Key, CustomType>> init_list);
 
+  // time complexity - O(logn)
   CustomType& operator[](Key key);
+  // time complexity - O(logn)
   void merge(SplayTree& tree);
+  // time complexity - O(logn)
   SplayTree split(Key key);
+  // time complexity - O(logn)
   void add(Key key, CustomType value);
+  // time complexity - O(logn)
   void remove(Key key);
+  // time complexity - O(1)
   TreeNode<std::pair<Key, CustomType>>* root() { return tree_root; }
-
-  friend void in_order_depth_first_search(SplayTree<CustomType, Key>& splaytree,
-                                          std::vector<CustomType>& data_vector);
-
+  // time complexity - O(logn)
   Key rightest_key();
 
  private:
   enum class Direction : bool { left, right };
 
+  // time complexity - O(logn)
   TreeNode<std::pair<Key, CustomType>>* find(Key key);
+  // time complexity - O(1)
   ParentsType parents_check(TreeNode<std::pair<Key, CustomType>>* x_node);
 
+  // time complexity - O(logn)
   void splay(Key key);
 
+  // time complexity - O(1)
   void zig(TreeNode<std::pair<Key, CustomType>>* x_node, Direction direction);
 
+  // time complexity - O(1)
   void zig_zig(TreeNode<std::pair<Key, CustomType>>* x_node,
                Direction direction);
 
+  // time complexity - O(1)
   void zig_zag(TreeNode<std::pair<Key, CustomType>>* x_node,
                Direction direction);
 
   TreeNode<std::pair<Key, CustomType>>* tree_root;
 };
 
+// time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 TreeNode<std::pair<Key, CustomType>>* SplayTree<CustomType, Key>::find(
     Key key) {
@@ -96,6 +107,7 @@ TreeNode<std::pair<Key, CustomType>>* SplayTree<CustomType, Key>::find(
   }
 }
 
+// time complexity - O(nlogn)
 template <constructable CustomType, comparable Key>
 SplayTree<CustomType, Key>::SplayTree(
     std::initializer_list<std::pair<Key, CustomType>> init_list) {
@@ -103,6 +115,7 @@ SplayTree<CustomType, Key>::SplayTree(
     add(pair.first, pair.second);
 }
 
+// time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 Key SplayTree<CustomType, Key>::rightest_key() {
   if (tree_root == nullptr) throw std::runtime_error("empty tree\n");
@@ -114,6 +127,7 @@ Key SplayTree<CustomType, Key>::rightest_key() {
   return current_node->value.first;
 }
 
+// time complexity - O(1)
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::zig(
     TreeNode<std::pair<Key, CustomType>>* x_node, Direction direction) {
@@ -143,6 +157,7 @@ void SplayTree<CustomType, Key>::zig(
   if (x_node->is_root()) tree_root = x_node;
 }
 
+// time complexity - O(1)
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::zig_zig(
     TreeNode<std::pair<Key, CustomType>>* x_node, Direction direction) {
@@ -158,6 +173,7 @@ void SplayTree<CustomType, Key>::zig_zig(
   if (x_node->is_root()) tree_root = x_node;
 }
 
+// time complexity - O(1)
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::zig_zag(
     TreeNode<std::pair<Key, CustomType>>* x_node, Direction direction) {
@@ -173,6 +189,7 @@ void SplayTree<CustomType, Key>::zig_zag(
   if (x_node->is_root()) tree_root = x_node;
 }
 
+// time complexity - O(1)
 template <constructable CustomType, comparable Key>
 ParentsType SplayTree<CustomType, Key>::parents_check(
     TreeNode<std::pair<Key, CustomType>>* x_node) {
@@ -216,6 +233,7 @@ ParentsType SplayTree<CustomType, Key>::parents_check(
       "got throw all else if blocks but haven't found a match\n");
 }
 
+// time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::splay(Key key) {
   if (tree_root == nullptr) return;
@@ -250,6 +268,7 @@ void SplayTree<CustomType, Key>::splay(Key key) {
   }
 }
 
+// time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::merge(SplayTree<CustomType, Key>& tree) {
   if (tree_root == nullptr) {
@@ -262,6 +281,7 @@ void SplayTree<CustomType, Key>::merge(SplayTree<CustomType, Key>& tree) {
   tree.tree_root->parent = tree_root;
 }
 
+// time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 SplayTree<CustomType, Key> SplayTree<CustomType, Key>::split(Key key) {
   splay(key);
@@ -285,6 +305,7 @@ SplayTree<CustomType, Key> SplayTree<CustomType, Key>::split(Key key) {
   }
 }
 
+// time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::add(Key key, CustomType value) {
   SplayTree right_tree = split(key);
@@ -296,6 +317,7 @@ void SplayTree<CustomType, Key>::add(Key key, CustomType value) {
   tree_root = new_root;
 }
 
+// time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::remove(Key key) {
   TreeNode<std::pair<Key, CustomType>>* x_node = find(key);
@@ -316,6 +338,8 @@ void SplayTree<CustomType, Key>::remove(Key key) {
 
   merge(right_tree);
 }
+
+// time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 CustomType& SplayTree<CustomType, Key>::operator[](Key key) {
   TreeNode<std::pair<Key, CustomType>>* x_node = find(key);
@@ -327,6 +351,7 @@ CustomType& SplayTree<CustomType, Key>::operator[](Key key) {
   return value_node->value.second;
 }
 
+// time complexity - O(n)
 template <constructable CustomType, comparable Key>
 void in_order_DFS(TreeNode<std::pair<Key, CustomType>>* current_node,
                   std::vector<CustomType>& data_vector) {
