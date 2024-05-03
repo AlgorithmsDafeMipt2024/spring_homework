@@ -244,41 +244,63 @@ TEST(SortAlgos, CustomCharTestType) {
   EXPECT_TRUE(std::is_sorted(c.begin(), c.end()));
 }
 
-TEST(SortAlgos, VeryLargeNumbers) {
+TEST(SortAlgos, VeryLargeNumbers_HeapSort) {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<int64_t> dis(
       std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::max());
 
   std::vector<int64_t> a;
-  std::vector<int64_t> b;
-  std::vector<int64_t> c;
 
   for (int i = 0; i < 1000000; ++i) {
     int64_t num = dis(gen);
     a.push_back(num);
-    b.push_back(num);
-    c.push_back(num);
   }
 
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
-
-  MergeSort(b);
-  EXPECT_TRUE(std::is_sorted(b.begin(), b.end()));
-
-  QuickSort(c);
-  EXPECT_TRUE(std::is_sorted(c.begin(), c.end()));
 }
 
-TEST(SortAlgos, VeryLongStrings) {
+TEST(SortAlgos, VeryLargeNumbers_MergeSort) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<int64_t> dis(
+      std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::max());
+
+  std::vector<int64_t> a;
+
+  for (int i = 0; i < 1000000; ++i) {
+    int64_t num = dis(gen);
+    a.push_back(num);
+  }
+
+  MergeSort(a);
+  EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
+}
+
+TEST(SortAlgos, VeryLargeNumbers_QuickSort) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<int64_t> dis(
+      std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::max());
+
+  std::vector<int64_t> a;
+
+  for (int i = 0; i < 1000000; ++i) {
+    int64_t num = dis(gen);
+    a.push_back(num);
+  }
+
+  QuickSort(a);
+  EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
+}
+
+TEST(SortAlgos, VeryLongStrings_HeapSort) {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<char> dis('a', 'z');
 
   std::vector<std::string> a;
-  std::vector<std::string> b;
-  std::vector<std::string> c;
 
   for (int i = 0; i < 10000; ++i) {
     std::string str(1000, 'a');
@@ -286,16 +308,46 @@ TEST(SortAlgos, VeryLongStrings) {
       c = dis(gen);
     }
     a.push_back(str);
-    b.push_back(str);
-    c.push_back(str);
   }
 
   HeapSort(a);
   EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
+}
 
-  MergeSort(b);
-  EXPECT_TRUE(std::is_sorted(b.begin(), b.end()));
+TEST(SortAlgos, VeryLongStrings_MergeSort) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<char> dis('a', 'z');
 
-  MergeSort(c);
-  EXPECT_TRUE(std::is_sorted(c.begin(), c.end()));
+  std::vector<std::string> a;
+
+  for (int i = 0; i < 10000; ++i) {
+    std::string str(1000, 'a');
+    for (char& c : str) {
+      c = dis(gen);
+    }
+    a.push_back(str);
+  }
+
+  MergeSort(a);
+  EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
+}
+
+TEST(SortAlgos, VeryLongStrings_QuickSort) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<char> dis('a', 'z');
+
+  std::vector<std::string> a;
+
+  for (int i = 0; i < 10000; ++i) {
+    std::string str(1000, 'a');
+    for (char& c : str) {
+      c = dis(gen);
+    }
+    a.push_back(str);
+  }
+
+  QuickSort(a);
+  EXPECT_TRUE(std::is_sorted(a.begin(), a.end()));
 }
