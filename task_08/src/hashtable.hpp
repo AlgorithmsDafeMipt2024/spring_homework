@@ -19,9 +19,9 @@ class HashTable {
   constexpr static const int DefaultSize = 8;
   constexpr static const double RehashSize = 0.75;
   constexpr static const double HashCoeff = 0.61803398;
-  unsigned size_; // занятые ячейки без учёта Deleted
+  unsigned size_;  // занятые ячейки без учёта Deleted
   unsigned buffer_size_;
-  unsigned used_cell_size_;// занятые ячейки с учётом Deleted
+  unsigned used_cell_size_;  // занятые ячейки с учётом Deleted
   std::vector<int> table_;
   enum class Status { Empty, Deleted, Fill };
   std::vector<Status> cell_status_;
@@ -32,4 +32,3 @@ class HashTable {
   void Resize();
   void Clear();
 };
-

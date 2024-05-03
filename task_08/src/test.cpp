@@ -1,5 +1,6 @@
-#include "hashtable.hpp"
 #include <gtest/gtest.h>
+
+#include "hashtable.hpp"
 
 TEST(Hashtable, Simple) {
   HashTable table;
@@ -9,7 +10,7 @@ TEST(Hashtable, Simple) {
   ASSERT_EQ(table.Contains(17), true);
   ASSERT_EQ(table.Size(), 3);
   table.Remove(5);
-  ASSERT_EQ(table.Contains(5),false);
+  ASSERT_EQ(table.Contains(5), false);
 }
 
 TEST(Hashtable, EmptyTable) {

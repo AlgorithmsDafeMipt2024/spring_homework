@@ -83,6 +83,4 @@ bool HashTable::Contains(int key) {
   return false;
 }
 
-unsigned HashTable::Size(){
-  return size_;
-}
+unsigned HashTable::Size() { return size_; }
