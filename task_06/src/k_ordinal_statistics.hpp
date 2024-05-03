@@ -16,6 +16,7 @@ concept comparable = requires(CustomType a, CustomType b) {
 template <comparable CustomType>
 size_t partition(std::vector<CustomType>& data_array, size_t left_index,
                  size_t right_index) {
+  // Seperate by the middle element
   CustomType& separator = data_array[(left_index + right_index) / 2];
   size_t left = left_index;
   size_t right = right_index;
