@@ -62,7 +62,7 @@ void QuickSort(std::vector<T>& data) {
       [&](std::size_t l, std::size_t r) {
         if (l < r) {
           std::size_t pivot_index = Partition(data, l, r);
-          QuickSortRecursive(l, pivot_index - 1);
+          if (pivot_index) QuickSortRecursive(l, pivot_index - 1);
           QuickSortRecursive(pivot_index + 1, r);
         }
       };
