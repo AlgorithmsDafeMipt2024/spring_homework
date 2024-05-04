@@ -35,7 +35,7 @@ class HashTable {
   std::vector<K> keys();
   std::vector<T> values();
 
-  T& operator[](K key);
+  T& operator[](const K& key);
   T& pop(K key);
   bool has_key(K key);
 
@@ -103,7 +103,7 @@ void HashTable<K, T>::set_default(T default_value_) {
 }
 
 template <hashable K, typename T>
-T& HashTable<K, T>::operator[](K key) {
+T& HashTable<K, T>::operator[](const K& key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[(hasher(key)) % array_length];
 
@@ -151,7 +151,7 @@ T& HashTable<K, T>::pop(K key) {
       return value;
     }
   }
-  throw std::runtime_error("deleting a key that doesn't exist");
+  throw std::runtime_error("out_of_range");
 }
 
 template <hashable K, typename T>
