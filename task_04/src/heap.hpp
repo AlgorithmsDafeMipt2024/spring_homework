@@ -34,28 +34,28 @@ concept comparing = requires(CustomType a, CustomType b, Function f) {
 template <constructable CustomType,
           comparing<CustomType> Function =
               std::function<bool(const CustomType&, const CustomType&)>>
-class heap {
+class Heap {
  public:
   // default constructor works only if your custom type is comparable!
-  heap();
+  Heap();
   // this constructor works only if your custom type is comparable with a
   // function
-  heap(std::function<bool(const CustomType&, const CustomType&)>
+  Heap(std::function<bool(const CustomType&, const CustomType&)>
            comparing_function_);
-  explicit heap(std::initializer_list<CustomType> initializer_list);
-  explicit heap(std::function<bool(const CustomType&, const CustomType&)>
+  explicit Heap(std::initializer_list<CustomType> initializer_list);
+  explicit Heap(std::function<bool(const CustomType&, const CustomType&)>
                     comparing_function_,
                 std::initializer_list<CustomType> initializer_list);
   // push an element into heap, O(logn) time complexity
-  void push(CustomType element);
+  void Push(CustomType element);
   // pop a minimal element from heap, O(logn) time complexity
-  CustomType pop_bottom();
+  CustomType PopBottom();
   // retrieve a minimal element from heap, O(1) time complexity
-  CustomType bottom();
+  CustomType Bottom();
   // return size of heap
-  size_t size() { return heap_size; }
+  size_t Size() { return heap_size; }
   // check if heap is empty
-  bool empty() { return heap_size == 0; }
+  bool Empty() { return heap_size == 0; }
 
  private:
   // bring minimal element back to place if element with given index is
@@ -71,7 +71,7 @@ class heap {
 
 // time complexity - O(1)
 template <constructable CustomType, comparing<CustomType> Function>
-heap<CustomType, Function>::heap() : data{}, heap_size{0} {
+Heap<CustomType, Function>::Heap() : data{}, heap_size{0} {
   comparing_function = [](const CustomType& a, const CustomType& b) {
     return a < b;
   };
@@ -79,7 +79,7 @@ heap<CustomType, Function>::heap() : data{}, heap_size{0} {
 
 // time complexity - O(1)
 template <constructable CustomType, comparing<CustomType> Function>
-heap<CustomType, Function>::heap(
+Heap<CustomType, Function>::Heap(
     std::function<bool(const CustomType&, const CustomType&)>
         comparing_function_)
     : data{}, heap_size{0} {
@@ -88,29 +88,29 @@ heap<CustomType, Function>::heap(
 
 // time complexity - O(nlogn)
 template <constructable CustomType, comparing<CustomType> Function>
-heap<CustomType, Function>::heap(
+Heap<CustomType, Function>::Heap(
     std::initializer_list<CustomType> initializer_list)
-    : heap() {
+    : Heap() {
   comparing_function = [](const CustomType& a, const CustomType& b) {
     return a < b;
   };
 
-  for (const CustomType& value : initializer_list) push(value);
+  for (const CustomType& value : initializer_list) Push(value);
 }
 
 // time complexity - O(nlogn)
 template <constructable CustomType, comparing<CustomType> Function>
-heap<CustomType, Function>::heap(
+Heap<CustomType, Function>::Heap(
     std::function<bool(const CustomType&, const CustomType&)>
         comparing_function_,
     std::initializer_list<CustomType> initializer_list)
     : comparing_function{comparing_function_} {
-  for (const CustomType& value : initializer_list) push(value);
+  for (const CustomType& value : initializer_list) Push(value);
 }
 
 // time complexity - O(logn)
 template <constructable CustomType, comparing<CustomType> Function>
-void heap<CustomType, Function>::sift_down(size_t index) {
+void Heap<CustomType, Function>::sift_down(size_t index) {
   size_t& index_1 = index;  // for code to be more readable
 
   while (2 * index_1 + 1 < heap_size) {
@@ -132,7 +132,7 @@ void heap<CustomType, Function>::sift_down(size_t index) {
 
 // time complexity - O(logn)
 template <constructable CustomType, comparing<CustomType> Function>
-void heap<CustomType, Function>::sift_up(size_t index) {
+void Heap<CustomType, Function>::sift_up(size_t index) {
   while (comparing_function(data[index], data[(index - 1) / 2])) {
     std::swap(data[index], data[(index - 1) / 2]);
     index = (index - 1) / 2;
@@ -141,15 +141,15 @@ void heap<CustomType, Function>::sift_up(size_t index) {
 
 // time complexity - O(1)
 template <constructable CustomType, comparing<CustomType> Function>
-CustomType heap<CustomType, Function>::bottom() {
-  if (empty()) throw std::runtime_error("heap is empty");
+CustomType Heap<CustomType, Function>::Bottom() {
+  if (Empty()) throw std::runtime_error("heap is empty");
   return data[0];
 }
 
 // time complexity - O(logn)
 template <constructable CustomType, comparing<CustomType> Function>
-CustomType heap<CustomType, Function>::pop_bottom() {
-  CustomType bottom_elem = bottom();
+CustomType Heap<CustomType, Function>::PopBottom() {
+  CustomType bottom_elem = Bottom();
   std::swap(data[0], data.back());
   data.pop_back();
   heap_size--;
@@ -159,7 +159,7 @@ CustomType heap<CustomType, Function>::pop_bottom() {
 
 // time complexity - O(logn)
 template <constructable CustomType, comparing<CustomType> Function>
-void heap<CustomType, Function>::push(CustomType element) {
+void Heap<CustomType, Function>::Push(CustomType element) {
   data.push_back(element);
   heap_size++;
   if (heap_size >= 2) sift_up(heap_size - 1);

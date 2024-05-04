@@ -9,60 +9,60 @@ using std::string;
 
 #include "heap.hpp"
 
-TEST(heap, empty) {
-  heap<int> hp1;
-  ASSERT_EQ(hp1.empty(), true);
-  ASSERT_EQ(hp1.size(), 0);
-  hp1.push(1);
-  ASSERT_EQ(hp1.empty(), false);
-  ASSERT_EQ(hp1.size(), 1);
-  ASSERT_EQ(hp1.pop_bottom(), 1);
-  EXPECT_THROW(hp1.bottom(), std::runtime_error);
-  EXPECT_THROW(hp1.pop_bottom(), std::runtime_error);
+TEST(Heap, Empty) {
+  Heap<int> hp1;
+  ASSERT_EQ(hp1.Empty(), true);
+  ASSERT_EQ(hp1.Size(), 0);
+  hp1.Push(1);
+  ASSERT_EQ(hp1.Empty(), false);
+  ASSERT_EQ(hp1.Size(), 1);
+  ASSERT_EQ(hp1.PopBottom(), 1);
+  EXPECT_THROW(hp1.Bottom(), std::runtime_error);
+  EXPECT_THROW(hp1.PopBottom(), std::runtime_error);
 }
-TEST(heap, comparable_1) {
-  heap<std::array<int, 5>> hp2;
-  hp2.push({1, 1, 1, 1, 1});
+TEST(Heap, Comparable1) {
+  Heap<std::array<int, 5>> hp2;
+  hp2.Push({1, 1, 1, 1, 1});
   std::array<int, 5> test_array_1 = {1, 1, 1, 1, 1};
   std::array<int, 5> test_array_2 = {1, 1, 1, 1, 0};
-  ASSERT_EQ(hp2.bottom(), test_array_1);
-  ASSERT_EQ(hp2.pop_bottom() == test_array_2, false);
+  ASSERT_EQ(hp2.Bottom(), test_array_1);
+  ASSERT_EQ(hp2.PopBottom() == test_array_2, false);
 }
 
-TEST(heap, without_duplicates) {
-  heap<int> hp3{};
-  for (int value : {3, 1, 2, 4, 5}) hp3.push(value);
-  ASSERT_EQ(hp3.pop_bottom(), 1);
-  ASSERT_EQ(hp3.pop_bottom(), 2);
-  ASSERT_EQ(hp3.pop_bottom(), 3);
-  ASSERT_EQ(hp3.pop_bottom(), 4);
-  ASSERT_EQ(hp3.pop_bottom(), 5);
+TEST(Heap, WithoutDuplicates) {
+  Heap<int> hp3{};
+  for (int value : {3, 1, 2, 4, 5}) hp3.Push(value);
+  ASSERT_EQ(hp3.PopBottom(), 1);
+  ASSERT_EQ(hp3.PopBottom(), 2);
+  ASSERT_EQ(hp3.PopBottom(), 3);
+  ASSERT_EQ(hp3.PopBottom(), 4);
+  ASSERT_EQ(hp3.PopBottom(), 5);
 }
 
-TEST(heap, with_duplicates) {
-  heap<int> hp4{};
-  for (int value : {6, 7, 7, 3, 3, 3, 1, 2}) hp4.push(value);
-  ASSERT_EQ(hp4.pop_bottom(), 1);
-  ASSERT_EQ(hp4.pop_bottom(), 2);
-  ASSERT_EQ(hp4.pop_bottom(), 3);
-  ASSERT_EQ(hp4.pop_bottom(), 3);
-  ASSERT_EQ(hp4.pop_bottom(), 3);
-  ASSERT_EQ(hp4.pop_bottom(), 6);
-  ASSERT_EQ(hp4.pop_bottom(), 7);
-  ASSERT_EQ(hp4.pop_bottom(), 7);
+TEST(Heap, WithDuplicates) {
+  Heap<int> hp4{};
+  for (int value : {6, 7, 7, 3, 3, 3, 1, 2}) hp4.Push(value);
+  ASSERT_EQ(hp4.PopBottom(), 1);
+  ASSERT_EQ(hp4.PopBottom(), 2);
+  ASSERT_EQ(hp4.PopBottom(), 3);
+  ASSERT_EQ(hp4.PopBottom(), 3);
+  ASSERT_EQ(hp4.PopBottom(), 3);
+  ASSERT_EQ(hp4.PopBottom(), 6);
+  ASSERT_EQ(hp4.PopBottom(), 7);
+  ASSERT_EQ(hp4.PopBottom(), 7);
 }
 
-TEST(heap, init_list_constructor) {
-  heap<int> hp5{1, 2, 3};
-  ASSERT_EQ(hp5.pop_bottom(), 1);
-  ASSERT_EQ(hp5.pop_bottom(), 2);
-  ASSERT_EQ(hp5.pop_bottom(), 3);
+TEST(Heap, InitListConstructor) {
+  Heap<int> hp5{1, 2, 3};
+  ASSERT_EQ(hp5.PopBottom(), 1);
+  ASSERT_EQ(hp5.PopBottom(), 2);
+  ASSERT_EQ(hp5.PopBottom(), 3);
 }
 
-TEST(string_heap, simple_test) {
-  heap<string> hp6{"azz", "bzz", "zaa", "zab"};
-  ASSERT_EQ(hp6.pop_bottom(), "azz");
-  ASSERT_EQ(hp6.pop_bottom(), "bzz");
-  ASSERT_EQ(hp6.pop_bottom(), "zaa");
-  ASSERT_EQ(hp6.pop_bottom(), "zab");
+TEST(StringHeap, SimpleTest) {
+  Heap<string> hp6{"azz", "bzz", "zaa", "zab"};
+  ASSERT_EQ(hp6.PopBottom(), "azz");
+  ASSERT_EQ(hp6.PopBottom(), "bzz");
+  ASSERT_EQ(hp6.PopBottom(), "zaa");
+  ASSERT_EQ(hp6.PopBottom(), "zab");
 }
