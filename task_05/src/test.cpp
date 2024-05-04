@@ -58,6 +58,7 @@ TEST(sort, empty) {
   merge_sort(begin, end);
   ASSERT_EQ(vector, test);
 }
+
 TEST(sort, one_elem) {
   std::vector<int> vector = {1};
   std::vector<int> test = vector;
