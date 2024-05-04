@@ -43,7 +43,7 @@ template <constructable CustomClass>
 CustomClass Stack<CustomClass>::Pop() {
   if (top_ == nullptr) throw std::runtime_error("out of range\n");
   ListNode<CustomClass>* temp = top_->prev;
-  CustomClass val = top_->data;
+  CustomClass& val = top_->data;
   delete top_;
   top_ = temp;
   return val;
