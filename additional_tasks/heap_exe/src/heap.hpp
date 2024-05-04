@@ -5,8 +5,8 @@ class Heap {
  public:
   void SiftUp(int i);
   void SiftDown(int i);
-  void insert(int x);
-  int getMin();
+  void Insert(int x);
+  int GetMin();
   void extractMin();
   int size();
 

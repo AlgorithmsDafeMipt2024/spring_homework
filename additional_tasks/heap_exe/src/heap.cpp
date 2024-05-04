@@ -28,9 +28,9 @@ void Heap::SiftDown(int i) {
 
 int Heap::size() { return a.size(); }
 
-int Heap::getMin() { return a[0]; }
+int Heap::GetMin() { return a[0]; }
 
-void Heap::insert(int x) {
+void Heap::Insert(int x) {
   a.push_back(x);
   n++;
   SiftUp(n - 1);
@@ -57,13 +57,13 @@ std::pair<int, std::vector<int>> Heap_exe(int n, int k, std::vector<int> a) {
     while (j - i < k && j < n) {
       if (a[j] < a[i]) {
         indx[a[j]] = j;
-        useful_elements.insert(a[j]);
+        useful_elements.Insert(a[j]);
         break;
       }
 
       if (i != j) {
         indx[a[j]] = j;
-        useful_elements.insert(a[j]);
+        useful_elements.Insert(a[j]);
       }
 
       ans0 += a[i];
@@ -73,7 +73,7 @@ std::pair<int, std::vector<int>> Heap_exe(int n, int k, std::vector<int> a) {
     }
 
     if (useful_elements.size() != 0) {
-      i = indx[useful_elements.getMin()];
+      i = indx[useful_elements.GetMin()];
       useful_elements.extractMin();
     } else {
       i = j;
