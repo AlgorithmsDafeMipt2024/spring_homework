@@ -21,7 +21,7 @@ template <typename CutsomType>
 struct Node {
   Node() : prev{nullptr}, data{}, next{nullptr} {}
   Node(CutsomType data_) : prev{nullptr}, data{data_}, next{nullptr} {}
-  void add_node(CutsomType data_);
+  void AddNode(CutsomType data_);
   Node* next;
   Node* prev;
   CutsomType data;
@@ -29,7 +29,7 @@ struct Node {
 
 // method, that allows to add a node with a value to an existing one
 template <typename CutsomType>
-void Node<CutsomType>::add_node(CutsomType data_) {
+void Node<CutsomType>::AddNode(CutsomType data_) {
   next = new Node(data_);
   next->prev = this;
 }
@@ -43,42 +43,42 @@ class MyStack {
   MyStack() : top_{nullptr} {}
 
   // insert an element at the top of the stack
-  void push(CutsomType value);
+  void Push(CutsomType value);
 
   // retrieve last inserted element
-  CutsomType top();
+  CutsomType Top();
   // retrieve last inserted element and delete it from the stack
-  CutsomType pop();
+  CutsomType Pop();
   // check if stack is empty
-  bool empty() const { return top_ == nullptr; }
+  bool Empty() const { return top_ == nullptr; }
 
  private:
   Node<CutsomType>* top_;
 };
 
 template <typename CutsomType>
-void MyStack<CutsomType>::push(CutsomType value) {
+void MyStack<CutsomType>::Push(CutsomType value) {
   if (top_ == nullptr)
     top_ = new Node(value);
   else {
-    top_->add_node(value);
+    top_->AddNode(value);
     top_ = top_->next;
   }
 }
 
 template <typename CutsomType>
-CutsomType MyStack<CutsomType>::top() {
+CutsomType MyStack<CutsomType>::Top() {
   if (top_ == nullptr)
     throw std::runtime_error("there are no elements in the stack\n");
   return top_->data;
 }
 
 template <typename CutsomType>
-CutsomType MyStack<CutsomType>::pop() {
+CutsomType MyStack<CutsomType>::Pop() {
   if (top_ == nullptr)
     throw std::runtime_error("there are no elements in the stack\n");
   Node<CutsomType>* temp = top_->prev;
-  CutsomType& val = top_->data;
+  CutsomType val = top_->data;
   delete top_;
   top_ = temp;
   return val;
@@ -88,37 +88,37 @@ template <comparable CutsomType>
 class MinStack {
  public:
   // insert an element at the top of the stack
-  void push(CutsomType value);
+  void Push(CutsomType value);
   // retrieve last inserted element and delete it from the stack
-  CutsomType pop();
+  CutsomType Pop();
   // retrieve minimal element
-  CutsomType min();
+  CutsomType Min();
   // retrieve last inserted element
-  CutsomType top();
+  CutsomType Top();
 
  private:
   MyStack<std::pair<CutsomType, CutsomType>> stack;
 };
 
 template <comparable CutsomType>
-void MinStack<CutsomType>::push(CutsomType value) {
-  if (stack.empty())
-    stack.push({value, value});
+void MinStack<CutsomType>::Push(CutsomType value) {
+  if (stack.Empty())
+    stack.Push({value, value});
   else
-    stack.push({value, std::min(value, stack.top().second)});
+    stack.Push({value, std::min(value, stack.Top().second)});
 }
 
 template <comparable CutsomType>
-CutsomType MinStack<CutsomType>::pop() {
-  return stack.pop().first;
+CutsomType MinStack<CutsomType>::Pop() {
+  return stack.Pop().first;
 }
 
 template <comparable CutsomType>
-CutsomType MinStack<CutsomType>::min() {
-  return stack.top().second;
+CutsomType MinStack<CutsomType>::Min() {
+  return stack.Top().second;
 }
 
 template <comparable CutsomType>
-CutsomType MinStack<CutsomType>::top() {
-  return stack.top().first;
+CutsomType MinStack<CutsomType>::Top() {
+  return stack.Top().first;
 }
