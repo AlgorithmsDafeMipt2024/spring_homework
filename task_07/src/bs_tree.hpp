@@ -10,7 +10,7 @@ class BSTree {
   // Public methods for insertion, checking containment, and removal
   void Insert(T value);
   bool Contains(T value) const;
-  void Remove(T value);
+  bool Remove(T value);
 
  private:
   // Node structure for the binary search tree
@@ -39,7 +39,7 @@ class BSTree {
 
   // Private method to remove a value recursively from the binary search tree
   // starting from the given node
-  void Remove(T value, std::unique_ptr<BSTNode> &node);
+  bool Remove(T value, std::unique_ptr<BSTNode> &node);
 };
 
 // Public method to insert a value into the binary search tree
@@ -77,40 +77,37 @@ bool BSTree<T>::Contains(T value, const std::unique_ptr<BSTNode> &node) const {
 
 // Public method to remove a value from the binary search tree
 template <typename T>
-void BSTree<T>::Remove(T value) {
-  Remove(value, root);
+bool BSTree<T>::Remove(T value) {
+  return Remove(value, root);
 }
 
 // Private method to remove a value recursively from the binary search tree
 // starting from the given node
 template <typename T>
-void BSTree<T>::Remove(T value, std::unique_ptr<BSTNode> &node) {
-  if (!node) return;
+bool BSTree<T>::Remove(T value, std::unique_ptr<BSTNode> &node) {
+  if (!node) return false;
   if (value == node->value) {
     if (!node->left && !node->right) {
       node = nullptr;
-      return;
+      return true;
     }
     if (node->left && !node->right) {
       node = std::move(node->left);
-      return;
+      return true;
     }
     if (!node->left && node->right) {
       node = std::move(node->right);
-      return;
+      return true;
     }
     std::unique_ptr<BSTNode> &minNode = SearchMin(node->right);
     node->value = minNode->value;
-    Remove(minNode->value, minNode);
-    return;
+    return Remove(minNode->value, minNode);
   }
   if (value < node->value) {
-    Remove(value, node->left);
-    return;
+    return Remove(value, node->left);
   }
   if (value > node->value) {
-    Remove(value, node->right);
-    return;
+    return Remove(value, node->right);
   }
 }
 

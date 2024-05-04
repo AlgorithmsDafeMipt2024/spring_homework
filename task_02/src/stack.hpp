@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <stdexcept>
 
 template <typename T>
 class Stack {
@@ -45,7 +46,7 @@ void Stack<T>::Push(T data) {
 
 template <typename T>
 T Stack<T>::Pop() {
-  if (size_ == 0) throw std::runtime_error("Stack is empty");
+  if (size_ == 0) throw std::out_of_range("Stack is empty");
   T removed_value = top_->data_;
   top_ = std::move(top_->next_);
   size_--;
@@ -54,7 +55,7 @@ T Stack<T>::Pop() {
 
 template <typename T>
 T Stack<T>::Top() const {
-  if (size_ == 0) throw std::runtime_error("Stack is empty");
+  if (size_ == 0) throw std::out_of_range("Stack is empty");
   return top_->data_;
 }
 

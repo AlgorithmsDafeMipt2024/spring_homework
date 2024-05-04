@@ -25,12 +25,12 @@ TEST(StackTest, PushAndPop) {
 
 TEST(StackTest, PopFromEmptyStack) {
   Stack<int> stack;
-  ASSERT_THROW(stack.Pop(), std::runtime_error);
+  ASSERT_THROW(stack.Pop(), std::out_of_range);
 }
 
 TEST(StackTest, TopFromEmptyStack) {
   Stack<int> stack;
-  ASSERT_THROW(stack.Top(), std::runtime_error);
+  ASSERT_THROW(stack.Top(), std::out_of_range);
 }
 
 TEST(MinStackTest, PushAndPop) {
@@ -61,15 +61,15 @@ TEST(MinStackTest, PushAndPop) {
 
 TEST(MinStackTest, PopFromEmptyStack) {
   MinStack<int> stack;
-  ASSERT_THROW(stack.Pop(), std::runtime_error);
+  ASSERT_THROW(stack.Pop(), std::out_of_range);
 }
 
 TEST(MinStackTest, TopFromEmptyStack) {
   MinStack<int> stack;
-  ASSERT_THROW(stack.Top(), std::runtime_error);
+  ASSERT_THROW(stack.Top(), std::out_of_range);
 }
 
 TEST(MinStackTest, GetMinFromEmptyStack) {
   MinStack<int> stack;
-  ASSERT_THROW(stack.GetMin(), std::runtime_error);
+  ASSERT_THROW(stack.GetMin(), std::out_of_range);
 }

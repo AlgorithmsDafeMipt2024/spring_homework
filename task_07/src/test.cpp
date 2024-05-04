@@ -63,6 +63,30 @@ TEST(BSTreeTest, DuplicateData) {
   ASSERT_EQ(Tree.Contains(3), false);
 }
 
+TEST(BSTreeTest, RemoveChecking) {
+  BSTree<int> Tree;
+  Tree.Insert(10);
+  Tree.Insert(5);
+  Tree.Insert(15);
+  Tree.Insert(7);
+  Tree.Insert(12);
+  Tree.Insert(20);
+
+  ASSERT_EQ(Tree.Remove(10), true);
+  ASSERT_EQ(Tree.Contains(10), false);
+
+  ASSERT_EQ(Tree.Remove(7), true);
+  ASSERT_EQ(Tree.Contains(7), false);
+
+  ASSERT_EQ(Tree.Contains(5), true);
+  ASSERT_EQ(Tree.Remove(5), true);
+
+  ASSERT_EQ(Tree.Remove(19), false);
+  ASSERT_EQ(Tree.Remove(119), false);
+  ASSERT_EQ(Tree.Remove(12), true);
+  ASSERT_EQ(Tree.Remove(12), false);
+}
+
 TEST(AVLTreeTest, InsertAndFind) {
   AVLTree<int> tree;
 

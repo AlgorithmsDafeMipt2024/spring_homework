@@ -2,11 +2,9 @@
 
 #include <math.h>
 
-#include <concepts>
 #include <functional>
 #include <memory>
 #include <stdexcept>
-#include <type_traits>
 
 template <typename T>
 class HashTable {
@@ -69,9 +67,6 @@ template <typename T>
 size_t HashTable<T>::Size() const {
   return size_;
 }
-
-template <typename T>
-concept tip = std::same_as<T, int>;
 
 template <typename T>
 size_t HashTable<T>::SecondHashFunction(T key) const {
