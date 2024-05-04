@@ -51,6 +51,9 @@ void HashTable::Insert(int key) {
   cell_status_[hash] = Status::Fill;
   used_cell_size_++;
   size_++;
+
+  double fill_coeff = double(used_cell_size_) / buffer_size_;
+  if (fill_coeff >= RehashSize) Rehash();
 }
 
 void HashTable::Remove(int key) {
