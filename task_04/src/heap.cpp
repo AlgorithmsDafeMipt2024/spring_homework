@@ -27,7 +27,7 @@ int Heap::Find_Min() { return vec_[0]; }
 int Heap::Extract_Min() {
   int min = vec_[0];
   vec_[0] = vec_[vec_.size() - 1];
-  vec_.erase(vec_.begin());
+  vec_.pop_back();
   SiftDown(0);
   return min;
 }
