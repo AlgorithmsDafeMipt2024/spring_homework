@@ -8,10 +8,7 @@ class Day {
  public:
   int number_of_day;
   int temperature;
-  Day(int number_of_day, int temperature) {
-    this->number_of_day = number_of_day;
-    this->temperature = temperature;
-  }
+  Day(int number_of_day, int temperature): number_of_day(number_of_day), temperature(temperature) {}
 };
 
 std::vector<int> RiseTemperature(std::vector<int> vec) {
