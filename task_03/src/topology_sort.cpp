@@ -14,7 +14,7 @@ class Day {
   }
 };
 
-std::vector<int> Rise_Temperature(std::vector<int> vec) {
+std::vector<int> RiseTemperature(std::vector<int> vec) {
   int size = int(vec.size());
   if (size == 0) {
     throw WrongVector("Wrong vector is too small");
