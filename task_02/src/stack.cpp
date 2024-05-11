@@ -16,7 +16,7 @@ void Stack::Push(int value) {
 
 int Stack::Pop() {
   if (top == nullptr) {
-    throw std::logic_error("Stack Underflow");
+    throw std::logic_error("Out_of_range");
   }
   int val = top->value;
   top = top->next;
