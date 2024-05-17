@@ -107,8 +107,8 @@ T& HashTable<K, T>::operator[](const K& key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[(hasher(key)) % array_length];
 
-  if (key_list.empty()) {
-    key_list.push_back({key, default_value});
+  if (key_list.Empty()) {
+    key_list.PushBack({key, default_value});
 
     number_of_elements++;
     fillness_ratio = number_of_elements / (double)array_length;
@@ -120,11 +120,11 @@ T& HashTable<K, T>::operator[](const K& key) {
 
     return key_list[0].second;
   } else {
-    for (size_t i = 0; i < key_list.size(); i++) {
+    for (size_t i = 0; i < key_list.Size(); i++) {
       if (key_list[i].first == key) return key_list[i].second;
     }
 
-    key_list.push_back({key, default_value});
+    key_list.PushBack({key, default_value});
 
     number_of_elements++;
     fillness_ratio = number_of_elements / (double)array_length;
@@ -134,7 +134,7 @@ T& HashTable<K, T>::operator[](const K& key) {
       return (*this)[key];
     }
 
-    return key_list.back().second;
+    return key_list.Back().second;
   }
 }
 
@@ -142,7 +142,7 @@ template <hashable K, typename T>
 T& HashTable<K, T>::Pop(K key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[(hasher(key)) % array_length];
-  for (size_t i = 0; i < key_list.size(); i++) {
+  for (size_t i = 0; i < key_list.Size(); i++) {
     if (key_list[i].first == key) {
       T& value = key_list.Pop(i).second;
       number_of_elements--;
@@ -158,7 +158,7 @@ template <hashable K, typename T>
 bool HashTable<K, T>::HasKey(K key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[hasher(key) % array_length];
-  for (size_t i = 0; i < key_list.size(); i++)
+  for (size_t i = 0; i < key_list.Size(); i++)
     if (key_list[i].first == key) return true;
   return false;
 }
@@ -166,7 +166,7 @@ bool HashTable<K, T>::HasKey(K key) {
 template <hashable K, typename T>
 void HashTable<K, T>::Print() {
   for (size_t i = 0; i < hash_vector.size(); i++) {
-    for (size_t j = 0; j < hash_vector[i].size(); j++) {
+    for (size_t j = 0; j < hash_vector[i].Size(); j++) {
       std::cout << hash_vector[i][j].second << ' ';
     }
     std::cout << '\n';
@@ -178,7 +178,7 @@ std::vector<std::pair<K, T>> HashTable<K, T>::Items() {
   std::vector<std::pair<K, T>> vector;
 
   for (size_t i = 0; i < hash_vector.size(); i++)
-    for (size_t j = 0; j < hash_vector[i].size(); j++)
+    for (size_t j = 0; j < hash_vector[i].Size(); j++)
       vector.push_back(hash_vector[i][j]);
 
   return vector;
@@ -189,7 +189,7 @@ std::vector<K> HashTable<K, T>::Keys() {
   std::vector<K> vector;
 
   for (size_t i = 0; i < hash_vector.size(); i++)
-    for (size_t j = 0; j < hash_vector[i].size(); j++)
+    for (size_t j = 0; j < hash_vector[i].Size(); j++)
       vector.push_back(hash_vector[i][j].first);
 
   return vector;
@@ -200,7 +200,7 @@ std::vector<T> HashTable<K, T>::Values() {
   std::vector<T> vector;
 
   for (size_t i = 0; i < hash_vector.size(); i++)
-    for (size_t j = 0; j < hash_vector[i].size(); j++)
+    for (size_t j = 0; j < hash_vector[i].Size(); j++)
       vector.push_back(hash_vector[i][j].second);
 
   return vector;
@@ -208,7 +208,7 @@ std::vector<T> HashTable<K, T>::Values() {
 
 template <hashable K, typename T>
 void HashTable<K, T>::Clear() {
-  hash_vector.Clear();
+  hash_vector.clear();
   hash_vector.resize(base_length);
   array_length = base_length;
 
@@ -220,7 +220,7 @@ template <hashable K, typename T>
 void HashTable<K, T>::Rehash(rehash_type type) {
   std::vector<std::pair<K, T>> vector = Items();
 
-  hash_vector.Clear();
+  hash_vector.clear();
   array_length =
       (type == rehash_type::up) ? array_length * 2 : array_length / 4;
   hash_vector.resize(array_length);
@@ -231,7 +231,7 @@ void HashTable<K, T>::Rehash(rehash_type type) {
     LinkedList<std::pair<K, T>>& key_list =
         hash_vector[hasher(key) % array_length];
 
-    key_list.push_back({key, value});
+    key_list.PushBack({key, value});
   }
   fillness_ratio = number_of_elements / (double)array_length;
 }

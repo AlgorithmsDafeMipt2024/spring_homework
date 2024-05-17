@@ -18,14 +18,14 @@ TEST(hashtable, simple) {
   std::vector<int> assert_vector_2;
   for (int i = 1; i <= 64; i++) assert_vector_2.push_back(hash_table_1[i]);
 
-  std::vector<int> assert_vector_3 = hash_table_1.values();
+  std::vector<int> assert_vector_3 = hash_table_1.Values();
   std::sort(assert_vector_3.begin(), assert_vector_3.end());
 
   // check if we don't lose any data when inserting into hash_table
   ASSERT_EQ(assert_vector_1, assert_vector_2);
   ASSERT_EQ(assert_vector_1, assert_vector_3);
 
-  for (int i = 17; i <= 64; i++) hash_table_1.pop(i);
+  for (int i = 17; i <= 64; i++) hash_table_1.Pop(i);
 
   std::vector<int> assert_vector_4;
   std::vector<int> assert_vector_5;
@@ -35,7 +35,7 @@ TEST(hashtable, simple) {
     assert_vector_5.push_back((hash_table_1[i]));
   }
 
-  std::vector<int> assert_vector_6 = hash_table_1.values();
+  std::vector<int> assert_vector_6 = hash_table_1.Values();
   std::sort(assert_vector_6.begin(), assert_vector_6.end());
 
   // check if we don't lose any data when deleting elements from hash_table
@@ -46,32 +46,32 @@ TEST(hashtable, simple) {
   std::vector<bool> assert_vector_8;
 
   for (int i = 1; i <= 16; i++) {
-    assert_vector_7.push_back(hash_table_1.has_key(i));
+    assert_vector_7.push_back(hash_table_1.HasKey(i));
     assert_vector_8.push_back(true);
   }
 
   for (int i = 17; i <= 64; i++) {
-    assert_vector_7.push_back(hash_table_1.has_key(i));
+    assert_vector_7.push_back(hash_table_1.HasKey(i));
     assert_vector_8.push_back(false);
   }
 
   // check if don't have "phantom" elements after deletion
   ASSERT_EQ(assert_vector_7, assert_vector_8);
 
-  hash_table_1.clear();
+  hash_table_1.Clear();
 
   std::vector<bool> assert_vector_9;
   std::vector<bool> assert_vector_10;
 
   for (int i = 1; i <= 64; i++) {
-    assert_vector_9.push_back(hash_table_1.has_key(i));
+    assert_vector_9.push_back(hash_table_1.HasKey(i));
     assert_vector_10.push_back(false);
   }
 
-  // check the method "clear()"
+  // check the method "Clear()"
   ASSERT_EQ(assert_vector_9, assert_vector_10);
 
-  hash_table_1.set_default(16);
+  hash_table_1.SetDefault(16);
 
   std::vector<int> assert_vector_11;
   std::vector<int> assert_vector_12;
