@@ -27,7 +27,7 @@ concept comparing = requires(CustomType a, CustomType b, Function f) {
 // where n - length of first array, m - length of second array
 template <typename CustomType, comparing<CustomType> Function = std::function<
                                    bool(const CustomType&, const CustomType&)>>
-void merge_two_sorted_arrays(
+void MergeTwoSortedArrays(
     CustomType* begin, CustomType* middle, CustomType* end,
     Function comparing_function = [](const CustomType& a, const CustomType& b) {
       return a < b;
@@ -64,7 +64,7 @@ void merge_two_sorted_arrays(
 // time complexity - O(nlogn) where n - length of an array
 template <typename CustomType, comparing<CustomType> Function = std::function<
                                    bool(const CustomType&, const CustomType&)>>
-void merge_sort(
+void MergeSort(
     CustomType* begin, CustomType* end,
     Function comparing_function = [](CustomType a, CustomType b) {
       return a < b;
@@ -72,9 +72,9 @@ void merge_sort(
   if ((end == begin) || (end - begin == 1)) return;
 
   CustomType* middle_begin = begin + (end - begin) / 2;
-  merge_sort(begin, middle_begin, comparing_function);
-  merge_sort(middle_begin, end, comparing_function);
-  merge_two_sorted_arrays(begin, middle_begin, end, comparing_function);
+  MergeSort(begin, middle_begin, comparing_function);
+  MergeSort(middle_begin, end, comparing_function);
+  MergeTwoSortedArrays(begin, middle_begin, end, comparing_function);
 }
 
 // this took way too long

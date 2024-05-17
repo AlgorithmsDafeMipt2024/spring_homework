@@ -10,21 +10,22 @@
 using std::string;
 
 TEST(sort, empty) {
-  std::vector<int> vector1 = {};
+  std::vector<int> vector1{};
   std::vector<int> assert_vector1 = vector1;
   std::sort(assert_vector1.begin(), assert_vector1.end());
   int* begin = &vector1[0];
   int* end = &vector1[vector1.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector1, assert_vector1);
 }
+
 TEST(sort, one_elem) {
   std::vector<int> vector2 = {1};
   std::vector<int> assert_vector2 = vector2;
   std::sort(assert_vector2.begin(), assert_vector2.end());
   int* begin = &vector2[0];
   int* end = &vector2[vector2.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector2, assert_vector2);
 }
 
@@ -34,14 +35,14 @@ TEST(sort, two_elem) {
   std::sort(assert_vector3.begin(), assert_vector3.end());
   int* begin = &vector3[0];
   int* end = &vector3[vector3.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector3, assert_vector3);
 
   std::vector<int> vector4 = {2, 1};
   std::vector<int> assert_vector4 = {1, 2};
   begin = &vector4[0];
   end = &vector4[vector4.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector4, assert_vector4);
 }
 
@@ -51,7 +52,7 @@ TEST(sort, multiple_elem_1) {
   std::sort(assert_vector5.begin(), assert_vector5.end());
   int* begin = &vector5[0];
   int* end = &vector5[vector5.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector5, assert_vector5);
 }
 
@@ -61,7 +62,7 @@ TEST(sort, multiple_elem_2) {
   std::sort(assert_vector6.begin(), assert_vector6.end());
   int* begin = &vector6[0];
   int* end = &vector6[vector6.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector6, assert_vector6);
 }
 
@@ -71,7 +72,7 @@ TEST(sort, strings) {
   std::sort(assert_vector7.begin(), assert_vector7.end());
   string* begin = &vector7[0];
   string* end = &vector7[vector7.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector7, assert_vector7);
 }
 
@@ -82,7 +83,7 @@ TEST(reverse_sort, multiple_elem) {
             [](const int& a, const int& b) { return a >= b; });
   int* begin = &vector8[0];
   int* end = &vector8[vector8.size()];
-  merge_sort(begin, end, [](const int& a, const int& b) { return a >= b; });
+  MergeSort(begin, end, [](const int& a, const int& b) { return a >= b; });
   ASSERT_EQ(vector8, assert_vector8);
 }
 
@@ -100,7 +101,7 @@ TEST(sum_sort, multiple_elem) {
   std::sort(assert_vector9.begin(), assert_vector9.end());
   std::vector<int>* begin = &vector9[0];
   std::vector<int>* end = &vector9[vector9.size()];
-  merge_sort(begin, end, sum_comparasion);
+  MergeSort(begin, end, sum_comparasion);
   EXPECT_FALSE(vector9 == assert_vector9);
   std::sort(assert_vector9.begin(), assert_vector9.end(), sum_comparasion);
   EXPECT_TRUE(vector9 == assert_vector9);
@@ -121,7 +122,7 @@ TEST(sum_sort, multiple_elem) {
 //   int quote_unquote_function = 1;
 //   int* begin = &vector10[0];
 //   int* end = &vector10[vector10.size()];
-//   EXPECT_ANY_THROW(merge_sort(begin, end, quote_unquote_function));
+//   EXPECT_ANY_THROW(MergeSort(begin, end, quote_unquote_function));
 // }
 
 struct A {
@@ -143,13 +144,13 @@ struct A {
 //   std::vector<A> vector11 = {{}, {}, {}};
 //   A* begin = &vector11[0];
 //   A* end = &vector11[vector11.size()];
-//   merge_sort(begin, end);
+//   MergeSort(begin, end);
 // }
 
 TEST(wrong_sort, uncomparable_types) {
   std::vector<A> vector12 = {{}, {}, {}};
   A* begin = &vector12[0];
   A* end = &vector12[vector12.size()];
-  merge_sort(begin, end, [](const A& a, const A& b) { return true; });
+  MergeSort(begin, end, [](const A& a, const A& b) { return true; });
   // this doesn't make sense but it works
 }
