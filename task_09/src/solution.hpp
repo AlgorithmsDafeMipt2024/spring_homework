@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <vector>
 
-long long coin_change(long long amount, std::vector<size_t> coins) {
+long long CoinChange(long long amount, std::vector<size_t> coins) {
   if (amount == 0) return 0;
   if (amount < 0) return -1;
   if (coins.empty()) return -1;
