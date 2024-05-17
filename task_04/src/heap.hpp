@@ -60,9 +60,9 @@ class Heap {
  private:
   // bring minimal element back to place if element with given index is
   // increased
-  void sift_down(size_t index);
+  void SiftDown(size_t index);
   // bring minimal element back to place if element with given index is decreaed
-  void sift_up(size_t index);
+  void SiftUp(size_t index);
   size_t heap_size;
 
   std::function<bool(const CustomType&, const CustomType&)> comparing_function;
@@ -110,7 +110,7 @@ Heap<CustomType, Function>::Heap(
 
 // time complexity - O(logn)
 template <constructable CustomType, comparing<CustomType> Function>
-void Heap<CustomType, Function>::sift_down(size_t index) {
+void Heap<CustomType, Function>::SiftDown(size_t index) {
   size_t& index_1 = index;  // for code to be more readable
 
   while (2 * index_1 + 1 < heap_size) {
@@ -132,7 +132,7 @@ void Heap<CustomType, Function>::sift_down(size_t index) {
 
 // time complexity - O(logn)
 template <constructable CustomType, comparing<CustomType> Function>
-void Heap<CustomType, Function>::sift_up(size_t index) {
+void Heap<CustomType, Function>::SiftUp(size_t index) {
   while (comparing_function(data[index], data[(index - 1) / 2])) {
     std::swap(data[index], data[(index - 1) / 2]);
     index = (index - 1) / 2;
@@ -153,7 +153,7 @@ CustomType Heap<CustomType, Function>::PopBottom() {
   std::swap(data[0], data.back());
   data.pop_back();
   heap_size--;
-  sift_down(0);
+  SiftDown(0);
   return bottom_elem;
 }
 
@@ -162,5 +162,5 @@ template <constructable CustomType, comparing<CustomType> Function>
 void Heap<CustomType, Function>::Push(CustomType element) {
   data.push_back(element);
   heap_size++;
-  if (heap_size >= 2) sift_up(heap_size - 1);
+  if (heap_size >= 2) SiftUp(heap_size - 1);
 }
