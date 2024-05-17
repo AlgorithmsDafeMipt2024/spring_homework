@@ -11,13 +11,13 @@ template <typename T>
 struct Node {
   Node() : next{nullptr}, data{} {}
   Node(T data_) : next{nullptr}, data{data_} {}
-  void add_node(T data_);
+  void AddNode(T data_);
   Node* next;
   T data;
 };
 
 template <typename T>
-void Node<T>::add_node(T data_) {
+void Node<T>::AddNode(T data_) {
   next = new Node(data_);
 }
 
@@ -28,16 +28,16 @@ struct LinkedList {
   ~LinkedList();
   LinkedList(const LinkedList& ll);
 
-  void push_back(T elem);
+  void PushBack(T elem);
 
-  bool empty() const { return size_ == 0; }
-  size_t size() const { return size_; }
+  bool Empty() const { return size_ == 0; }
+  size_t Size() const { return size_; }
 
   T& operator[](size_t index);
-  T& back();
-  T& pop(size_t index);
+  T& Back();
+  T& Pop(size_t index);
 
-  void print();
+  void Print();
 
  private:
   Node<T>* head;
@@ -72,7 +72,7 @@ LinkedList<T>::LinkedList(std::initializer_list<T> initializer_list) {
       if (first_iteration_flag)
         first_iteration_flag = 0;
       else {
-        curr->add_node(value);
+        curr->AddNode(value);
         curr = curr->next;
       }
     }
@@ -82,22 +82,22 @@ LinkedList<T>::LinkedList(std::initializer_list<T> initializer_list) {
 
 template <typename T>
 LinkedList<T>::LinkedList(const LinkedList& ll) {
-  size_ = ll.size();
+  size_ = ll.Size();
   head = new Node(head->data);
   Node<T>* curr = ll.head;
   Node<T>* curr_copy = head;
-  for (size_t i = 1; i < ll.size(); i++) {
+  for (size_t i = 1; i < ll.Size(); i++) {
     curr = curr->next;
-    curr_copy->add_node(curr->data);
+    curr_copy->AddNode(curr->data);
     curr_copy = curr_copy->next;
   }
   tail = curr_copy;
 }
 
 template <typename T>
-void LinkedList<T>::push_back(T elem) {
+void LinkedList<T>::PushBack(T elem) {
   if (tail != nullptr) {
-    tail->add_node(elem);
+    tail->AddNode(elem);
     tail = tail->next;
   } else {
     tail = new Node<T>(elem);
@@ -117,15 +117,15 @@ T& LinkedList<T>::operator[](size_t index) {
 }
 
 template <typename T>
-T& LinkedList<T>::back() {
+T& LinkedList<T>::Back() {
   if (tail == nullptr)
     throw std::runtime_error(
-        "can't use method \"back()\": the linked list is empty");
+        "can't use method \"Back()\": the linked list is empty");
   return tail->data;
 }
 
 template <typename T>
-T& LinkedList<T>::pop(size_t index) {
+T& LinkedList<T>::Pop(size_t index) {
   if (index >= size_) throw std::runtime_error("index out of range");
 
   if (size_ == 1) {
@@ -163,7 +163,7 @@ T& LinkedList<T>::pop(size_t index) {
 }
 
 template <typename T>
-void LinkedList<T>::print() {
+void LinkedList<T>::Print() {
   Node<T>* curr = head;
   while (curr != nullptr) {
     std::cout << curr->data << ' ';

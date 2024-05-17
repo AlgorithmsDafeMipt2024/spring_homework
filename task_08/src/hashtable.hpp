@@ -29,22 +29,22 @@ class HashTable {
         default_value{default_value_} {}
   HashTable(std::initializer_list<std::pair<K, T>> initializer_list);
 
-  void set_default(T default_value_);
+  void SetDefault(T default_value_);
 
-  std::vector<std::pair<K, T>> items();
-  std::vector<K> keys();
-  std::vector<T> values();
+  std::vector<std::pair<K, T>> Items();
+  std::vector<K> Keys();
+  std::vector<T> Values();
 
   T& operator[](const K& key);
-  T& pop(K key);
-  bool has_key(K key);
+  T& Pop(K key);
+  bool HasKey(K key);
 
-  void clear();
-  void print();
+  void Clear();
+  void Print();
 
  private:
   enum rehash_type { up = 1, down = 2 };
-  void rehash(rehash_type type);
+  void Rehash(rehash_type type);
 
   std::vector<LinkedList<std::pair<K, T>>> hash_vector{base_length};
   std::hash<K> hasher;
@@ -98,7 +98,7 @@ HashTable<K, T>::HashTable(
 }
 
 template <hashable K, typename T>
-void HashTable<K, T>::set_default(T default_value_) {
+void HashTable<K, T>::SetDefault(T default_value_) {
   default_value = default_value_;
 }
 
@@ -114,7 +114,7 @@ T& HashTable<K, T>::operator[](const K& key) {
     fillness_ratio = number_of_elements / (double)array_length;
 
     if (fillness_ratio > critical_ratio) {
-      rehash(rehash_type::up);
+      Rehash(rehash_type::up);
       return (*this)[key];
     }
 
@@ -130,7 +130,7 @@ T& HashTable<K, T>::operator[](const K& key) {
     fillness_ratio = number_of_elements / (double)array_length;
 
     if (fillness_ratio > critical_ratio) {
-      rehash(rehash_type::up);
+      Rehash(rehash_type::up);
       return (*this)[key];
     }
 
@@ -139,15 +139,15 @@ T& HashTable<K, T>::operator[](const K& key) {
 }
 
 template <hashable K, typename T>
-T& HashTable<K, T>::pop(K key) {
+T& HashTable<K, T>::Pop(K key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[(hasher(key)) % array_length];
   for (size_t i = 0; i < key_list.size(); i++) {
     if (key_list[i].first == key) {
-      T& value = key_list.pop(i).second;
+      T& value = key_list.Pop(i).second;
       number_of_elements--;
       fillness_ratio = number_of_elements / (double)array_length;
-      if (fillness_ratio < critical_ratio / 4) rehash(rehash_type::down);
+      if (fillness_ratio < critical_ratio / 4) Rehash(rehash_type::down);
       return value;
     }
   }
@@ -155,7 +155,7 @@ T& HashTable<K, T>::pop(K key) {
 }
 
 template <hashable K, typename T>
-bool HashTable<K, T>::has_key(K key) {
+bool HashTable<K, T>::HasKey(K key) {
   LinkedList<std::pair<K, T>>& key_list =
       hash_vector[hasher(key) % array_length];
   for (size_t i = 0; i < key_list.size(); i++)
@@ -164,7 +164,7 @@ bool HashTable<K, T>::has_key(K key) {
 }
 
 template <hashable K, typename T>
-void HashTable<K, T>::print() {
+void HashTable<K, T>::Print() {
   for (size_t i = 0; i < hash_vector.size(); i++) {
     for (size_t j = 0; j < hash_vector[i].size(); j++) {
       std::cout << hash_vector[i][j].second << ' ';
@@ -174,7 +174,7 @@ void HashTable<K, T>::print() {
 }
 
 template <hashable K, typename T>
-std::vector<std::pair<K, T>> HashTable<K, T>::items() {
+std::vector<std::pair<K, T>> HashTable<K, T>::Items() {
   std::vector<std::pair<K, T>> vector;
 
   for (size_t i = 0; i < hash_vector.size(); i++)
@@ -185,7 +185,7 @@ std::vector<std::pair<K, T>> HashTable<K, T>::items() {
 }
 
 template <hashable K, typename T>
-std::vector<K> HashTable<K, T>::keys() {
+std::vector<K> HashTable<K, T>::Keys() {
   std::vector<K> vector;
 
   for (size_t i = 0; i < hash_vector.size(); i++)
@@ -196,7 +196,7 @@ std::vector<K> HashTable<K, T>::keys() {
 }
 
 template <hashable K, typename T>
-std::vector<T> HashTable<K, T>::values() {
+std::vector<T> HashTable<K, T>::Values() {
   std::vector<T> vector;
 
   for (size_t i = 0; i < hash_vector.size(); i++)
@@ -207,8 +207,8 @@ std::vector<T> HashTable<K, T>::values() {
 }
 
 template <hashable K, typename T>
-void HashTable<K, T>::clear() {
-  hash_vector.clear();
+void HashTable<K, T>::Clear() {
+  hash_vector.Clear();
   hash_vector.resize(base_length);
   array_length = base_length;
 
@@ -217,10 +217,10 @@ void HashTable<K, T>::clear() {
 }
 
 template <hashable K, typename T>
-void HashTable<K, T>::rehash(rehash_type type) {
-  std::vector<std::pair<K, T>> vector = items();
+void HashTable<K, T>::Rehash(rehash_type type) {
+  std::vector<std::pair<K, T>> vector = Items();
 
-  hash_vector.clear();
+  hash_vector.Clear();
   array_length =
       (type == rehash_type::up) ? array_length * 2 : array_length / 4;
   hash_vector.resize(array_length);
