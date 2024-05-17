@@ -10,7 +10,7 @@ int main() {
   std::cout << '\n';
   int* begin = &vector[0];
   int* end = &vector[vector.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   for (size_t ind = 0; ind < vector.size(); ind++)
     std::cout << vector[ind] << ' ';
   std::cout << '\n';
