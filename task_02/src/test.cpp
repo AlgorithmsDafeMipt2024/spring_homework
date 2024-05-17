@@ -12,6 +12,8 @@ TEST(EmptyStack, Simple) {
   EXPECT_THROW(stack.Pop(), std::runtime_error);
   stack.Push(1);
   EXPECT_NO_THROW(stack.Pop());
+  EXPECT_THROW(stack.Top(), std::runtime_error);
+  EXPECT_THROW(stack.Pop(), std::runtime_error);
 }
 
 TEST(StackTest, Simple) {
@@ -48,6 +50,9 @@ TEST(MinStackTest, Simple) {
   ASSERT_EQ(stack.Min(), 1);
   ASSERT_EQ(stack.Pop(), 3);  // Stack [1]
   ASSERT_EQ(stack.Pop(), 1);  // Stack []
+
+  EXPECT_THROW(stack.Top(), std::runtime_error);
+  EXPECT_THROW(stack.Pop(), std::runtime_error);
 }
 
 TEST(StackTest, Empty) {
