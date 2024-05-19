@@ -19,7 +19,7 @@ int Stack::Pop() {
   return t->value_;
 }
 
-Node* Stack::Top() { return this->top_; }
+Stack::Node* Stack::Top() { return this->top_; }
 void MinStack::Push(int value) {
   if (s_.Top() == nullptr) {
     m_.Push(value);

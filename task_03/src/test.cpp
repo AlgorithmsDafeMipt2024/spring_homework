@@ -10,4 +10,5 @@ TEST(TempUpDays, Simple) {
             (std::vector<int>{1, 0, 1, 0, 0, 0, 0}));
   ASSERT_EQ(TempUpDayCounter(std::vector<int>{2, 6, 17, 7, 3, 4}),
             (std::vector<int>{1, 1, 0, 0, 1, 0}));
+  ASSERT_EQ(TempUpDayCounter(std::vector<int>{}), std::vector<int>{});
 }

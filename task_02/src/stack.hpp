@@ -1,16 +1,17 @@
 #pragma once
 
-struct Node {
-  int value_ = 0;
-  Node* prev_ = nullptr;
-};
+class Stack {
+ private:
+  struct Node {
+    int value_ = 0;
+    Node* prev_ = nullptr;
+  };
+  Node* top_ = nullptr;
 
-struct Stack {
+ public:
   void Push(int value);
   int Pop();
   Node* Top();
-
-  Node* top_ = nullptr;
 };
 
 struct MinStack {

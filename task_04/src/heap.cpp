@@ -11,7 +11,8 @@ void Heap::SiftUp(int index) {
 
 void Heap::SiftDown(int index) {
   while (2 * index + 1 < heap_.size()) {
-    int l = 2 * index + 1, r = 2 * index + 2;
+    int l = 2 * index + 1;
+    int r = 2 * index + 2;
     int j = l;
     if (r < heap_.size() && heap_[r] < heap_[l]) {
       j = r;

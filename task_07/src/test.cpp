@@ -46,3 +46,11 @@ TEST(AVLTree, RemoveNonExistentElement) {
   avl.Pop(15);
   ASSERT_EQ(avl.Contains(15), false);
 }
+
+TEST(AVLTree, RemoveInEmptyTree) {
+  Tree<int> avl;
+  ASSERT_EQ(avl.Contains(13), false);
+  avl.Pop(13);
+  ASSERT_EQ(avl.Contains(13), false);
+  ASSERT_EQ(avl.Contains(37), false);
+}

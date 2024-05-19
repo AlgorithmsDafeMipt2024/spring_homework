@@ -1,6 +1,8 @@
 #pragma once
+
 #include <ctime>
 #include <vector>
+
 template <class T>
 int Partition(std::vector<T>& data, int l, int r) {
   std::srand(std::time(nullptr));
