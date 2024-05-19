@@ -40,7 +40,7 @@ void MinStack::Push(int value) {
 
 int MinStack::Pop() {
   if (st1_.top == nullptr) {
-    throw std::logic_error("Stack Underflow");
+    throw std::logic_error("Out_of_range");
   }
 
   int val = st1_.top->value;
