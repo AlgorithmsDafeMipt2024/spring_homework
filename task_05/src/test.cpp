@@ -29,8 +29,8 @@ TEST(Qsort, Simple4) {
   ASSERT_EQ((vec4), (std::vector<int>{1, 1, 2, 2, 3, 4, 4}));
 }
 
-TEST(Qsort, Simple5){
+TEST(Qsort, Simple5) {
   std::vector<int> vec5{};
-  QuickSort<int>(vec5, 0, vec5.size()-1);
+  QuickSort<int>(vec5, 0, vec5.size() - 1);
   ASSERT_EQ((vec5), std::vector<int>{});
 }

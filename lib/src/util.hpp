@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
-#include<vector>
+#include <vector>
 
 template <typename T>
 int Partition(std::vector<T>& arr, int l, int r) {
