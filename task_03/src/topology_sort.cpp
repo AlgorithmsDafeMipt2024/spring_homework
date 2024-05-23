@@ -13,10 +13,8 @@ std::vector<int> Task3(std::vector<int> temperature) {
         break;
       }
     }
-    if (flag)
-      count_day = 0;
-    else
-      result.push_back(count_day);
+    if (flag) count_day = 0;
+    result.push_back(count_day);
   }
   return result;
 }
