@@ -17,5 +17,5 @@ TEST(TopologySort, MultipleCases) {
   ASSERT_EQ(Task3(std::vector<int>{76, 75, 74, 73, 72, 71, 70}),
             (std::vector<int>{0, 0, 0, 0, 0, 0, 0}));
   ASSERT_EQ(Task3(std::vector<int>{75, 72, 71, 70, 74, 76}),
-            (std::vector<int>{4, 3, 2, 1, 1, 0}));
+            (std::vector<int>{5, 3, 2, 1, 1, 0}));
 }
