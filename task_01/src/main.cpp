@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-// proverka 3
+// proverka 3 new
 
 int main() {
   int a;
