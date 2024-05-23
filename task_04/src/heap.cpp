@@ -37,7 +37,7 @@ void Heap::Insert(int x) {
 }
 
 void Heap::extractMin() {
-  a[0] = a[n];
+  a[0] = a[n-1];
   a.erase(a.begin() + n - 1);
   n--;
   SiftDown(0);
