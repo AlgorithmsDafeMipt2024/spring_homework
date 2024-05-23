@@ -4,13 +4,19 @@ std::vector<int> Task3(std::vector<int> temperature) {
   std::vector<int> result;
   for (int i = 0; i < temperature.size(); ++i) {
     int count_day = 0;
+    bool flag = true;
     for (int j = i; j < temperature.size(); ++j) {
       if (temperature[j] <= temperature[i])
         count_day++;
-      else
+      else {
+        flag = false;
         break;
+      }
     }
-    result.push_back(count_day);
+    if (flag)
+      count_day = 0;
+    else
+      result.push_back(count_day);
   }
   return result;
 }
