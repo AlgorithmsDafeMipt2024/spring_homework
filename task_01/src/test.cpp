@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <vector>
-
+#include "utils.h"
 
 TEST(main, Simple) {
   ASSERT_EQ(Task1(9, std::vector < int > {1, 2, 4, 5, 6, 8, 10, 12}), (std::pair < int, int > {1,8}));
@@ -11,7 +11,7 @@ TEST(main, Simple) {
 
   EXPECT_THROW(Task1(1887, std::vector<int>{1, 2, 4, 6, 8, 10, 12, 15}), std::logic_error);
 
-  EXPECT_THROW(Task1(12, std::vector<int>{0,1,1,2,2}), std::logic_error);
+  EXPECT_THROW(Task1(12, std::vector<int>{0, 1, 1, 2, 2}), std::logic_error);
 
   ASSERT_EQ(Task1(1338, std::vector < int > {10, 20, 40, 50, 60, 87, 100, 1278}), (std::pair < int, int > {60,1278}));
 
