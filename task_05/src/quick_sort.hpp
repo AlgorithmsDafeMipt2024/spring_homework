@@ -30,6 +30,7 @@ static std::size_t Partition(std::vector<T>& data, std::size_t left,
 
 template <typename T>
 void QuickSort(std::vector<T>& data) {
+  if (data.empty()) return;
   std::function<void(std::size_t, std::size_t)> QuickSortStep =
       [&](std::size_t l, std::size_t r) {
         if (l >= r) return;
