@@ -1,5 +1,5 @@
-#ifndef TOPOLOGY_SORT_HPP
-#define TOPOLOGY_SORT_HPP
+#ifndef SUMMANDDS_IN_ARRAY_HPP
+#define SUMMANDDS_IN_ARRAY_HPP
 
 #include <optional>
 #include <tuple>
