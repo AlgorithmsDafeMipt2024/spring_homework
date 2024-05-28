@@ -2,20 +2,23 @@
 
 #include <algorithm>
 
-void Stack::Push(int value) { data_.push(value); }
+void Stack::Push(int value) { data_.push_back(value); }
 
 int Stack::Pop() {
-  auto result = data_.top();
-  data_.pop();
-  return result;
-}
-
-void MinStack::Push(int value) { data_.push_back(value); }
-
-int MinStack::Pop() {
-  auto result = data_.back();
+  int result = data_[data_.size() - 1];
   data_.pop_back();
   return result;
 }
 
-int MinStack::GetMin() { return *std::min_element(data_.begin(), data_.end()); }
+void MinStack::Push(int value) {
+  data_.push_back(value);
+  if (value < minimum_) {
+    minimum_ = value;
+  }
+}
+
+int MinStack::Pop() {
+  int result = data_[data_.size() - 1];
+  data_.pop_back();
+  return result;
+}
