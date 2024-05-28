@@ -1,14 +1,15 @@
 #pragma once
+#include <iostream>
 #include <vector>
 
 class Heap {
  public:
-  Heap() { data = {}; }
-  int pop_min();
-  void insert(int x);
-  std::vector<int> get_data() { return data; }
-  void clean_heap() { data = {}; }
+  Heap() { data_ = {}; }
+  int PopMin();
+  void Insert(int x);
+  std::vector<int> GetData() { return data_; }
+  void CleanHeap() { data_ = {}; }
 
  private:
-  std::vector<int> data;
+  std::vector<int> data_;
 };

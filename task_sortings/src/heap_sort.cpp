@@ -7,12 +7,12 @@ std::vector<int> HeapSort(std::vector<int> massive) {
 
   // put all elems into heap one by one
   for (int i = 0; i < massive.size(); i++) {
-    heap.insert(massive[i]);
+    heap.Insert(massive[i]);
   }
 
   // push back with mins
   for (int i = 0; i < massive.size(); i++) {
-    massive[i] = heap.pop_min();
+    massive[i] = heap.PopMin();
   }
 
   return massive;

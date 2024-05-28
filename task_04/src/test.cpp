@@ -8,25 +8,25 @@
 TEST(HeapTest, Simple) {
   Heap heap;
   std::vector<int> answer = {};
-  heap.pop_min();
-  ASSERT_EQ(heap.get_data(), answer);  // pop from empty heap
+  heap.PopMin();
+  ASSERT_EQ(heap.GetData(), answer);  // pop from empty heap
 
-  heap.insert(1);
-  heap.insert(2);
-  heap.insert(3);
-  heap.insert(4);
-  heap.insert(5);
-  heap.insert(6);
+  heap.Insert(1);
+  heap.Insert(2);
+  heap.Insert(3);
+  heap.Insert(4);
+  heap.Insert(5);
+  heap.Insert(6);
 
-  heap.insert(0);
+  heap.Insert(0);
   answer = {0, 2, 1, 4, 5, 6, 3};
-  ASSERT_EQ(heap.get_data(), answer);  // insert key, smaller than its parent
+  ASSERT_EQ(heap.GetData(), answer);  // insert key, smaller than its parent
 
-  heap.pop_min();
+  heap.PopMin();
   answer = {1, 2, 3, 4, 5, 6};
-  ASSERT_EQ(heap.get_data(), answer);  // pop from full heap
+  ASSERT_EQ(heap.GetData(), answer);  // pop from full heap
 
-  heap.insert(100);
+  heap.Insert(100);
   answer = {1, 2, 3, 4, 5, 6, 100};
-  ASSERT_EQ(heap.get_data(), answer);  // insert key, smaller than its parent
+  ASSERT_EQ(heap.GetData(), answer);  // insert key, smaller than its parent
 }
