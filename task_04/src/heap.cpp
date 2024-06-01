@@ -6,7 +6,7 @@ int Heap::PopMin() {
     std::swap(data_[0], data_[data_.size() - 1]);
     data_.pop_back();  // min is already at last position
 
-    // Sift Down
+    // Sift Down (O(logn))
     int current_index = 0;
     int left_child_index = 1;
     int right_child_index = 2;
@@ -39,7 +39,7 @@ int Heap::PopMin() {
 void Heap::Insert(int x) {
   data_.push_back(x);
 
-  // Sift Up
+  // Sift Up (O(logn))
   int current_index = data_.size() - 1;
   int parent_index = (current_index - 1) / 2;
 
