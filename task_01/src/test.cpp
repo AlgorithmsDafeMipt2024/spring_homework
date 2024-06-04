@@ -15,5 +15,4 @@ TEST(find_pair_with_sum, Simple) {
 
   std::vector<int> test2 = {};
   ASSERT_EQ(find_pair_with_sum(test2, 1), std::make_pair(-1, -1));
-
 }
