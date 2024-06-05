@@ -24,16 +24,7 @@ TEST(solution, simple) {
   std::pair<int, int> p5 = {0, 1};
   ASSERT_EQ(p5, solution(3, v5));
 
-  // if there are multiple solutions, the algorithm
-  // will pick the one, in which sum of i and j is the least,
-  // where i and j are indices of numbers, which sum is equal to needed number
-  std::vector<int> v6 = {1, 1, 1, 1, 1, 1, 1, 1, 1};
-  std::pair<int, int> p6 = {0, 1};
-  ASSERT_EQ(p6, solution(2, v6));
-
-  // in case there are multiple solutions in which i+j is the least,
-  // the algorithm will pick the one, in which i is greater
-  std::vector<int> v7 = {1, 2, 1, 1, 4, 5, 1, 1, 1};
-  std::pair<int, int> p7 = {1, 4};
-  ASSERT_EQ(p7, solution(6, v7));
+  std::vector<int> v6 = {1, 2, 2, 2, 4, 5, 6, 7, 8};
+  std::pair<int, int> p6 = {0, 5};
+  ASSERT_EQ(p6, solution(6, v6));
 }

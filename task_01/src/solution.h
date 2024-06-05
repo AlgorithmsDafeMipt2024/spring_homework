@@ -1,3 +1,4 @@
+#pragma once
 #include <unordered_map>
 #include <vector>
 
@@ -18,24 +19,18 @@ Output:
 
 */
 
-// Solution below has a time complexity of O(n) and memory complexity of O(n)
+// Solution below has a time complexity of O(n) and memory complexity of O(1)
 
-std::pair<int, int> solution(int sum, std::vector<int> v) {
-  std::unordered_map<int, int> indices_map;  // keeps array numbers as keys and
-                                             // indices as values behind keys
-
-  for (int i = 0; i < v.size(); i++) {
-    if (indices_map.find(sum - v[i]) !=
-        indices_map
-            .end()) {  // if key "number - t" exists, we have found the solution
-      return {indices_map[sum - v[i]], i};
-    }
-
-    if (indices_map.find(v[i]) == indices_map.end())
-      indices_map[v[i]] =
-          i;  // We only add keys that weren't in the map before (that
-              // way we get the least possible sum of i and j)
+std::pair<int, int> solution(int sum, std::vector<int> vector) {
+  if (vector.size() < 2) return {-1, -1};
+  int left_pointer = 0, right_pointer = vector.size() - 1;
+  while (vector[left_pointer] < vector[right_pointer]) {
+    if (vector[left_pointer] + vector[right_pointer] > sum)
+      right_pointer--;  // move right pointer to the left by one
+    else if (vector[left_pointer] + vector[right_pointer] < sum)
+      left_pointer++;  // move left pointer to the right by one
+    else
+      return {left_pointer, right_pointer};
   }
-
   return {-1, -1};  // in case there are no such numbers
 }
