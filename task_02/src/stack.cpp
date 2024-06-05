@@ -1,21 +1,46 @@
 #include "stack.hpp"
 
 #include <algorithm>
+#include <stdexcept>
 
-void Stack::Push(int value) { data_.push(value); }
+void Stack::Push(int value) {
+  Node* new_top = new Node();
+  new_top->value = value;
+  if (top == nullptr) {
+    top = new_top;
+  } else {
+    new_top->prev = top;
+    top = new_top;
+  }
+}
 
 int Stack::Pop() {
-  auto result = data_.top();
-  data_.pop();
+  if (top == nullptr) {
+    throw std::out_of_range("Stack is out of elements");
+  }
+  int result = top->value;
+  top = top->prev;
   return result;
 }
 
-void MinStack::Push(int value) { data_.push_back(value); }
+void MinStack::Push(int value) {
+  Stack::Push(value);
+
+  Node* new_min_top = new Node();
+  if (min_top == nullptr) {
+    new_min_top->value = value;
+    min_top = new_min_top;
+  } else {
+    new_min_top->value = std::min(value, min_top->value);
+    new_min_top->prev = min_top;
+    min_top = new_min_top;
+  }
+}
 
 int MinStack::Pop() {
-  auto result = data_.back();
-  data_.pop_back();
-  return result;
+  int a = Stack::Pop();
+  min_top = min_top->prev;
+  return a;
 }
 
-int MinStack::GetMin() { return *std::min_element(data_.begin(), data_.end()); }
+int MinStack::GetMin() { return min_top->value; }
