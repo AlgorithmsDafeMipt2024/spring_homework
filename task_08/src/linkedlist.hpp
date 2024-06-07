@@ -23,7 +23,7 @@ void Node<T>::AddNode(T data_) {
 
 template <typename T>
 struct LinkedList {
-  LinkedList() : head{nullptr}, tail{nullptr}, size_{0} {}
+  LinkedList() : head_{nullptr}, tail_{nullptr}, size_{0} {}
   LinkedList(std::initializer_list<T> initializer_list);
   ~LinkedList();
   LinkedList(const LinkedList& ll);
@@ -40,15 +40,15 @@ struct LinkedList {
   void Print();
 
  private:
-  Node<T>* head;
-  Node<T>* tail;
+  Node<T>* head_;
+  Node<T>* tail_;
   size_t size_;
 };
 
 template <typename T>
 LinkedList<T>::~LinkedList() {
   if (size_ != 0) {
-    Node<T>* curr = head;
+    Node<T>* curr = head_;
     Node<T>* deletable = curr;
     for (size_t i = 0; i < size_; i++) {
       curr = curr->next;
@@ -62,11 +62,11 @@ template <typename T>
 LinkedList<T>::LinkedList(std::initializer_list<T> initializer_list) {
   size_ = initializer_list.size();
   if (size_ == 0) {
-    head = nullptr;
-    tail = nullptr;
+    head_ = nullptr;
+    tail_ = nullptr;
   } else {
-    head = new Node<T>{*initializer_list.begin()};
-    Node<T>* curr = head;
+    head_ = new Node<T>{*initializer_list.begin()};
+    Node<T>* curr = head_;
     bool first_iteration_flag = 1;
     for (const T& value : initializer_list) {
       if (first_iteration_flag)
@@ -76,32 +76,32 @@ LinkedList<T>::LinkedList(std::initializer_list<T> initializer_list) {
         curr = curr->next;
       }
     }
-    tail = curr;
+    tail_ = curr;
   }
 }
 
 template <typename T>
 LinkedList<T>::LinkedList(const LinkedList& ll) {
   size_ = ll.Size();
-  head = new Node(head->data);
-  Node<T>* curr = ll.head;
-  Node<T>* curr_copy = head;
+  head_ = new Node(head_->data);
+  Node<T>* curr = ll.head_;
+  Node<T>* curr_copy = head_;
   for (size_t i = 1; i < ll.Size(); i++) {
     curr = curr->next;
     curr_copy->AddNode(curr->data);
     curr_copy = curr_copy->next;
   }
-  tail = curr_copy;
+  tail_ = curr_copy;
 }
 
 template <typename T>
 void LinkedList<T>::PushBack(T elem) {
-  if (tail != nullptr) {
-    tail->AddNode(elem);
-    tail = tail->next;
+  if (tail_ != nullptr) {
+    tail_->AddNode(elem);
+    tail_ = tail_->next;
   } else {
-    tail = new Node<T>(elem);
-    head = tail;
+    tail_ = new Node<T>(elem);
+    head_ = tail_;
   }
   size_++;
 }
@@ -109,7 +109,7 @@ void LinkedList<T>::PushBack(T elem) {
 template <typename T>
 T& LinkedList<T>::operator[](size_t index) {
   if (index >= size_) throw std::runtime_error("index is out of range");
-  Node<T>* curr = head;
+  Node<T>* curr = head_;
   for (size_t i = 0; i < index; i++) {
     curr = curr->next;
   }
@@ -118,10 +118,10 @@ T& LinkedList<T>::operator[](size_t index) {
 
 template <typename T>
 T& LinkedList<T>::Back() {
-  if (tail == nullptr)
+  if (tail_ == nullptr)
     throw std::runtime_error(
         "can't use method \"Back()\": the linked list is empty");
-  return tail->data;
+  return tail_->data;
 }
 
 template <typename T>
@@ -129,25 +129,25 @@ T& LinkedList<T>::Pop(size_t index) {
   if (index >= size_) throw std::runtime_error("index out of range");
 
   if (size_ == 1) {
-    T& value = head->data;
-    delete head;
-    head = nullptr;
-    tail = nullptr;
+    T& value = head_->data;
+    delete head_;
+    head_ = nullptr;
+    tail_ = nullptr;
     size_--;
     return value;
   }
 
   if (index == 0) {
-    T& value = head->data;
-    Node<T>* prev = head;
-    head = head->next;
+    T& value = head_->data;
+    Node<T>* prev = head_;
+    head_ = head_->next;
     delete prev;
     size_--;
     return value;
   }
 
   Node<T>* prev = nullptr;
-  Node<T>* curr = head;
+  Node<T>* curr = head_;
 
   for (size_t i = 0; i < index; i++) {
     prev = curr;
@@ -164,7 +164,7 @@ T& LinkedList<T>::Pop(size_t index) {
 
 template <typename T>
 void LinkedList<T>::Print() {
-  Node<T>* curr = head;
+  Node<T>* curr = head_;
   while (curr != nullptr) {
     std::cout << curr->data << ' ';
     curr = curr->next;
