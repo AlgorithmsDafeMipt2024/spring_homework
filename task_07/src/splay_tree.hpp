@@ -36,9 +36,9 @@ concept printable = requires(CustomType a) {
 template <constructable CustomType, comparable Key = int>
 class SplayTree {
  public:
-  SplayTree() : tree_root{nullptr} {}
-  SplayTree(TreeNode<std::pair<Key, CustomType>>* tree_root_)
-      : tree_root{tree_root_} {}
+  SplayTree() : tree_root_{nullptr} {}
+  SplayTree(TreeNode<std::pair<Key, CustomType>>* tree_root)
+      : tree_root_{tree_root} {}
   // time complexity - O(nlogn)
   explicit SplayTree(
       std::initializer_list<std::pair<Key, CustomType>> init_list);
@@ -54,7 +54,7 @@ class SplayTree {
   // time complexity - O(logn)
   void Remove(Key key);
   // time complexity - O(1)
-  TreeNode<std::pair<Key, CustomType>>* Root() { return tree_root; }
+  TreeNode<std::pair<Key, CustomType>>* Root() { return tree_root_; }
   // time complexity - O(logn)
   Key RightestKey();
 
@@ -80,16 +80,16 @@ class SplayTree {
   void ZigZag(TreeNode<std::pair<Key, CustomType>>* x_node,
               Direction direction);
 
-  TreeNode<std::pair<Key, CustomType>>* tree_root;
+  TreeNode<std::pair<Key, CustomType>>* tree_root_;
 };
 
 // time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 TreeNode<std::pair<Key, CustomType>>* SplayTree<CustomType, Key>::Find(
     Key key) {
-  if (tree_root == nullptr) return nullptr;
+  if (tree_root_ == nullptr) return nullptr;
 
-  TreeNode<std::pair<Key, CustomType>>* current_node = tree_root;
+  TreeNode<std::pair<Key, CustomType>>* current_node = tree_root_;
   for (;;) {
     if (key == current_node->value.first)
       return current_node;
@@ -118,8 +118,8 @@ SplayTree<CustomType, Key>::SplayTree(
 // time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 Key SplayTree<CustomType, Key>::RightestKey() {
-  if (tree_root == nullptr) throw std::runtime_error("empty tree\n");
-  TreeNode<std::pair<Key, CustomType>>* current_node = tree_root;
+  if (tree_root_ == nullptr) throw std::runtime_error("empty tree\n");
+  TreeNode<std::pair<Key, CustomType>>* current_node = tree_root_;
 
   while (current_node->right_child != nullptr)
     current_node = current_node->right_child;
@@ -154,7 +154,7 @@ void SplayTree<CustomType, Key>::Zig(
   }
 
   x_node->parent = parent_of_a_parent;
-  if (x_node->is_root()) tree_root = x_node;
+  if (x_node->is_root()) tree_root_ = x_node;
 }
 
 // time complexity - O(1)
@@ -170,7 +170,7 @@ void SplayTree<CustomType, Key>::ZigZig(
     Zig(x_node->parent, Direction::left);
     Zig(x_node, Direction::left);
   }
-  if (x_node->is_root()) tree_root = x_node;
+  if (x_node->is_root()) tree_root_ = x_node;
 }
 
 // time complexity - O(1)
@@ -186,7 +186,7 @@ void SplayTree<CustomType, Key>::ZigZag(
     Zig(x_node, Direction::left);
     Zig(x_node, Direction::right);
   }
-  if (x_node->is_root()) tree_root = x_node;
+  if (x_node->is_root()) tree_root_ = x_node;
 }
 
 // time complexity - O(1)
@@ -236,7 +236,7 @@ ParentsType SplayTree<CustomType, Key>::ParentsCheck(
 // time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::Splay(Key key) {
-  if (tree_root == nullptr) return;
+  if (tree_root_ == nullptr) return;
 
   TreeNode<std::pair<Key, CustomType>>* x_node = Find(key);
 
@@ -271,36 +271,37 @@ void SplayTree<CustomType, Key>::Splay(Key key) {
 // time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 void SplayTree<CustomType, Key>::Merge(SplayTree<CustomType, Key>& tree) {
-  if (tree_root == nullptr) {
-    tree_root = tree.tree_root;
+  if (tree_root_ == nullptr) {
+    tree_root_ = tree.tree_root_;
     return;
-  } else if (tree.tree_root == nullptr)
+  } else if (tree.tree_root_ == nullptr)
     return;
   Splay(RightestKey());
-  tree_root->right_child = tree.tree_root;
-  tree.tree_root->parent = tree_root;
+  tree_root_->right_child = tree.tree_root_;
+  tree.tree_root_->parent = tree_root_;
 }
 
 // time complexity - O(logn)
 template <constructable CustomType, comparable Key>
 SplayTree<CustomType, Key> SplayTree<CustomType, Key>::Split(Key key) {
   Splay(key);
-  if (tree_root == nullptr) return SplayTree{nullptr};
-  if (Find(key) != tree_root)
+  if (tree_root_ == nullptr) return SplayTree{nullptr};
+  if (Find(key) != tree_root_)
     throw std::runtime_error("key is not root after splaying");
 
-  if (tree_root->value.first >= key) {
-    SplayTree right_tree{tree_root};
-    tree_root = tree_root->left_child;
+  if (tree_root_->value.first >= key) {
+    SplayTree right_tree{tree_root_};
+    tree_root_ = tree_root_->left_child;
 
-    if (tree_root != nullptr) tree_root->parent = nullptr;
-    right_tree.tree_root->left_child = nullptr;
+    if (tree_root_ != nullptr) tree_root_->parent = nullptr;
+    right_tree.tree_root_->left_child = nullptr;
     return right_tree;
   } else {
-    SplayTree right_tree{tree_root->right_child};
+    SplayTree right_tree{tree_root_->right_child};
 
-    tree_root->right_child = nullptr;
-    if (right_tree.tree_root != nullptr) right_tree.tree_root->parent = nullptr;
+    tree_root_->right_child = nullptr;
+    if (right_tree.tree_root_ != nullptr)
+      right_tree.tree_root_->parent = nullptr;
     return right_tree;
   }
 }
@@ -312,9 +313,9 @@ void SplayTree<CustomType, Key>::Add(Key key, CustomType value) {
 
   TreeNode<std::pair<Key, CustomType>>* new_root =
       new TreeNode<std::pair<Key, CustomType>>{
-          tree_root, {key, value}, right_tree.tree_root};
+          tree_root_, {key, value}, right_tree.tree_root_};
 
-  tree_root = new_root;
+  tree_root_ = new_root;
 }
 
 // time complexity - O(logn)
@@ -325,14 +326,14 @@ void SplayTree<CustomType, Key>::Remove(Key key) {
     throw std::runtime_error("removing a non-existing element\n");
 
   Splay(key);
-  x_node = tree_root;
-  tree_root = x_node->left_child;
-  if (tree_root != nullptr) tree_root->parent = nullptr;
+  x_node = tree_root_;
+  tree_root_ = x_node->left_child;
+  if (tree_root_ != nullptr) tree_root_->parent = nullptr;
 
   x_node->left_child = nullptr;
   SplayTree right_tree{x_node->right_child};
   x_node->right_child = nullptr;
-  if (right_tree.tree_root != nullptr) right_tree.tree_root->parent = nullptr;
+  if (right_tree.tree_root_ != nullptr) right_tree.tree_root_->parent = nullptr;
 
   delete x_node;
 
