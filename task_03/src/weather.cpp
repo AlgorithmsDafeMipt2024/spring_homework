@@ -2,7 +2,7 @@
 
 #include <stack>
 
-std::vector<size_t> weather_algorithm(std::vector<int> days_array) {
+std::vector<size_t> WeatherAlgorithm(std::vector<int> days_array) {
   std::vector<size_t> result(days_array.size());
   std::stack<size_t> unchecked_days;
   for (size_t day_index = 0; day_index < days_array.size(); day_index++) {
