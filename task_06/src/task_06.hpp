@@ -2,47 +2,37 @@
 
 #include <vector>
 
-std::vector<int> merge(const std::vector<int>& left,
-                       const std::vector<int>& right) {
-  std::vector<int> result;
-  int i = 0, j = 0;
+using namespace std;
 
-  while (i < left.size() && j < right.size()) {
-    if (left[i] <= right[j]) {
-      result.push_back(left[i]);
-      ++i;
-    } else {
-      result.push_back(right[j]);
-      ++j;
+int partition(vector<int>& arr, int left, int right) {
+  int pivotIndex = left + (right - left) / 2;
+  int pivotValue = arr[pivotIndex];
+  swap(arr[pivotIndex], arr[right]);
+  int storeIndex = left;
+  for (int i = left; i < right; ++i) {
+    if (arr[i] < pivotValue) {
+      swap(arr[i], arr[storeIndex]);
+      ++storeIndex;
     }
   }
-
-  while (i < left.size()) {
-    result.push_back(left[i]);
-    ++i;
-  }
-
-  while (j < right.size()) {
-    result.push_back(right[j]);
-    ++j;
-  }
-
-  return result;
+  swap(arr[storeIndex], arr[right]);
+  return storeIndex;
 }
 
-std::vector<int> mergeSort(std::vector<int> arr) {
-  if (arr.size() <= 1) {
-    return arr;
+int quickSelect(vector<int>& arr, int left, int right, int k) {
+  while (left <= right) {
+    int pivotIndex = partition(arr, left, right);
+    if (pivotIndex == k) {
+      return arr[pivotIndex];
+    } else if (pivotIndex < k) {
+      left = pivotIndex + 1;
+    } else {
+      right = pivotIndex - 1;
+    }
   }
-
-  int mid = arr.size() / 2;
-  std::vector<int> left(arr.begin(), arr.begin() + mid);
-  std::vector<int> right(arr.begin() + mid, arr.end());
-
-  return merge(mergeSort(left), mergeSort(right));
+  return -1;
 }
 
-int findNthOrder(std::vector<int> arr, int n) {
-  std::vector<int> ans = mergeSort(arr);
-  return ans[n - 1];
+int findNthOrder(std::vector<int> arr, int k) {
+  return quickSelect(arr, 0, arr.size() - 1, k - 1);
 }
