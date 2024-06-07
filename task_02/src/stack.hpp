@@ -1,5 +1,5 @@
 #pragma once
-
+#include <optional>
 #include <stack>
 #include <vector>
 
@@ -19,6 +19,7 @@ class MinStack {
   int GetMin();
 
  private:
+  std::optional<int> GetMin_();
   Stack data_;
   Stack min_;
 };
