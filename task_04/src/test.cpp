@@ -1,8 +1,6 @@
 
 #include <gtest/gtest.h>
 
-#include <iostream>
-
 #include "heap.hpp"
 
 TEST(TopologySort, Simple) {
