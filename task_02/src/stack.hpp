@@ -68,13 +68,13 @@ void MyStack<CutsomType>::Push(CutsomType value) {
 
 template <typename CutsomType>
 CutsomType MyStack<CutsomType>::Top() {
-  if (top_ == nullptr) throw std::runtime_error("out_of_range\n");
+  if (top_ == nullptr) throw std::runtime_error("Empty stack\n");
   return top_->data;
 }
 
 template <typename CutsomType>
 CutsomType MyStack<CutsomType>::Pop() {
-  if (top_ == nullptr) throw std::runtime_error("out_of_range\n");
+  if (top_ == nullptr) throw std::runtime_error("Empty stack\n");
   Node<CutsomType>* temp = top_->prev;
   CutsomType val = top_->data;
   delete top_;
