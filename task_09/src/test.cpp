@@ -35,8 +35,14 @@ TEST(MoneyTest, Empty_array) {
   ASSERT_EQ(-1, CoinChange(numbah5, nominals5));
 }
 
-TEST(MoneyTest, Suggested_Test) {
+TEST(MoneyTest, Suggested_Test_1) {
   long long numbah6 = 14;
   std::vector<size_t> nominals6 = {1, 2, 5, 7, 10};
   ASSERT_EQ(2, CoinChange(numbah6, nominals6));
+}
+
+TEST(MoneyTest, Suggested_Test_2) {
+  long long numbah7 = 10;
+  std::vector<size_t> nominals7 = {1, 2, 5, 7};
+  ASSERT_EQ(2, CoinChange(numbah7, nominals7));
 }
