@@ -2,24 +2,22 @@
 
 #include <vector>
 
-using namespace std;
-
-int partition(vector<int>& arr, int left, int right) {
+int partition(std::vector<int>& arr, int left, int right) {
   int pivotIndex = left + (right - left) / 2;
   int pivotValue = arr[pivotIndex];
-  swap(arr[pivotIndex], arr[right]);
+  std::swap(arr[pivotIndex], arr[right]);
   int storeIndex = left;
   for (int i = left; i < right; ++i) {
     if (arr[i] < pivotValue) {
-      swap(arr[i], arr[storeIndex]);
+      std::swap(arr[i], arr[storeIndex]);
       ++storeIndex;
     }
   }
-  swap(arr[storeIndex], arr[right]);
+  std::swap(arr[storeIndex], arr[right]);
   return storeIndex;
 }
 
-int quickSelect(vector<int>& arr, int left, int right, int k) {
+int quickSelect(std::vector<int>& arr, int left, int right, int k) {
   while (left <= right) {
     int pivotIndex = partition(arr, left, right);
     if (pivotIndex == k) {
