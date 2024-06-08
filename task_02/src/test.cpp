@@ -1,9 +1,9 @@
-
 #include <gtest/gtest.h>
 
 #include <stack>
 #include <stdexcept>
 
+#include "min_stack.hpp"
 #include "stack.hpp"
 
 TEST(StackTest, Simple) {
