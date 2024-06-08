@@ -18,21 +18,6 @@ enum class ParentsType : char {
   right_left
 };
 
-template <typename Key>
-concept comparable = requires(Key a, Key b) {
-  a < b;
-  a <= b;
-  a == b;
-  a >= b;
-  a > b;
-  a != b;
-};
-
-template <typename CustomType>
-concept printable = requires(CustomType a) {
-  std::cout << a;
-};
-
 template <constructable CustomType, comparable Key = int>
 class SplayTree {
  public:

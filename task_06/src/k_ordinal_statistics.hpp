@@ -1,17 +1,8 @@
 #pragma once
 #include <cstddef>
 #include <stdexcept>
+#include <util.hpp>
 #include <vector>
-
-template <typename CustomType>
-concept comparable = requires(CustomType a, CustomType b) {
-  a < b;
-  a <= b;
-  a == b;
-  a >= b;
-  a > b;
-  a != b;
-};
 
 template <comparable CustomType>
 size_t Partition(std::vector<CustomType>& data_array, size_t left_index,

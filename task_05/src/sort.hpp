@@ -1,27 +1,10 @@
 #pragma once
-#include <concepts>
 #include <cstddef>
 #include <functional>
 #include <iostream>
 #include <stdexcept>
+#include <util.hpp>
 #include <utility>
-
-// concept to check if the type is comparable (now obsolete)
-template <typename CustomType>
-concept comparable = requires(CustomType a, CustomType b) {
-  a < b;
-  a <= b;
-  a == b;
-  a >= b;
-  a > b;
-  a != b;
-};
-
-// concept to check if the type is comparable with a concrete function
-template <typename Function, typename CustomType>
-concept comparing = requires(CustomType a, CustomType b, Function f) {
-  f(a, b);
-};
 
 // function, that merges two sorted arrays, time complexity is O(n+m),
 // where n - length of first array, m - length of second array

@@ -1,10 +1,5 @@
 #pragma once
-
-template <typename CustomType>
-concept constructable = requires(CustomType a, CustomType b) {
-  a = CustomType{};
-  b = CustomType{a};
-};
+#include <util.hpp>
 
 template <constructable CustomType>
 struct TreeNode {

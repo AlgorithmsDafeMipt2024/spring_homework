@@ -3,18 +3,8 @@
 #include <algorithm>
 #include <stack>
 #include <stdexcept>
+#include <util.hpp>
 #include <vector>
-
-// check if type comparasion operators are defined for a class
-template <typename CutsomType>
-concept comparable = requires(CutsomType a, CutsomType b) {
-  a < b;
-  a <= b;
-  a == b;
-  a >= b;
-  a > b;
-  a != b;
-};
 
 // simple structure, helps to form a linked list
 template <typename CutsomType>

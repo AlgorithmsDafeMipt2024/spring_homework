@@ -4,13 +4,9 @@
 #include <concepts>
 #include <initializer_list>
 #include <stdexcept>
+#include <util.hpp>
 
 #include "linkedlist.hpp"
-
-template <typename K>
-concept hashable = requires(K a) {
-  { std::hash<K>{}(a) } -> std::convertible_to<std::size_t>;
-};
 
 template <hashable K, typename T>
 class HashTable {

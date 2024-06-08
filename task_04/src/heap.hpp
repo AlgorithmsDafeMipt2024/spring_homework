@@ -1,33 +1,10 @@
 #pragma once
-#include <concepts>
 #include <cstddef>
 #include <functional>
 #include <initializer_list>
 #include <stdexcept>
+#include <util.hpp>
 #include <vector>
-
-template <typename CustomType>
-concept constructable = requires(CustomType a, CustomType b) {
-  a = CustomType{};
-  b = CustomType{a};
-};
-
-// concept to check if the type is comparable (now obsolete)
-template <typename CustomType>
-concept comparable = requires(CustomType a, CustomType b) {
-  a < b;
-  a <= b;
-  a == b;
-  a >= b;
-  a > b;
-  a != b;
-};
-
-// concept to check if the type is comparable with a concrete function
-template <typename Function, typename CustomType>
-concept comparing = requires(CustomType a, CustomType b, Function f) {
-  f(a, b);
-};
 
 // data structure that allows to retrieve minimal element with O(1) time
 // complexity and pop a minimal element with O(logn) time complexity
