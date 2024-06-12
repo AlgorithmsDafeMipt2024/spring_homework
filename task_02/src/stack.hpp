@@ -41,7 +41,7 @@ void Stack<T>::push(T value) {
 template <class T>
 T Stack<T>::pop() {
   if (size == 0) {
-    throw std::out_of_range("Empty stack");
+    throw std::underflow_error("Empty stack");
   }
   T returningValue = top->data;
   StackNode<T> *oldTop = top;
@@ -59,7 +59,7 @@ int Stack<T>::getSize() {
 template <class T>
 T Stack<T>::getTop() {
   if (size == 0) {
-    throw std::out_of_range("Empty stack");
+    throw std::underflow_error("Empty stack");
   }
   return top->data;
 }
