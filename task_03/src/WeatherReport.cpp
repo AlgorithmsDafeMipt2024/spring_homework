@@ -11,8 +11,10 @@ std::vector<int> findNextGreater(std::vector<int> v) {
     while (stack.size() != 0 && v[i] >= v[stack.top()]) {
       stack.pop();
     }
-    if (stack.size() == 0) {
+    if (stack.size() != 0) {
       res[i] = stack.top() - i;
+    } else {
+      res[i] = -1;
     }
     stack.push(i);
   }
