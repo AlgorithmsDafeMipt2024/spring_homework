@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 
+
 BinHeap::BinHeap() {
   heap = {};
   size = 0;
