@@ -235,3 +235,36 @@ TEST(ListStack_test, PushRange_Stack_SizePopTop_test) {
   EXPECT_THROW(stack.Pop(), logic_error);
   EXPECT_THROW(stack.Top(), logic_error);
 }
+
+TEST(ListStack_test, Swap) {
+  ListStack<int> stack1, stack2;
+
+  stack1.Push(1);
+  stack1.Push(2);
+  stack1.Push(3);
+
+  stack2.Push(4);
+  stack2.Push(5);
+  stack2.Push(6);
+
+  auto stack1_original = stack1;
+  auto stack2_original = stack2;
+
+  stack1.Swap(stack2);
+
+  ASSERT_EQ(stack1, stack2_original);
+  ASSERT_EQ(stack2, stack1_original);
+}
+
+TEST(ListStack_test, SwapWithDifferentSizes) {
+  ListStack<int> stack1, stack2;
+
+  stack1.Push(1);
+  stack1.Push(2);
+
+  stack2.Push(3);
+  stack2.Push(4);
+  stack2.Push(5);
+
+  EXPECT_THROW(stack1.Swap(stack2), std::invalid_argument);
+}

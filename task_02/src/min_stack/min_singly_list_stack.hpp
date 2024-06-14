@@ -31,6 +31,10 @@ class SinglyListElem {
   SinglyListElem<T>& operator=(SinglyListElem<T>&&) = default;
   SinglyListElem<T>& operator=(const SinglyListElem<T>& elem) = default;
 
+  bool operator==(const SinglyListElem<T>& elem) const {
+    return data == elem.data;
+  }
+
   // @brief указатель на предыдущий элемент
   std::shared_ptr<SinglyListElem<T>> prev;
 
@@ -75,21 +79,6 @@ class MinSinglyListStack {
     if (Empty()) throw std::logic_error("Stack is empty");
 
     return top_->data;
-  }
-
-  /**
-   * @param key: ключ, по которому можно получить Top в виде указателя
-   * @return std::shared_ptr<SinglyListElem<int>>&: ptr на верхний элемент стека
-   * @throw std::logic_error: если ключ != "ptr"
-   */
-  std::shared_ptr<SinglyListElem<int>>& Top(const std::string& key) {
-    if (Empty()) throw std::logic_error("Stack is empty");
-
-    if (key == "ptr")
-      return top_;
-    else
-      throw std::logic_error(
-          "invalid key string, do you mean 'T& Top('ptr')'?");
   }
 
   /**
@@ -192,7 +181,11 @@ class MinSinglyListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(MinSinglyListStack<T>& another_stack) {
-    std::swap(another_stack.Top("ptr"), top_);
+    if (Size() != another_stack.Size()) {
+      throw std::invalid_argument("Sizes of stacks do not match");
+    }
+
+    std::swap(another_stack.TopPtr(), top_);
   }
 
   /**
@@ -218,6 +211,16 @@ class MinSinglyListStack {
       if (iter->data < min_) min_ = iter->data;
       iter = iter->prev;
     }
+  }
+
+  /**
+   * @return std::shared_ptr<SinglyListElem<int>>&: ptr на верхний элемент стека
+   * @throw std::logic_error: если ключ != "ptr"
+   */
+  std::shared_ptr<SinglyListElem<int>>& TopPtr() {
+    if (Empty()) throw std::logic_error("Stack is empty");
+
+    return top_;
   }
 
   // @brief указатель на последний элемент

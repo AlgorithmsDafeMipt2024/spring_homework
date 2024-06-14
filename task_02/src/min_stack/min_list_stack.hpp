@@ -32,6 +32,10 @@ class MinListStack {
   MinListStack& operator=(const MinListStack<T>&) = default;
   MinListStack& operator=(MinListStack<T>&&) = default;
 
+  bool operator==(const MinListStack<T>& other) const {
+    return list_ == other.list_;
+  }
+
   /**
    * @return T: верхний элемент стека
    * @throw std::logic_error: если стек пуст
@@ -139,30 +143,11 @@ class MinListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(MinListStack<T>& another_stack) {
-    // проще особо не сделаешь, если хочется сохранить порядок
-
-    MinListStack<T> extra_stack_1;
-    MinListStack<T> extra_stack_2;
-
-    while (!Empty()) {
-      extra_stack_1.Push(Top());
-      Pop();
+    if (Size() != another_stack.Size()) {
+      throw std::invalid_argument("Sizes of stacks do not match");
     }
 
-    while (!another_stack.Empty()) {
-      extra_stack_2.Push(another_stack.Top());
-      another_stack.Pop();
-    }
-
-    while (!extra_stack_1.Empty()) {
-      another_stack.Push(extra_stack_1.Top());
-      extra_stack_1.Pop();
-    }
-
-    while (!extra_stack_2.Empty()) {
-      Push(extra_stack_2.Top());
-      extra_stack_2.Pop();
-    }
+    std::swap(list_, another_stack.list_);
   }
 
   /**
