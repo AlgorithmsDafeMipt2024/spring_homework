@@ -176,10 +176,10 @@ class SinglyListStack {
 
  private:
   /**
-   * @return std::shared_ptr<SinglyListElem<int>>&: ptr на верхний элемент стека
+   * @return std::shared_ptr<SinglyListElem<T>>&: ptr на верхний элемент стека
    * @throw std::logic_error: если ключ != "ptr"
    */
-  std::shared_ptr<SinglyListElem<int>>& TopPtr() {
+  std::shared_ptr<SinglyListElem<T>>& TopPtr() {
     if (Empty()) throw std::logic_error("Stack is empty");
 
     return top_;
