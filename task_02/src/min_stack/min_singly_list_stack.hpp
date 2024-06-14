@@ -196,38 +196,6 @@ class MinSinglyListStack {
   }
 
   /**
-   * @brief меняет все элементы двух стеков местами
-   * @param another_stack
-   * @throw std::invalid_argument: если размеры стеков не совпадает
-   */
-  void Swap(std::stack<T>& another_stack) {
-    // проще особо не сделаешь, если хочется сохранить порядок
-
-    MinSinglyListStack<T> extra_stack_1;
-    MinSinglyListStack<T> extra_stack_2;
-
-    while (!Empty()) {
-      extra_stack_1.Push(Top());
-      Pop();
-    }
-
-    while (!another_stack.empty()) {
-      extra_stack_2.Push(another_stack.top());
-      another_stack.pop();
-    }
-
-    while (!extra_stack_1.Empty()) {
-      another_stack.push(extra_stack_1.Top());
-      extra_stack_1.Pop();
-    }
-
-    while (!extra_stack_2.Empty()) {
-      Push(extra_stack_2.Top());
-      extra_stack_2.Pop();
-    }
-  }
-
-  /**
    * @return T: значение минимума стека
    * @throw std::logic_error: если минимум не проинициализирован
    */
