@@ -3,15 +3,15 @@
 #include <iostream>
 #include <vector>
 
-void Heap::SiftDown(int i) {
-  while (2 * i + 1 < vec_.size()) {
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
-    int j = left;
-    if ((right < vec_.size()) && vec_[right] < vec_[left]) j = right;
-    if (vec_[i] <= vec_[j]) break;
-    std::swap(vec_[i], vec_[j]);
-    i = j;
+void Heap::SiftDown(int cur_node) {
+  while (2 * cur_node + 1 < vec_.size()) {
+    int left = 2 * cur_node + 1;
+    int right = 2 * cur_node + 2;
+    int next_node = left;
+    if ((right < vec_.size()) && vec_[right] < vec_[left]) next_node = right;
+    if (vec_[cur_node] <= vec_[next_node]) break;
+    std::swap(vec_[cur_node], vec_[next_node]);
+    cur_node = next_node;
   }
 }
 
@@ -22,9 +22,9 @@ void Heap::SiftUp(int i) {
   }
 }
 
-int Heap::Find_Min() { return vec_[0]; }
+int Heap::FindMin() { return vec_[0]; }
 
-int Heap::Extract_Min() {
+int Heap::ExtractMin() {
   int min = vec_[0];
   vec_[0] = vec_[vec_.size() - 1];
   vec_.pop_back();
@@ -32,27 +32,27 @@ int Heap::Extract_Min() {
   return min;
 }
 
-std::vector<int> Heap::Copy_Heap() { return vec_; }
+std::vector<int> Heap::CopyHeap() { return vec_; }
 
 void Heap::Insert(int value) {
   vec_.push_back(value);
   SiftUp(vec_.size() - 1);
 }
 
-void Heap::Build_heap(std::vector<int> vec) {
+void Heap::BuildHeap(std::vector<int> vec) {
   for (int i = 0; i < vec.size(); ++i) {
     Insert(vec[i]);
   }
 }
 
-int Find_Minimum(std::vector<int> vec) {
+int FindMinimum(std::vector<int> vec) {
   Heap heap;
-  heap.Build_heap(vec);
-  return heap.Find_Min();
+  heap.BuildHeap(vec);
+  return heap.FindMin();
 }
 
-std::vector<int> Heap_Ready(std::vector<int> vec) {
+std::vector<int> HeapReady(std::vector<int> vec) {
   Heap heap;
-  heap.Build_heap(vec);
-  return heap.Copy_Heap();
+  heap.BuildHeap(vec);
+  return heap.CopyHeap();
 }

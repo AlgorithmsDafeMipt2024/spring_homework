@@ -4,14 +4,13 @@
 #include <stdexcept>
 
 void Stack::Push(int value) {
-  std::shared_ptr<Node> p(new Node(value));
+  auto p = std::make_shared<Node>(value);
   if (top == nullptr) {
     top = p;
-  }
-  if (top != nullptr) {
+  } else {
     p->next = top;
+    top = p;
   }
-  top = p;
 }
 
 int Stack::Pop() {

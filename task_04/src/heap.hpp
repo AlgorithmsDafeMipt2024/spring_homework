@@ -7,15 +7,15 @@ class Heap {
   void SiftDown(int i);
   void SiftUp(int i);
   void Insert(int value);
-  int Find_Min();
-  void Build_heap(std::vector<int> vec);
-  int Extract_Min();
-  std::vector<int> Copy_Heap();
+  int FindMin();
+  void BuildHeap(std::vector<int> vec);
+  int ExtractMin();
+  std::vector<int> CopyHeap();
 
  private:
   std::vector<int> vec_;
 };
 
-int Find_Minimum(std::vector<int> vec);
+int FindMinimum(std::vector<int> vec);
 
-std::vector<int> Heap_Ready(std::vector<int> heap);
+std::vector<int> HeapReady(std::vector<int> heap);

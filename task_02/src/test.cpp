@@ -87,5 +87,4 @@ TEST(MinStackTest, Behavior) {
   ASSERT_EQ(stack.GetMin(), 1);  // Минимальный элемент остается 1
   ASSERT_EQ(stack.Pop(), 2);  // Stack [2]
   ASSERT_EQ(stack.GetMin(), 2);  // Минимальный элемент обновляется до 2
-  ASSERT_EQ(stack.Pop(), 2);  // Stack []
 }

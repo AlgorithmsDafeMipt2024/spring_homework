@@ -7,9 +7,9 @@ int AVL_Tree::DifferenceH(Node *p) {
 }
 
 void AVL_Tree::Fixheight(Node *p) {
-  unsigned char hl = Height(p->left);
-  unsigned char hr = Height(p->right);
-  p->height = (hl > hr ? hl : hr) + 1;
+  unsigned char height_l = Height(p->left);
+  unsigned char height_r = Height(p->right);
+  p->height = (height_l > height_r ? height_l : height_r) + 1;
 }
 
 Node *AVL_Tree::Insert(Node *root, int k) {
