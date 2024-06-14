@@ -4,7 +4,7 @@
 
 #include "minimum_moneys.hpp"
 
-TEST(MinMoney, GreedyAlgorithmNotWorkHere){
+TEST(MinMoney, GreedyAlgorithmNotWorkHere) {
   ASSERT_EQ(MinMoney(std::vector<int>{1, 3, 4}, 6), (2));
 }
 
