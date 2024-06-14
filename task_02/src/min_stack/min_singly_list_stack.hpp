@@ -8,38 +8,51 @@
 #include <vector>
 
 /**
- * @brief элемент стека (звено в односвязном списке)
+ * @brief элемент стека с минимумом (звено в односвязном списке)
  * @tparam T: тип значения в стеке
  */
 template <typename T>
-class SinglyListElem {
+class MinSinglyListElem {
  public:
-  SinglyListElem() : prev{nullptr} {}
+  MinSinglyListElem() : prev{nullptr}, min{std::numeric_limits<T>::max()} {}
 
-  SinglyListElem(const SinglyListElem<T>& elem) : prev{&elem} {}
+  MinSinglyListElem(const MinSinglyListElem<T>& elem)
+      : prev{elem.prev}, data{elem.data}, min{elem.min} {}
 
-  SinglyListElem(SinglyListElem<T>* elem) : prev{elem} {}
+  MinSinglyListElem(MinSinglyListElem<T>* elem, const T& value)
+      : prev(elem),
+        data{value},
+        min{std::min(elem ? elem->min : std::numeric_limits<T>::max(), value)} {
+  }
 
-  SinglyListElem(SinglyListElem<T>* elem, const T& value)
-      : prev(elem), data{value} {}
+  MinSinglyListElem(const std::shared_ptr<MinSinglyListElem<T>>& elem,
+                    const T& value)
+      : prev(elem),
+        data{value},
+        min{std::min(elem ? elem->min : std::numeric_limits<T>::max(), value)} {
+  }
 
-  SinglyListElem(const std::shared_ptr<SinglyListElem<T>>& elem, const T& value)
-      : prev(elem), data{value} {}
+  MinSinglyListElem(const T& value) : prev{nullptr}, data{value}, min{value} {}
 
-  SinglyListElem(const T& value) : prev{nullptr}, data{value} {}
+  MinSinglyListElem<T>& operator=(MinSinglyListElem<T>&&) = default;
+  MinSinglyListElem<T>& operator=(const MinSinglyListElem<T>& elem) = default;
 
-  SinglyListElem<T>& operator=(SinglyListElem<T>&&) = default;
-  SinglyListElem<T>& operator=(const SinglyListElem<T>& elem) = default;
+  bool operator==(const MinSinglyListElem<T>& elem) const {
+    return data == elem.data;
+  }
 
   // @brief указатель на предыдущий элемент
-  std::shared_ptr<SinglyListElem<T>> prev;
+  std::shared_ptr<MinSinglyListElem<T>> prev;
 
   // @brief значение элемента
   T data;
+
+  // @brief минимальный элемент на данном уровне стека
+  T min;
 };
 
 /**
- * @brief реализация стека на односвязном списке
+ * @brief реализация стека с минимумом на односвязном списке
  * @tparam T: тип значений элементов стека
  */
 template <typename T>
@@ -61,10 +74,12 @@ class MinSinglyListStack {
 
   MinSinglyListStack& operator=(const MinSinglyListStack<T>& stack) {
     PushRange(stack);
+    return *this;
   }
 
   MinSinglyListStack& operator=(MinSinglyListStack<T>&& stack) {
-    PushRange(stack);
+    PushRange(std::move(stack));
+    return *this;
   }
 
   /**
@@ -75,21 +90,6 @@ class MinSinglyListStack {
     if (Empty()) throw std::logic_error("Stack is empty");
 
     return top_->data;
-  }
-
-  /**
-   * @param key: ключ, по которому можно получить Top в виде указателя
-   * @return std::shared_ptr<SinglyListElem<int>>&: ptr на верхний элемент стека
-   * @throw std::logic_error: если ключ != "ptr"
-   */
-  std::shared_ptr<SinglyListElem<int>>& Top(const std::string& key) {
-    if (Empty()) throw std::logic_error("Stack is empty");
-
-    if (key == "ptr")
-      return top_;
-    else
-      throw std::logic_error(
-          "invalid key string, do you mean 'T& Top('ptr')'?");
   }
 
   /**
@@ -109,14 +109,7 @@ class MinSinglyListStack {
    * @param value: значение нового элемента
    */
   void Push(const T& value = T()) {
-    if (!is_min_init) {
-      min_ = value;
-      is_min_init = true;
-    }
-
-    if (value < min_) min_ = value;
-
-    auto new_elem = std::make_shared<SinglyListElem<T>>(top_, value);
+    auto new_elem = std::make_shared<MinSinglyListElem<T>>(top_, value);
     top_ = new_elem;
     size_++;
   }
@@ -142,6 +135,7 @@ class MinSinglyListStack {
    * @brief расширяет стек значениями std::stack
    * @param stack
    */
+
   void PushRange(std::stack<T> stack) {
     std::stack<T> temp_stack;
     while (!stack.empty()) {
@@ -179,11 +173,6 @@ class MinSinglyListStack {
 
     top_ = top_->prev;
     size_--;
-
-    if (Size() > 0)
-      FindNewMin();
-    else
-      is_min_init = false;
   }
 
   /**
@@ -192,70 +181,35 @@ class MinSinglyListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(MinSinglyListStack<T>& another_stack) {
-    std::swap(another_stack.Top("ptr"), top_);
+    if (Size() != another_stack.Size()) {
+      throw std::invalid_argument("Sizes of stacks do not match");
+    }
+
+    std::swap(another_stack.TopPtr(), top_);
   }
 
   /**
-   * @brief меняет все элементы двух стеков местами
-   * @param another_stack
-   * @throw std::invalid_argument: если размеры стеков не совпадает
-   */
-  void Swap(std::stack<T>& another_stack) {
-    // проще особо не сделаешь, если хочется сохранить порядок
-
-    MinSinglyListStack<T> extra_stack_1;
-    MinSinglyListStack<T> extra_stack_2;
-
-    while (!Empty()) {
-      extra_stack_1.Push(Top());
-      Pop();
-    }
-
-    while (!another_stack.empty()) {
-      extra_stack_2.Push(another_stack.top());
-      another_stack.pop();
-    }
-
-    while (!extra_stack_1.Empty()) {
-      another_stack.push(extra_stack_1.Top());
-      extra_stack_1.Pop();
-    }
-
-    while (!extra_stack_2.Empty()) {
-      Push(extra_stack_2.Top());
-      extra_stack_2.Pop();
-    }
-  }
-
-  /**
-   * @return T: значение минимума стека
-   * @throw std::logic_error: если минимум не проинициализирован
+   * @return T: минимальный элемент в стеке
+   * @throw std::logic_error: если стек пуст
    */
   T GetMin() {
-    if (!is_min_init) throw std::logic_error("Minimum is not initialized");
+    if (Empty()) throw std::logic_error("Stack is empty");
 
-    return min_;
+    return top_->min;
   }
 
  private:
   /**
-   * @return T: новый минимум
-   * (после удаления)
+   * @return std::shared_ptr<MinSinglyListElem<T>>&: ptr на верхний элемент
+   * стека
+   * @throw std::logic_error: если ключ != "ptr"
    */
-  void FindNewMin() {
-    min_ = top_->data;
+  std::shared_ptr<MinSinglyListElem<T>>& TopPtr() {
+    if (Empty()) throw std::logic_error("Stack is empty");
 
-    auto iter = top_;
-    while (iter->prev != nullptr) {
-      if (iter->data < min_) min_ = iter->data;
-      iter = iter->prev;
-    }
+    return top_;
   }
 
-  // @brief указатель на последний элемент
-  std::shared_ptr<SinglyListElem<T>> top_;
-  size_t size_{0};
-
-  T min_;
-  bool is_min_init{false};
+  std::shared_ptr<MinSinglyListElem<T>> top_ = nullptr;
+  size_t size_ = 0;
 };

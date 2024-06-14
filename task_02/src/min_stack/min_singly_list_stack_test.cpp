@@ -262,3 +262,16 @@ TEST(MinSinglyListStack_test, GetMin_PushPop_test_2) {
   ASSERT_EQ(stack.GetMin(), 0);
   stack.Pop();
 }
+
+TEST(MinSinglyListStack_test, SwapWithDifferentSizes) {
+  MinSinglyListStack<int> stack1, stack2;
+
+  stack1.Push(1);
+  stack1.Push(2);
+
+  stack2.Push(3);
+  stack2.Push(4);
+  stack2.Push(5);
+
+  EXPECT_THROW(stack1.Swap(stack2), std::invalid_argument);
+}

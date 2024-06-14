@@ -31,6 +31,10 @@ class SinglyListElem {
   SinglyListElem<T>& operator=(SinglyListElem<T>&&) = default;
   SinglyListElem<T>& operator=(const SinglyListElem<T>& elem) = default;
 
+  bool operator==(const SinglyListElem<T>& elem) const {
+    return data == elem.data;
+  }
+
   // @brief указатель на предыдущий элемент
   std::shared_ptr<SinglyListElem<T>> prev;
 
@@ -73,21 +77,6 @@ class SinglyListStack {
     if (Empty()) throw std::logic_error("Stack is empty");
 
     return top_->data;
-  }
-
-  /**
-   * @param key: ключ, по которому можно получить Top в виде указателя
-   * @return std::shared_ptr<SinglyListElem<int>>&: ptr на верхний элемент стека
-   * @throw std::logic_error: если ключ != "ptr"
-   */
-  std::shared_ptr<SinglyListElem<int>>& Top(const std::string& key) {
-    if (Empty()) throw std::logic_error("Stack is empty");
-
-    if (key == "ptr")
-      return top_;
-    else
-      throw std::logic_error(
-          "invalid key string, do you mean 'T& Top('ptr')'?");
   }
 
   /**
@@ -178,42 +167,24 @@ class SinglyListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(SinglyListStack<T>& another_stack) {
-    std::swap(another_stack.Top("ptr"), top_);
-  }
-
-  /**
-   * @brief меняет все элементы двух стеков местами
-   * @param another_stack
-   * @throw std::invalid_argument: если размеры стеков не совпадает
-   */
-  void Swap(std::stack<T>& another_stack) {
-    // проще особо не сделаешь, если хочется сохранить порядок
-
-    SinglyListStack<T> extra_stack_1;
-    SinglyListStack<T> extra_stack_2;
-
-    while (!Empty()) {
-      extra_stack_1.Push(Top());
-      Pop();
+    if (Size() != another_stack.Size()) {
+      throw std::invalid_argument("Sizes of stacks do not match");
     }
 
-    while (!another_stack.empty()) {
-      extra_stack_2.Push(another_stack.top());
-      another_stack.pop();
-    }
-
-    while (!extra_stack_1.Empty()) {
-      another_stack.push(extra_stack_1.Top());
-      extra_stack_1.Pop();
-    }
-
-    while (!extra_stack_2.Empty()) {
-      Push(extra_stack_2.Top());
-      extra_stack_2.Pop();
-    }
+    std::swap(another_stack.TopPtr(), top_);
   }
 
  private:
+  /**
+   * @return std::shared_ptr<SinglyListElem<T>>&: ptr на верхний элемент стека
+   * @throw std::logic_error: если ключ != "ptr"
+   */
+  std::shared_ptr<SinglyListElem<T>>& TopPtr() {
+    if (Empty()) throw std::logic_error("Stack is empty");
+
+    return top_;
+  }
+
   // @brief указатель на последний элемент
   std::shared_ptr<SinglyListElem<T>> top_;
   size_t size_{0};

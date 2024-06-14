@@ -6,6 +6,7 @@
 #include <stack>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 /**
@@ -32,6 +33,10 @@ class MinListStack {
   MinListStack& operator=(const MinListStack<T>&) = default;
   MinListStack& operator=(MinListStack<T>&&) = default;
 
+  bool operator==(const MinListStack<T>& other) const {
+    return list_ == other.list_;
+  }
+
   /**
    * @return T: верхний элемент стека
    * @throw std::logic_error: если стек пуст
@@ -39,7 +44,7 @@ class MinListStack {
   T Top() {
     if (Empty()) throw std::logic_error("Stack is empty");
 
-    return list_.back();
+    return list_.back().first;
   }
 
   /**
@@ -47,26 +52,20 @@ class MinListStack {
    * @return true: если пуст
    * @return false: если не пуст
    */
-  bool Empty() { return list_.size() == 0; }
+  bool Empty() { return list_.empty(); }
 
   /**
    * @return size_t: размер стека
    */
-  size_t Size() { return list_.size(); };
+  size_t Size() { return list_.size(); }
 
   /**
    * @brief добавляет новый элемент в стек
    * @param value: значение нового элемента
    */
   void Push(const T& value = T()) {
-    if (!is_min_init) {
-      min_ = value;
-      is_min_init = true;
-    }
-
-    if (value < min_) min_ = value;
-
-    list_.push_back(value);
+    T newMin = list_.empty() ? value : std::min(value, list_.back().second);
+    list_.emplace_back(value, newMin);
   }
 
   /**
@@ -126,11 +125,6 @@ class MinListStack {
     if (Empty()) throw std::logic_error("Stack is empty");
 
     list_.pop_back();
-
-    if (Size() > 0)
-      FindNewMin();
-    else
-      is_min_init = false;
   }
 
   /**
@@ -139,61 +133,11 @@ class MinListStack {
    * @throw std::invalid_argument: если размеры стеков не совпадает
    */
   void Swap(MinListStack<T>& another_stack) {
-    // проще особо не сделаешь, если хочется сохранить порядок
-
-    MinListStack<T> extra_stack_1;
-    MinListStack<T> extra_stack_2;
-
-    while (!Empty()) {
-      extra_stack_1.Push(Top());
-      Pop();
+    if (Size() != another_stack.Size()) {
+      throw std::invalid_argument("Sizes of stacks do not match");
     }
 
-    while (!another_stack.Empty()) {
-      extra_stack_2.Push(another_stack.Top());
-      another_stack.Pop();
-    }
-
-    while (!extra_stack_1.Empty()) {
-      another_stack.Push(extra_stack_1.Top());
-      extra_stack_1.Pop();
-    }
-
-    while (!extra_stack_2.Empty()) {
-      Push(extra_stack_2.Top());
-      extra_stack_2.Pop();
-    }
-  }
-  /**
-   * @brief меняет все элементы двух стеков местами
-   * @param another_stack
-   * @throw std::invalid_argument: если размеры стеков не совпадает
-   */
-  void Swap(std::stack<T>& another_stack) {
-    // проще особо не сделаешь, если хочется сохранить порядок
-
-    MinListStack<T> extra_stack_1;
-    MinListStack<T> extra_stack_2;
-
-    while (!Empty()) {
-      extra_stack_1.Push(Top());
-      Pop();
-    }
-
-    while (!another_stack.empty()) {
-      extra_stack_2.Push(another_stack.top());
-      another_stack.pop();
-    }
-
-    while (!extra_stack_1.Empty()) {
-      another_stack.push(extra_stack_1.Top());
-      extra_stack_1.Pop();
-    }
-
-    while (!extra_stack_2.Empty()) {
-      Push(extra_stack_2.Top());
-      extra_stack_2.Pop();
-    }
+    std::swap(list_, another_stack.list_);
   }
 
   /**
@@ -201,25 +145,11 @@ class MinListStack {
    * @throw std::logic_error: если минимум не проинициализирован
    */
   T GetMin() {
-    if (!is_min_init) throw std::logic_error("Minimum is not initialized");
+    if (Empty()) throw std::logic_error("Stack is empty");
 
-    return min_;
+    return list_.back().second;
   }
 
  private:
-  /**
-   * @return T: новый минимум
-   * (после удаления)
-   */
-  void FindNewMin() {
-    min_ = list_.front();
-    for (const auto& elem : list_)
-      if (elem < min_) min_ = elem;
-  }
-
-  // @brief двусвязный список, на основе которого написан стек
-  std::list<T> list_;
-
-  T min_;
-  bool is_min_init{false};
+  std::list<std::pair<T, T>> list_;
 };
