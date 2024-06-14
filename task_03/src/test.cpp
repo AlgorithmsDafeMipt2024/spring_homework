@@ -1,6 +1,7 @@
 
 #include <gtest/gtest.h>
 
+#include <stdexcept>
 #include <vector>
 
 #include "topology_sort.hpp"
@@ -17,9 +18,7 @@ TEST(TopologySort, Simple) {
             std::vector<int>({9, 8, 7, 3, 2, 1, 3, 2, 1, 0, 0, 0}));
   ASSERT_EQ(find_higher_temp({0, 0, 0, 0, 0, 0, 0}),
             std::vector<int>({0, 0, 0, 0, 0, 0, 0}));
-            ASSERT_EQ(find_higher_temp({}),
-            std::vector<int>({}));
+  ASSERT_EQ(find_higher_temp({}), std::vector<int>({}));
   ASSERT_EQ(find_higher_temp({1, 5, 2, 3, 4, 0}),
             std::vector<int>({1, 0, 1, 1, 0, 0}));
-            
 }

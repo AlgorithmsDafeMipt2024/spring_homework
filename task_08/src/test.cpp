@@ -23,5 +23,4 @@ TEST(HashTable, Simple) {
   ASSERT_EQ(table.Find("DDDD"), false);
   ASSERT_EQ(table.Add("abcd"), false);
   ASSERT_EQ(table.Find("abcd"), true);
-
 }
