@@ -6,9 +6,9 @@
 template <class T>
 int Partition(std::vector<T>& data, int l, int r) {
   std::srand(std::time(nullptr));
-  int pivotPos = l + std::rand() % (r - l);
-  if (pivotPos != r - 1) {
-    std::swap(data[r - 1], data[pivotPos]);
+  int pivot_pos = l + std::rand() % (r - l);
+  if (pivot_pos != r - 1) {
+    std::swap(data[r - 1], data[pivot_pos]);
   }
 
   int i = l, j = l;

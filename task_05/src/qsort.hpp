@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../../lib/src/util.hpp"
+#include <util.hpp>
 
 template <typename T>
 void QuickSort(std::vector<T>& arr, int l, int r) {

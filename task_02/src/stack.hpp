@@ -7,18 +7,22 @@ class Stack {
     Node* prev_ = nullptr;
   };
   Node* top_ = nullptr;
+  Node* Top();
 
  public:
   void Push(int value);
   int Pop();
-  Node* Top();
+  bool CheckTop();
+  int GetTopValue();
 };
 
-struct MinStack {
+class MinStack {
+ public:
   void Push(int value);
   int Pop();
   int GetMin();
 
+ private:
   Stack s_;
   Stack m_;
 };

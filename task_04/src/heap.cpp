@@ -1,5 +1,7 @@
 #include "heap.hpp"
 
+#include <cstddef>
+#include <stdexcept>
 #include <vector>
 
 void Heap::SiftUp(int index) {
@@ -11,21 +13,22 @@ void Heap::SiftUp(int index) {
 
 void Heap::SiftDown(int index) {
   while (2 * index + 1 < heap_.size()) {
-    int l = 2 * index + 1;
-    int r = 2 * index + 2;
-    int j = l;
-    if (r < heap_.size() && heap_[r] < heap_[l]) {
-      j = r;
+    int left = 2 * index + 1;
+    int right = 2 * index + 2;
+    int small_child_index = left;
+    if (right < heap_.size() && heap_[right] < heap_[left]) {
+      small_child_index = right;
     }
-    if (heap_[index] < heap_[j]) {
+    if (heap_[index] < heap_[small_child_index]) {
       break;
     }
-    std::swap(heap_[index], heap_[j]);
-    index = j;
+    std::swap(heap_[index], heap_[small_child_index]);
+    index = small_child_index;
   }
 }
 
 int Heap::Min() {
+  if (Size() == 0) throw std::runtime_error("Empty Heap");
   int m = heap_[0];
   std::swap(heap_[0], heap_[heap_.size() - 1]);
   heap_.pop_back();
@@ -42,6 +45,13 @@ void Heap::Build(std::vector<int> data) {
   for (auto x : data) {
     this->Insert(x);
   }
+}
+
+int Heap::Size() { return heap_.size(); }
+
+int Heap::Top() {
+  if (Size() == 0) throw std::runtime_error("Empty Heap");
+  return heap_[0];
 }
 
 int FindMin(std::vector<int> data) {

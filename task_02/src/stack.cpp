@@ -5,26 +5,36 @@
 void Stack::Push(int value) {
   Node* t = new Node();
   t->value_ = value;
-  if (this->top_ == nullptr) {
-    this->top_ = t;
+  if (top_ == nullptr) {
+    top_ = t;
   } else {
-    t->prev_ = this->top_;
-    this->top_ = t;
+    t->prev_ = top_;
+    top_ = t;
   }
 }
 
+bool Stack::CheckTop() {
+  if (Top() == nullptr) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+int Stack::GetTopValue() { return Top()->value_; }
+
 int Stack::Pop() {
-  Node* t = this->top_;
-  this->top_ = this->top_->prev_;
+  Node* t = top_;
+  top_ = top_->prev_;
   return t->value_;
 }
 
-Stack::Node* Stack::Top() { return this->top_; }
+Stack::Node* Stack::Top() { return top_; }
 void MinStack::Push(int value) {
-  if (s_.Top() == nullptr) {
+  if (s_.CheckTop()) {
     m_.Push(value);
   } else {
-    m_.Push(std::min(value, s_.Top()->value_));
+    m_.Push(std::min(value, s_.GetTopValue()));
   }
   s_.Push(value);
 }
@@ -34,4 +44,4 @@ int MinStack::Pop() {
   return s_.Pop();
 }
 
-int MinStack::GetMin() { return m_.Top()->value_; }
+int MinStack::GetMin() { return m_.GetTopValue(); }
