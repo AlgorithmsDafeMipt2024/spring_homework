@@ -27,7 +27,7 @@ class AVL_Tree {
   Node *Rotateleft(Node *q);
   Node *Balance(Node *p);
   Node *Findmin(Node *right_subtree);
-  Node *Removemin(Node *p);
+  Node *RemoveMin(Node *p);
   unsigned char Height(Node *p);
   int DifferenceH(Node *p);
   void Fixheight(Node *p);

@@ -8,20 +8,12 @@
 size_t HashTable::Size() { return size_; }
 
 size_t HashTable::FirstHashFunc(int key) {
-  if constexpr (std::is_arithmetic<int>::value) {
-    return floor(buffers_size_ *
-                 ((key * hashCoefficient) - floor(key * hashCoefficient)));
-  }
-  throw std::invalid_argument(
-      "Hash table cannot cannot work with it with an arithmetic data type");
+  return floor(buffers_size_ *
+               ((key * hashCoefficient) - floor(key * hashCoefficient)));
 }
 
 size_t HashTable::SecondHashFunc(int key) {
-  if constexpr (std::is_arithmetic<int>::value) {
-    return (key * buffers_size_ - 1) % buffers_size_;
-  }
-  throw std::invalid_argument(
-      "Hash table cannot cannot work with it with an arithmetic data type");
+  return (key * buffers_size_ - 1) % buffers_size_;
 }
 
 void HashTable::Clear() {

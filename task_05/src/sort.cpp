@@ -16,11 +16,11 @@ int Partition(std::vector<int> &arr, int low, int high) {
   return (i + 1);
 }
 
-std::vector<int> Quick_Sort(std::vector<int> &arr, int low, int high) {
+std::vector<int> QuickSort(std::vector<int> &arr, int low, int high) {
   if (low < high) {
     int m = Partition(arr, low, high);
-    Quick_Sort(arr, low, m - 1);
-    Quick_Sort(arr, m + 1, high);
+    QuickSort(arr, low, m - 1);
+    QuickSort(arr, m + 1, high);
   }
   return arr;
 }

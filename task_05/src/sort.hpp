@@ -4,4 +4,4 @@
 
 int Partition(std::vector<int> &arr, int low, int high);
 
-std::vector<int> Quick_Sort(std::vector<int> &arr, int low, int high);
+std::vector<int> QuickSort(std::vector<int> &arr, int low, int high);

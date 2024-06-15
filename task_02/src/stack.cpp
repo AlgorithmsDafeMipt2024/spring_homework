@@ -15,7 +15,7 @@ void Stack::Push(int value) {
 
 int Stack::Pop() {
   if (top == nullptr) {
-    throw std::logic_error("Out_of_range");
+    throw std::logic_error("Stack_is_empty");
   }
   int val = top->value;
   top = top->next;
@@ -23,29 +23,29 @@ int Stack::Pop() {
 }
 
 void MinStack::Push(int value) {
-  if (st1_.top == nullptr) {
-    st1_.Push(value);
-    st2_.Push(value);
+  if (stack_.top == nullptr) {
+    stack_.Push(value);
+    min_stack_.Push(value);
     return;
   }
 
-  if (st1_.top->value > value) {
-    st2_.Push(value);
+  if (stack_.top->value > value) {
+    min_stack_.Push(value);
   } else {
-    st1_.Push(value);
-    st2_.Push(st2_.top->value);
+    stack_.Push(value);
+    min_stack_.Push(min_stack_.top->value);
   }
 }
 
 int MinStack::Pop() {
-  if (st1_.top == nullptr) {
-    throw std::logic_error("Out_of_range");
+  if (stack_.top == nullptr) {
+    throw std::logic_error("Stack_is_empty");
   }
 
-  int val = st1_.top->value;
-  st1_.top = st1_.top->next;
-  st2_.top = st2_.top->next;
+  int val = stack_.top->value;
+  stack_.top = stack_.top->next;
+  min_stack_.top = min_stack_.top->next;
   return val;
 }
 
-int MinStack::GetMin() { return st2_.top->value; }
+int MinStack::GetMin() { return min_stack_.top->value; }

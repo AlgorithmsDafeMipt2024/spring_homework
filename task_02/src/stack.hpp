@@ -23,6 +23,6 @@ class MinStack {
   int GetMin();
 
  private:
-  Stack st1_;
-  Stack st2_;
+  Stack stack_;
+  Stack min_stack_;
 };

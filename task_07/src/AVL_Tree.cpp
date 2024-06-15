@@ -62,9 +62,9 @@ Node *AVL_Tree::Findmin(Node *right_subtree) {
   return right_subtree->left ? Findmin(right_subtree->left) : right_subtree;
 }
 
-Node *AVL_Tree::Removemin(Node *p) {
+Node *AVL_Tree::RemoveMin(Node *p) {
   if (p->left == nullptr) return p->right;
-  p->left = Removemin(p->left);
+  p->left = RemoveMin(p->left);
   return p;
 }
 
@@ -80,7 +80,7 @@ Node *AVL_Tree::Remove(Node *p, int k) {
     delete p;
     if (!p_right) return p_left;
     Node *min = Findmin(p_right);
-    min->right = Removemin(p_right);
+    min->right = RemoveMin(p_right);
     min->left = p_left;
     return Balance(min);
   }
