@@ -1,6 +1,5 @@
-#include <map>
-#include <vector>
 #include <iostream>
+#include <vector>
 
 class Heap {
  public:
