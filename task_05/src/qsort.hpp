@@ -1,9 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
-
 #include <util.hpp>
+#include <vector>
 
 template <typename T>
 void QuickSort(std::vector<T>& arr, int l, int r) {
