@@ -34,6 +34,5 @@ TEST(MergeSortTests, Case6) {
 }
 
 TEST(MergeSortTests, Case7) {
-  ASSERT_EQ(MergeSort(std::vector<int>{}),
-            (std::vector<int>{}));
+  ASSERT_EQ(MergeSort(std::vector<int>{}), (std::vector<int>{}));
 }
