@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <memory>
 
 template <typename T>
 struct Node {
@@ -13,7 +14,7 @@ struct Node {
 };
 
 template <typename T>
-class AVL_Tree {
+class AVLTree {
  public:
   void Push(int k) { root = Insert(root, k); }
   void Pop(int k) { root = Remove(root, k); }
@@ -61,7 +62,9 @@ class AVL_Tree {
 
   Node<T>* Insert(Node<T>* n, T k) {
     {
-      if (!n) return new Node(k);
+      if (!n) {
+        return new Node(k);
+      }
       if (k < n->key)
         n->left = Insert(n->left, k);
       else
@@ -75,6 +78,7 @@ class AVL_Tree {
   Node<T>* RemoveMin(Node<T>* n) {
     {
       if (!n->left) {
+        delete n->left;
         return n->right;
       }
       n->left = RemoveMin(n->left);
@@ -84,6 +88,7 @@ class AVL_Tree {
 
   Node<T>* Remove(Node<T>* n, int k) {
     if (!n) {
+      delete n;
       return nullptr;
     }
     if (k == n->key) {

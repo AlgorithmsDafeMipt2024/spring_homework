@@ -4,7 +4,7 @@
 #include <vector>
 
 TEST(AVLTree, test) {
-  AVL_Tree<int> avl;
+  AVLTree<int> avl;
   ASSERT_EQ(avl.Contains(10), false);
   ASSERT_EQ(avl.Contains(5), false);
   ASSERT_EQ(avl.Contains(15), false);
