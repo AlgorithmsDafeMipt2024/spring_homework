@@ -1,23 +1,19 @@
 #include "temperature.hpp"
 
-std::vector<int> Solve(std::vector<int> temperature) {
-  int max_temp = -10000000;
-  std::vector<int> result(temperature.size(), 0);
+#include <stack>
 
-  for (int i = temperature.size() - 1; i >= 0; i--) {
-    int cur_temperature = temperature[i];
-
-    if (max_temp < cur_temperature) {
-      max_temp = cur_temperature;
-    } else {
-      int days_to_up = 1;
-
-      while (temperature[i + days_to_up] <= cur_temperature) {
-        days_to_up += result[i + days_to_up];
-      }
-
-      result[i] = days_to_up;
+std::vector<unsigned int> Solve(std::vector<int> temperature) {
+  std::vector<unsigned int> result(temperature.size());
+  std::stack<unsigned int> check_days;
+  for (unsigned int day_index = 0; day_index < temperature.size();
+       day_index++) {
+    result[day_index] = 0;
+    while (!check_days.empty() &&
+           temperature[day_index] > temperature[check_days.top()]) {
+      result[check_days.top()] = day_index - check_days.top();
+      check_days.pop();
     }
+    check_days.push(day_index);
   }
   return result;
 }
