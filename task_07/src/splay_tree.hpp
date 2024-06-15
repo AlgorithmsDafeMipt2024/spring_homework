@@ -186,8 +186,7 @@ ParentsType SplayTree<CustomType, Key>::ParentsCheck(
     TreeNode<std::pair<Key, CustomType>>* parent_node = x_node->parent;
     if (parent_node->parent == nullptr) {
       if (parent_node->left_child == parent_node->right_child)
-        throw std::runtime_error(
-            "left and right children are the same node!?\n");
+        throw std::logic_error("left and right children are the same node!?\n");
       else if (parent_node->left_child == x_node)
         return ParentsType::right;
       // else if for more explicit code
@@ -195,8 +194,7 @@ ParentsType SplayTree<CustomType, Key>::ParentsCheck(
         return ParentsType::left;
     } else {
       if (parent_node->parent->left_child == parent_node->parent->right_child)
-        throw std::logic_error(
-            "left and right children are the same node!?\n");
+        throw std::logic_error("left and right children are the same node!?\n");
       if (parent_node->left_child == x_node) {
         if (parent_node->parent->left_child == parent_node)
           return ParentsType::right_right;
