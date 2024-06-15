@@ -1,135 +1,111 @@
-#include <algorithm>
-#include <cstdlib>
-#include <iostream>
 #include <vector>
-
-using namespace std;
 
 struct Node {
   int value;
+  int Height;
   Node* left;
   Node* right;
 
-  Node(int val) : value(val), left(nullptr), right(nullptr) {}
+  Node(int k) {
+    value = k;
+    left = right = 0;
+    Height = 1;
+  }
 };
 
-void insert(Node*& root, int value) {
-  Node* newNode = new Node(value);
+int Height(Node* p) { return p ? p->Height : 0; }
+
+int Bfactor(Node* p) { return Height(p->right) - Height(p->left); }
+
+void FixHeight(Node* p) {
+  int hl = Height(p->left);
+  int hr = Height(p->right);
+  p->Height = (hl > hr ? hl : hr) + 1;
+}
+
+Node* Rotateright(Node* p) {
+  Node* q = p->left;
+  p->left = q->right;
+  q->right = p;
+  FixHeight(p);
+  FixHeight(q);
+  return q;
+}
+
+Node* Rotateleft(Node* q) {
+  Node* p = q->right;
+  q->right = p->left;
+  p->left = q;
+  FixHeight(q);
+  FixHeight(p);
+  return p;
+}
+
+Node* Balance(Node* p) {
+  FixHeight(p);
+  if (Bfactor(p) == 2) {
+    if (Bfactor(p->right) < 0) p->right = Rotateright(p->right);
+    return Rotateleft(p);
+  }
+  if (Bfactor(p) == -2) {
+    if (Bfactor(p->left) > 0) p->left = Rotateleft(p->left);
+    return Rotateright(p);
+  }
+  return p;
+}
+
+Node* Insert(Node* p, int k) {
+  if (!p) return new Node(k);
+  if (k < p->value)
+    p->left = Insert(p->left, k);
+  else
+    p->right = Insert(p->right, k);
+  return Balance(p);
+}
+
+Node* Find(Node* root, int value) {
   if (root == nullptr) {
-    root = newNode;
-    return;
+    return nullptr;
   }
-  Node* current = root;
-  while (true) {
-    if (value <= current->value) {
-      if (current->left == nullptr) {
-        current->left = newNode;
-        break;
-      }
-      current = current->left;
-    } else {
-      if (current->right == nullptr) {
-        current->right = newNode;
-        break;
-      }
-      current = current->right;
-    }
+
+  if (value < root->value) {
+    return Find(root->left, value);
+  } else if (value > root->value) {
+    return Find(root->right, value);
+  } else {
+    return root;
   }
 }
 
-void build_binary_search_tree(vector<int>& arr, Node*& root) {
+Node* FindMin(Node* p) { return p->left ? FindMin(p->left) : p; }
+
+Node* Removemin(Node* p) {
+  if (p->left == 0) return p->right;
+  p->left = Removemin(p->left);
+  return Balance(p);
+}
+
+Node* Remove(Node* p, int k) {
+  if (!p) return 0;
+  if (k < p->value)
+    p->left = Remove(p->left, k);
+  else if (k > p->value)
+    p->right = Remove(p->right, k);
+  else {
+    Node* q = p->left;
+    Node* r = p->right;
+    delete p;
+    if (!r) return q;
+    Node* min = FindMin(r);
+    min->right = Removemin(r);
+    min->left = q;
+    return Balance(min);
+  }
+  return Balance(p);
+}
+
+void BuildBinarySearchTree(std::vector<int>& arr, Node*& root) {
   for (int i = 0; i < arr.size(); ++i) {
-    insert(root, arr[i]);
-  }
-}
-
-string find(Node* current, int value) {
-  while (true) {
-    if (value == current->value) {
-      return "Есть";
-    }
-
-    if (value < current->value) {
-      if (current->left == nullptr) break;
-      current = current->left;
-    }
-
-    if (value > current->value) {
-      if (current->right == nullptr) break;
-      current = current->right;
-    }
-  }
-  return "Нет";
-}
-
-Node* findMin(Node* node) {
-  while (node->left != nullptr) {
-    node = node->left;
-  }
-  return node;
-}
-
-void remove(Node* current, int value) {
-  while (true) {
-    Node* next = nullptr;
-
-    if (value < current->value) {
-      next = current->left;
-      if (next == nullptr) {
-        cout << "Такого элемента нет\n";
-      }
-
-      if (value == next->value) {
-        if (next->left == nullptr && next->right == nullptr) {
-          current->left = nullptr;
-          delete next;
-          return;
-        }
-        if (next->left != nullptr && next->right == nullptr) {
-          current->left = next->left;
-          delete next;
-          return;
-        }
-        if (next->left == nullptr && next->right != nullptr) {
-          current->left = next->right;
-          delete next;
-          return;
-        }
-        if (next->left != nullptr && next->right != nullptr) {
-          Node* min_right = findMin(next->right);
-          next->value = min_right->value;
-          value = min_right->value;
-        }
-      }
-      current = next;
-    }
-
-    if (value > current->value) {
-      next = current->right;
-      if (current->right == nullptr) {
-        cout << "Такого элемента нет\n";
-      }
-      if (value == next->value) {
-        if (next->left == nullptr && next->right == nullptr) {
-          current->right = nullptr;
-          delete next;
-        }
-        if (next->left != nullptr && next->right == nullptr) {
-          current->right = next->left;
-          delete next;
-        }
-        if (next->left == nullptr && next->right != nullptr) {
-          current->right = next->right;
-          delete next;
-        }
-        if (next->left != nullptr && next->right != nullptr) {
-          Node* min_right = findMin(next->right);
-          next->value = min_right->value;
-          value = min_right->value;
-        }
-        return;
-      }
-      current = next;
-    }
+    root = Insert(root, arr[i]);
   }
 }
