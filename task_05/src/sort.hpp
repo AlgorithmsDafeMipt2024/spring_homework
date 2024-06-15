@@ -8,9 +8,8 @@
 #include <utility>
 
 template <constructable CustomClass>
-void merge_two_sorted_arrays(CustomClass* array_start,
-                             CustomClass* array_middle,
-                             CustomClass* array_end) {
+void MergeTwoSortedArrays(CustomClass* array_start, CustomClass* array_middle,
+                          CustomClass* array_end) {
   size_t array_size = array_end - array_start;
 
   CustomClass array[array_size];
@@ -50,11 +49,11 @@ void merge_two_sorted_arrays(CustomClass* array_start,
 }
 
 template <constructable CustomClass>
-void merge_sort(CustomClass* array_start, CustomClass* array_end) {
+void MergeSort(CustomClass* array_start, CustomClass* array_end) {
   if ((array_end == array_start) || (array_end - array_start == 1)) return;
 
-  merge_sort(array_start, array_start + (array_end - array_start) / 2);
-  merge_sort(array_start + (array_end - array_start) / 2, array_end);
-  merge_two_sorted_arrays(
-      array_start, array_start + (array_end - array_start) / 2, array_end);
+  MergeSort(array_start, array_start + (array_end - array_start) / 2);
+  MergeSort(array_start + (array_end - array_start) / 2, array_end);
+  MergeTwoSortedArrays(array_start, array_start + (array_end - array_start) / 2,
+                       array_end);
 }

@@ -15,7 +15,7 @@ TEST(sort, simple_1) {
   std::sort(test.begin(), test.end());
   int* begin = &vector[0];
   int* end = &vector[vector.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector, test);
 }
 
@@ -25,7 +25,7 @@ TEST(sort, already_sorted) {
   std::sort(test.begin(), test.end());
   int* begin = &vector[0];
   int* end = &vector[vector.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector, test);
 }
 
@@ -35,7 +35,7 @@ TEST(sort, multiple_1) {
   std::sort(test.begin(), test.end());
   int* begin = &vector[0];
   int* end = &vector[vector.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector, test);
 }
 
@@ -45,7 +45,7 @@ TEST(sort, multiple_2) {
   std::sort(test.begin(), test.end());
   int* begin = &vector[0];
   int* end = &vector[vector.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector, test);
 }
 
@@ -55,7 +55,7 @@ TEST(sort, empty) {
   std::sort(test.begin(), test.end());
   int* begin = &vector[0];
   int* end = &vector[vector.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector, test);
 }
 
@@ -65,6 +65,6 @@ TEST(sort, one_elem) {
   std::sort(test.begin(), test.end());
   int* begin = &vector[0];
   int* end = &vector[vector.size()];
-  merge_sort(begin, end);
+  MergeSort(begin, end);
   ASSERT_EQ(vector, test);
 }
