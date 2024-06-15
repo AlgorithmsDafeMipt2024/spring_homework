@@ -195,7 +195,7 @@ ParentsType SplayTree<CustomType, Key>::ParentsCheck(
         return ParentsType::left;
     } else {
       if (parent_node->parent->left_child == parent_node->parent->right_child)
-        throw std::runtime_error(
+        throw std::logic_error(
             "left and right children are the same node!?\n");
       if (parent_node->left_child == x_node) {
         if (parent_node->parent->left_child == parent_node)
@@ -214,7 +214,7 @@ ParentsType SplayTree<CustomType, Key>::ParentsCheck(
       }
     }
   }
-  throw std::runtime_error(
+  throw std::logic_error(
       "got throw all else if blocks but haven't found a match\n");
 }
 
@@ -272,7 +272,7 @@ SplayTree<CustomType, Key> SplayTree<CustomType, Key>::Split(Key key) {
   Splay(key);
   if (tree_root_ == nullptr) return SplayTree{nullptr};
   if (Find(key) != tree_root_)
-    throw std::runtime_error("key is not root after splaying");
+    throw std::logic_error("key is not root after splaying");
 
   if (tree_root_->value.first >= key) {
     SplayTree right_tree{tree_root_};
