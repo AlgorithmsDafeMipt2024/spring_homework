@@ -1,5 +1,6 @@
 #include <map>
 #include <vector>
+#include <iostream>
 
 class Heap {
  public:
@@ -7,12 +8,10 @@ class Heap {
   void SiftDown(int i);
   void Insert(int x);
   int GetMin();
-  void extractMin();
-  int size();
+  void ExtractMin();
+  int Size();
 
  private:
   std::vector<int> a;
   int n = 0;
 };
-
-std::pair<int, std::vector<int>> Heap_exe(int n, int k, std::vector<int> a);

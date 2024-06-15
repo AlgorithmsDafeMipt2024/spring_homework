@@ -26,9 +26,14 @@ void Heap::SiftDown(int i) {
   }
 }
 
-int Heap::size() { return a.size(); }
+int Heap::Size() { return a.size(); }
 
-int Heap::GetMin() { return a[0]; }
+int Heap::GetMin() {
+  if (a.size() == 0) {
+    throw std::out_of_range("Heap is empty");
+  }
+  return a[0];
+}
 
 void Heap::Insert(int x) {
   a.push_back(x);
@@ -36,48 +41,12 @@ void Heap::Insert(int x) {
   SiftUp(n - 1);
 }
 
-void Heap::extractMin() {
+void Heap::ExtractMin() {
+  if (a.size() == 0) {
+    throw std::out_of_range("Heap is empty");
+  }
   a[0] = a[n - 1];
   a.erase(a.begin() + n - 1);
   n--;
   SiftDown(0);
-}
-
-std::pair<int, std::vector<int>> Heap_exe(int n, int k, std::vector<int> a) {
-  Heap useful_elements;
-  std::map<int, int> indx;
-
-  std::vector<int> ans(n, 0);
-
-  long long i = 0;
-  long long ans0 = 0;
-  long long j = 0;
-
-  while (j < n) {
-    while (j - i < k && j < n) {
-      if (a[j] < a[i]) {
-        indx[a[j]] = j;
-        useful_elements.Insert(a[j]);
-        break;
-      }
-
-      if (i != j) {
-        indx[a[j]] = j;
-        useful_elements.Insert(a[j]);
-      }
-
-      ans0 += a[i];
-      ans[i]++;
-
-      j++;
-    }
-
-    if (useful_elements.size() != 0) {
-      i = indx[useful_elements.GetMin()];
-      useful_elements.extractMin();
-    } else {
-      i = j;
-    }
-  }
-  return {ans0, ans};
 }
