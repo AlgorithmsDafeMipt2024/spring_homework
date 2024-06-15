@@ -14,7 +14,7 @@ class Heap {
   std::vector<int> Copy();
 
  private:
-  std::vector<int> heap;
+  std::vector<int> heap_;
 };
 
 int FindMininum(std::vector<int> vec);
