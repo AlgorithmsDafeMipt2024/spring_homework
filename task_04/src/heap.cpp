@@ -21,9 +21,9 @@ void Heap::SiftUp(int i) {
   }
 }
 
-int Heap::GetMin() { return heap[0]; }
+int Heap::GetMininum() { return heap[0]; }
 
-int Heap::DelMin() {
+int Heap::DelMininum() {
   int minimum = heap[0];
   heap[0] = heap[heap.size() - 1];
   heap.erase(heap.begin());
@@ -44,10 +44,10 @@ void Heap::Build(std::vector<int> vec) {
   }
 }
 
-int FindMin(std::vector<int> vec) {
+int FindMininum(std::vector<int> vec) {
   Heap heap;
   heap.Build(vec);
-  return heap.GetMin();
+  return heap.GetMininum();
 }
 
 std::vector<int> Result(std::vector<int> vec) {
