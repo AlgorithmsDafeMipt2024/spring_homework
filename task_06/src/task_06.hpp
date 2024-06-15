@@ -32,5 +32,8 @@ int quickSelect(std::vector<int>& arr, int left, int right, int k) {
 }
 
 int findNthOrder(std::vector<int> arr, int k) {
+  if (arr.size() == 0) {
+    throw std::invalid_argument("vector must be not empty");
+  }
   return quickSelect(arr, 0, arr.size() - 1, k - 1);
 }

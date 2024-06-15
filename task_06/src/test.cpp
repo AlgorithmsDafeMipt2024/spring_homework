@@ -19,3 +19,7 @@ TEST(findNthOrder, Case3) {
 TEST(findNthOrder, Case4) {
   ASSERT_EQ(findNthOrder(std::vector<int>{55, 55, 55, 55, 55}, 5), 55);
 }
+
+TEST(findNthOrder, Case5) {
+  EXPECT_THROW(findNthOrder(std::vector<int>{}, 5), std::invalid_argument);
+}
