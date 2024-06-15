@@ -1,4 +1,5 @@
 #pragma once
 #include <vector>
+#include <stack>
 
-std::vector<int> Task3(std::vector<int>);
+std::vector<int> TopologySort(std::vector<int>);

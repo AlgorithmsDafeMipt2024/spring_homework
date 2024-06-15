@@ -1,20 +1,20 @@
 #include "topology_sort.hpp"
 
-std::vector<int> Task3(std::vector<int> temperature) {
-  std::vector<int> result;
+std::vector<int> TopologySort(std::vector<int> temperature) {
+  std::vector<int> result(0, temperature.size());
+  std::stack <int> index;
+
   for (int i = 0; i < temperature.size(); ++i) {
-    int count_day = 0;
-    bool flag = true;
-    for (int j = i; j < temperature.size(); ++j) {
-      if (temperature[j] <= temperature[i])
-        count_day++;
-      else {
-        flag = false;
-        break;
-      }
+    while (!index.empty() && temperature[index.top()] < temperature[i]) {
+      int current_index = index.top();
+      index.pop();
+      result[current_index] = i - current_index;
     }
-    if (flag) count_day = 0;
-    result.push_back(count_day);
+    index.push(i);
   }
+  for (int i = 0; i<index.size(); ++i) {
+    result.push_back(0);
+  }
+
   return result;
 }
