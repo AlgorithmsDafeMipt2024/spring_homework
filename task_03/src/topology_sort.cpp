@@ -2,7 +2,7 @@
 
 std::vector<int> TopologySort(std::vector<int> temperature) {
   std::vector<int> result(0, temperature.size());
-  std::stack <int> index;
+  std::stack<int> index;
 
   for (int i = 0; i < temperature.size(); ++i) {
     while (!index.empty() && temperature[index.top()] < temperature[i]) {
@@ -12,7 +12,7 @@ std::vector<int> TopologySort(std::vector<int> temperature) {
     }
     index.push(i);
   }
-  for (int i = 0; i<index.size(); ++i) {
+  for (int i = 0; i < index.size(); ++i) {
     result.push_back(0);
   }
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
 #include <stack>
+#include <vector>
 
 std::vector<int> TopologySort(std::vector<int>);
