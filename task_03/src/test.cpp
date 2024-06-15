@@ -13,4 +13,6 @@ TEST(TemperatureCnt, Simple) {
       TemperatureCounter(std::vector<double>{2, 6, 17.512512, 7, 3, 4.412151}),
       (std::vector<int>{1, 1, 0, 0, 1, 0}));
   ASSERT_EQ(TemperatureCounter(std::vector<double>{}), std::vector<int>{});
+  ASSERT_EQ(TemperatureCounter(std::vector<double>{2, 6, 5, 4, 3, 7}),
+            (std::vector<int>{1, 4, 3, 2, 1, 0}));
 }
