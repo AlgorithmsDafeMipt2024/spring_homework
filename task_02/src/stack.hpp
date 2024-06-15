@@ -4,6 +4,7 @@
 #include <concepts/constructable.hpp>
 #include <listnode.hpp>
 #include <stack>
+#include <stdexcept>
 
 template <typename CustomClass>
 concept constructable_and_comparable =
@@ -35,15 +36,15 @@ void Stack<CustomClass>::Push(CustomClass value) {
 
 template <constructable CustomClass>
 CustomClass Stack<CustomClass>::Top() {
-  if (top_ == nullptr) throw std::runtime_error("out of range\n");
+  if (top_ == nullptr) throw std::out_of_range("Empty stack\n");
   return top_->data;
 }
 
 template <constructable CustomClass>
 CustomClass Stack<CustomClass>::Pop() {
-  if (top_ == nullptr) throw std::runtime_error("out of range\n");
+  if (top_ == nullptr) throw std::out_of_range("Empty stack\n");
   ListNode<CustomClass>* temp = top_->prev;
-  CustomClass& val = top_->data;
+  CustomClass val = top_->data;
   delete top_;
   top_ = temp;
   return val;
