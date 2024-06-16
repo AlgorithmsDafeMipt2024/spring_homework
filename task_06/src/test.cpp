@@ -56,3 +56,13 @@ TEST(OrderStats, Char) {
   std::vector<char> v{'d', 's', 'a', 'b'};
   ASSERT_EQ(FindOrderStatistic(v, 1), 'b');
 }
+
+TEST(OrderStats, SameNumbers) {
+  std::vector<int> v{2, 2, 2, 2, 2, 2};
+  ASSERT_EQ(FindOrderStatistic(v, 0), 2);
+  ASSERT_EQ(FindOrderStatistic(v, 1), 2);
+  ASSERT_EQ(FindOrderStatistic(v, 2), 2);
+  ASSERT_EQ(FindOrderStatistic(v, 3), 2);
+  ASSERT_EQ(FindOrderStatistic(v, 4), 2);
+  ASSERT_EQ(FindOrderStatistic(v, 5), 2);
+}
