@@ -4,7 +4,7 @@
 #include "AVLTree.h"
 
 TEST(AVLTreeTest, InsertAndContains) {
-  AVL_Tree tree;
+  AVLTree tree;
 
   tree.Insert(10);
   tree.Insert(5);
@@ -19,7 +19,7 @@ TEST(AVLTreeTest, InsertAndContains) {
 }
 
 TEST(AVLTreeTest, DuplicateInsert) {
-  AVL_Tree tree;
+  AVLTree tree;
   tree.Insert(5);
   tree.Insert(5);
   tree.Insert(5);
@@ -27,7 +27,7 @@ TEST(AVLTreeTest, DuplicateInsert) {
 }
 
 TEST(AVLTreeTest, RemoveNonExisting) {
-  AVL_Tree tree;
+  AVLTree tree;
   tree.Insert(5);
   tree.Remove(10);
   ASSERT_EQ(tree.Contains(5), true);
@@ -35,7 +35,7 @@ TEST(AVLTreeTest, RemoveNonExisting) {
 }
 
 TEST(AVLTreeTest, LeftRotation) {
-  AVL_Tree tree;
+  AVLTree tree;
   tree.Insert(30);
   tree.Insert(20);
   tree.Insert(10);
@@ -45,7 +45,7 @@ TEST(AVLTreeTest, LeftRotation) {
 }
 
 TEST(AVLTreeTest, RightRotation) {
-  AVL_Tree tree;
+  AVLTree tree;
   tree.Insert(10);
   tree.Insert(20);
   tree.Insert(30);
@@ -55,7 +55,7 @@ TEST(AVLTreeTest, RightRotation) {
 }
 
 TEST(AVLTreeTest, RandomData) {
-  AVL_Tree tree;
+  AVLTree tree;
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<> dist(1, 1000);
