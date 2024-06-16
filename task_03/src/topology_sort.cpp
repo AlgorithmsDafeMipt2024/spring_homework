@@ -1,6 +1,6 @@
 #include "topology_sort.hpp"
 
-std::vector<int> TopologySort(std::vector<int> temperature) {
+std::vector<int> DaysUntilWarmer(std::vector<int> temperature) {
   std::vector<int> result(temperature.size(), 0);
   std::stack<int> index;
 

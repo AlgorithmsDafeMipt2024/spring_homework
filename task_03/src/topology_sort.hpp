@@ -2,4 +2,4 @@
 #include <stack>
 #include <vector>
 
-std::vector<int> TopologySort(std::vector<int>);
+std::vector<int> DaysUntilWarmer(std::vector<int>);
