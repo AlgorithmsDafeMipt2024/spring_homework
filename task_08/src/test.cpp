@@ -55,7 +55,7 @@ TEST(HashTableTest, CollisionHandling) {
 TEST(HashTableTest, ADD100Delete50Rehash) {
   HashTable table;
   for (int i = 0; i < 100; i++) table.Insert(i);
-  for (int i = 0; i < 50; i++) table.Remove(100 - i);
+  for (int i = 0; i <= 50; i++) table.Remove(100 - i);
   for (int i = 0; i < 38; i++) table.Insert(i);
-  ASSERT_EQ(table.Size(), 39);
+  ASSERT_EQ(table.Size(), 50);
 }

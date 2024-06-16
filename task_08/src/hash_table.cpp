@@ -6,16 +6,12 @@
 #include <stdexcept>
 
 size_t HashTable::FirstHashFunc(std::size_t key) {
-  if constexpr (std::is_arithmetic<std::size_t>::value)
-    return floor(buffers_size *
-                 ((key * hashCoefficient) - floor(key * hashCoefficient)));
-  throw std::invalid_argument("Invalid data type!");
+  return floor(buffers_size *
+               ((key * hashCoefficient) - floor(key * hashCoefficient)));
 }
 
 size_t HashTable::SecondHashFunc(std::size_t key) {
-  if constexpr (std::is_arithmetic<std::size_t>::value)
-    return (key * buffers_size - 1) % buffers_size;
-  throw std::invalid_argument("Invalid data type!");
+  return (key * buffers_size - 1) % buffers_size;
 }
 
 void HashTable::Clear() {
@@ -32,9 +28,9 @@ void HashTable::ReSize() {
 
 void HashTable::ReHash() {
   std::vector<std::size_t> subdata;
-  for (std::size_t i{0};
-       i < buffers_size && cell_conditions[i] == Condition::Fill; i++)
-    subdata.push_back(t_container[i]);
+  for (std::size_t i{0}; i < buffers_size; i++)
+    if (cell_conditions[i] == Condition::Fill)
+      subdata.push_back(t_container[i]);
 
   ReSize();
   Clear();

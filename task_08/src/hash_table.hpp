@@ -24,7 +24,7 @@ class HashTable {
  private:
   enum class Condition { Fill, Deleted, Empty };
   constexpr static const double rehashCoefficient = 0.7;
-  constexpr static const double hashCoefficient = 0.618;
+  constexpr static const double hashCoefficient = 0.618033989;
   constexpr static const double DefaultBufferSize = 8;
   size_t buffers_size;
   size_t size;
