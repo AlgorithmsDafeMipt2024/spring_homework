@@ -15,7 +15,7 @@ void Stack::Push(int value) {
 
 int Stack::Pop() {
   if (top == nullptr) {
-    throw std::logic_error("Stack_is_empty");
+    throw std::logic_error("out_of_range");
   }
   int val = top->value;
   top = top->next;
@@ -39,7 +39,7 @@ void MinStack::Push(int value) {
 
 int MinStack::Pop() {
   if (stack_.top == nullptr) {
-    throw std::logic_error("Stack_is_empty");
+    throw std::logic_error("out_of_range");
   }
 
   int val = stack_.top->value;

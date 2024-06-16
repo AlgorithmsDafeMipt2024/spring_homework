@@ -24,11 +24,11 @@ class AVL_Tree {
   Node *Remove(Node *root, int k);
   Node *Insert(Node *root, int k);
   Node *RotateRight(Node *p);
-  Node *Rotateleft(Node *q);
+  Node *RotateLeft(Node *q);
   Node *Balance(Node *p);
-  Node *Findmin(Node *right_subtree);
+  Node *FindMin(Node *right_subtree);
   Node *RemoveMin(Node *p);
   unsigned char Height(Node *p);
   int DifferenceH(Node *p);
-  void Fixheight(Node *p);
+  void FixHeight(Node *p);
 };

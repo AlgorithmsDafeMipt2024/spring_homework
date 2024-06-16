@@ -6,7 +6,7 @@ int AVL_Tree::DifferenceH(Node *p) {
   return Height(p->right) - Height(p->left);
 }
 
-void AVL_Tree::Fixheight(Node *p) {
+void AVL_Tree::FixHeight(Node *p) {
   unsigned char height_l = Height(p->left);
   unsigned char height_r = Height(p->right);
   p->height = (height_l > height_r ? height_l : height_r) + 1;
@@ -27,39 +27,39 @@ Node *AVL_Tree::RotateRight(Node *p) {
   Node *q = p->left;
   p->left = q->right;
   q->right = p;
-  Fixheight(p);
-  Fixheight(q);
+  FixHeight(p);
+  FixHeight(q);
   return q;
 }
 
-Node *AVL_Tree::Rotateleft(Node *q) {
+Node *AVL_Tree::RotateLeft(Node *q) {
   Node *p = q->right;
   q->right = p->left;
   p->left = q;
-  Fixheight(q);
-  Fixheight(p);
+  FixHeight(q);
+  FixHeight(p);
   return p;
 }
 Node *AVL_Tree::Balance(Node *p) {
-  Fixheight(p);
+  FixHeight(p);
   if (DifferenceH(p) == 2) {
     if (DifferenceH(p->right) < 0) {
       p->right = RotateRight(p->right);
     }
-    return Rotateleft(p);
+    return RotateLeft(p);
   }
 
   if (DifferenceH(p) == -2) {
     if (DifferenceH(p->left) > 0) {
-      p->left = Rotateleft(p->left);
+      p->left = RotateLeft(p->left);
     }
     return RotateRight(p);
   }
   return p;
 }
 
-Node *AVL_Tree::Findmin(Node *right_subtree) {
-  return right_subtree->left ? Findmin(right_subtree->left) : right_subtree;
+Node *AVL_Tree::FindMin(Node *right_subtree) {
+  return right_subtree->left ? FindMin(right_subtree->left) : right_subtree;
 }
 
 Node *AVL_Tree::RemoveMin(Node *p) {
@@ -79,7 +79,7 @@ Node *AVL_Tree::Remove(Node *p, int k) {
     Node *p_right = p->right;
     delete p;
     if (!p_right) return p_left;
-    Node *min = Findmin(p_right);
+    Node *min = FindMin(p_right);
     min->right = RemoveMin(p_right);
     min->left = p_left;
     return Balance(min);
