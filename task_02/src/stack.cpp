@@ -26,22 +26,24 @@ int Stack::GetTopValue() { return Top()->value_; }
 int Stack::Pop() {
   Node* t = top_;
   top_ = top_->prev_;
-  return t->value_;
+  int value = t->value_;
+  delete t;
+  return value;
 }
 
 Stack::Node* Stack::Top() { return top_; }
 void MinStack::Push(int value) {
-  if (s_.CheckTop()) {
-    m_.Push(value);
+  if (data_.CheckTop()) {
+    min_values_.Push(value);
   } else {
-    m_.Push(std::min(value, s_.GetTopValue()));
+    min_values_.Push(std::min(value, data_.GetTopValue()));
   }
-  s_.Push(value);
+  data_.Push(value);
 }
 
 int MinStack::Pop() {
-  int t = m_.Pop();
-  return s_.Pop();
+  int t = min_values_.Pop();
+  return data_.Pop();
 }
 
-int MinStack::GetMin() { return m_.GetTopValue(); }
+int MinStack::GetMin() { return min_values_.GetTopValue(); }
