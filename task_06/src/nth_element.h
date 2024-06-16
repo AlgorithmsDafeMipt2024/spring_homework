@@ -20,7 +20,7 @@ std::size_t Division(std::vector<T> data, std::size_t left, std::size_t right) {
 }
 
 template <class T>
-std::size_t Partition(std::vector<T> data, std::size_t left,
+std::size_t Partition(std::vector<T>& data, std::size_t left,
                       std::size_t right) {
   std::size_t pivotPos = Division(data, left, right);
 
@@ -47,7 +47,7 @@ std::size_t Partition(std::vector<T> data, std::size_t left,
 
 // поиск к-ой порядковой статистики
 template <class T>
-T NthElement(std::vector<T> data, std::size_t k) {
+T NthElement(std::vector<T>& data, std::size_t k) {
   std::size_t lastPivotPos = 0;
   std::size_t left = 0;
   std::size_t right = data.size();
