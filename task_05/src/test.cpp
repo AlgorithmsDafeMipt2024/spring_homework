@@ -1,8 +1,9 @@
+#include <gtest/gtest.h>
+
 #include <limits>
+#include <merge_sort.hpp>
 #include <random>
 #include <string>
-#include <gtest/gtest.h>
-#include <merge_sort.hpp>
 
 TEST(Sort, Simple) {
   std::vector<int> b{5, 3, 4, 1, 2};

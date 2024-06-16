@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
-#include "heap.hpp"
+
 #include <iostream>
+
+#include "heap.hpp"
 
 TEST(BinaryMinHeap_test, Empty) {
   BinaryMinHeap<int> heap;

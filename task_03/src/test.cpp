@@ -27,5 +27,5 @@ TEST(Temperature, Simple) {
   std::vector<size_t> days_data_5 = DaysAmountBeforeWarming({6, 5, 4, 3, 2, 1});
   std::vector<size_t> answer_5 = {0, 0, 0, 0, 0, 0};
 
-  ASSERT_EQ(days_data_3, answer_5);
+  ASSERT_EQ(days_data_5, answer_5);
 }
