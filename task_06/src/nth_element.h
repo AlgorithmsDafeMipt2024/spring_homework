@@ -1,37 +1,67 @@
-#include <cstddef>
-#include <stdexcept>
 #include <vector>
 
-template <typename T>
-size_t Division(std::vector<T>& data, size_t left, size_t right) {
-  T pivot = data[(left + right) / 2];
-  while (left <= right) {
-    while (data[left] < pivot) ++left;
-    while (data[right] > pivot) --right;
-    if (left >= right) break;
-    std::swap(data[left], data[right]);
-    if (data[left] != pivot) ++left;
-    if (data[right] != pivot) --right;
+template <class T>
+std::size_t Division(std::vector<T> data, std::size_t left, std::size_t right) {
+  std::size_t half = (left + right - 1) / 2;  // середина списка
+
+  if (data[left] < data[half]) {
+    if (data[right] < data[left])
+      return left;
+    else if (data[right] < data[half])
+      return right;
+    return half;
+  } else {
+    if (data[right] < data[half])
+      return half;
+    else if (data[right] < data[left])
+      return right;
+    return left;
   }
-  return right;
 }
 
-template <typename T>
-T NthElement(std::vector<T> data, size_t n) {
-  if (n >= data.size())
-    throw std::runtime_error("N is greater then array size");
+template <class T>
+std::size_t Partition(std::vector<T> data, std::size_t left,
+                      std::size_t right) {
+  std::size_t pivotPos = Division(data, left, right);
 
-  size_t left = 0;
-  size_t right = data.size() - 1;
-  while (true) {
-    size_t mid_index = Division(data, left, right);
+  if (pivotPos != right - 1) {  // меняем местами опорный элемент с последним
+    std::swap(data[right - 1], data[pivotPos]);
+  }
 
-    if (mid_index == n) {
-      return data[mid_index];
-    } else if (n < mid_index) {
-      right = mid_index;
+  std::size_t i = left;
+  std::size_t j = left;
+  T pivot = data[right - 1];
+  while (j < right - 1) {
+    if (data[j] <= pivot) {
+      // текущий элемент не больше опорного
+      // меняем его с первым из больших
+      std::swap(data[i++], data[j]);
+    }
+    ++j;
+  }
+  if (i != right - 1) {  // ставим опорный элемент на место
+    std::swap(data[i], data[right - 1]);
+  }
+  return i;
+}
+
+// поиск к-ой порядковой статистики
+template <class T>
+T NthElement(std::vector<T> data, std::size_t k) {
+  std::size_t lastPivotPos = 0;
+  std::size_t left = 0;
+  std::size_t right = data.size() - 1;
+
+  while (left < right) {
+    if ((lastPivotPos = Partition(data, left, right)) == k)
+      return data[lastPivotPos];
+    else if (lastPivotPos > k) {
+      // опорный элемент оказался правее искомого
+      right = lastPivotPos;
     } else {
-      left = mid_index + 1;
+      // опорный элемент не дошел до искомого
+      left = lastPivotPos + 1;
     }
   }
+  return data[lastPivotPos];
 }
