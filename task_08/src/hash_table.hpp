@@ -7,7 +7,7 @@ class HashTable {
   HashTable(size_t size) : table(size) {}
 
   // Вставка элемента
-  void insert(int key, int value) {
+  void Insert(int key, int value) {
     auto& list = table[hashFunction(key, table.size())];
     for (auto& pair : list) {
       if (pair.first == key) {
@@ -19,7 +19,7 @@ class HashTable {
   }
 
   // Удаление элемента
-  void remove(int key) {
+  void Remove(int key) {
     auto& list = table[hashFunction(key, table.size())];
     for (auto it = list.begin(); it != list.end(); ++it) {
       if (it->first == key) {
@@ -30,7 +30,7 @@ class HashTable {
   }
 
   // Поиск элемента
-  bool find(int key, int& value) {
+  bool Find(int key, int& value) {
     auto& list = table[hashFunction(key, table.size())];
     for (auto pair : list) {
       if (pair.first == key) {

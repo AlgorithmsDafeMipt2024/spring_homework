@@ -23,7 +23,7 @@ void FixHeight(Node* p) {
   p->Height = (hl > hr ? hl : hr) + 1;
 }
 
-Node* Rotateright(Node* p) {
+Node* RotateRight(Node* p) {
   Node* q = p->left;
   p->left = q->right;
   q->right = p;
@@ -32,7 +32,7 @@ Node* Rotateright(Node* p) {
   return q;
 }
 
-Node* Rotateleft(Node* q) {
+Node* RotateLeft(Node* q) {
   Node* p = q->right;
   q->right = p->left;
   p->left = q;
@@ -44,12 +44,12 @@ Node* Rotateleft(Node* q) {
 Node* Balance(Node* p) {
   FixHeight(p);
   if (Bfactor(p) == 2) {
-    if (Bfactor(p->right) < 0) p->right = Rotateright(p->right);
-    return Rotateleft(p);
+    if (Bfactor(p->right) < 0) p->right = RotateRight(p->right);
+    return RotateLeft(p);
   }
   if (Bfactor(p) == -2) {
-    if (Bfactor(p->left) > 0) p->left = Rotateleft(p->left);
-    return Rotateright(p);
+    if (Bfactor(p->left) > 0) p->left = RotateLeft(p->left);
+    return RotateRight(p);
   }
   return p;
 }
@@ -79,9 +79,9 @@ Node* Find(Node* root, int value) {
 
 Node* FindMin(Node* p) { return p->left ? FindMin(p->left) : p; }
 
-Node* Removemin(Node* p) {
+Node* RemoveMin(Node* p) {
   if (p->left == 0) return p->right;
-  p->left = Removemin(p->left);
+  p->left = RemoveMin(p->left);
   return Balance(p);
 }
 
@@ -97,7 +97,7 @@ Node* Remove(Node* p, int k) {
     delete p;
     if (!r) return q;
     Node* min = FindMin(r);
-    min->right = Removemin(r);
+    min->right = RemoveMin(r);
     min->left = q;
     return Balance(min);
   }
