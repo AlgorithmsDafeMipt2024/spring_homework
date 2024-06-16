@@ -2,38 +2,38 @@
 
 #include <vector>
 
-int partition(std::vector<int>& arr, int left, int right) {
-  int pivotIndex = left + (right - left) / 2;
-  int pivotValue = arr[pivotIndex];
-  std::swap(arr[pivotIndex], arr[right]);
-  int storeIndex = left;
+int Partition(std::vector<int>& arr, int left, int right) {
+  int pivot_index = left + (right - left) / 2;
+  int pivot_value = arr[pivot_index];
+  std::swap(arr[pivot_index], arr[right]);
+  int store_index = left;
   for (int i = left; i < right; ++i) {
-    if (arr[i] < pivotValue) {
-      std::swap(arr[i], arr[storeIndex]);
-      ++storeIndex;
+    if (arr[i] < pivot_value) {
+      std::swap(arr[i], arr[store_index]);
+      ++store_index;
     }
   }
-  std::swap(arr[storeIndex], arr[right]);
-  return storeIndex;
+  std::swap(arr[store_index], arr[right]);
+  return store_index;
 }
 
-int quickSelect(std::vector<int>& arr, int left, int right, int k) {
+int QuickSelect(std::vector<int>& arr, int left, int right, int k) {
   while (left <= right) {
-    int pivotIndex = partition(arr, left, right);
-    if (pivotIndex == k) {
-      return arr[pivotIndex];
-    } else if (pivotIndex < k) {
-      left = pivotIndex + 1;
+    int pivot_index = Partition(arr, left, right);
+    if (pivot_index == k) {
+      return arr[pivot_index];
+    } else if (pivot_index < k) {
+      left = pivot_index + 1;
     } else {
-      right = pivotIndex - 1;
+      right = pivot_index - 1;
     }
   }
   return -1;
 }
 
-int findNthOrder(std::vector<int> arr, int k) {
+int FindNthOrder(std::vector<int> arr, int k) {
   if (arr.size() == 0) {
     throw std::invalid_argument("vector must be not empty");
   }
-  return quickSelect(arr, 0, arr.size() - 1, k - 1);
+  return QuickSelect(arr, 0, arr.size() - 1, k - 1);
 }
