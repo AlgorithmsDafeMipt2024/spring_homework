@@ -7,7 +7,11 @@
 #include <stdexcept>
 #include <utility>
 
-template <constructable CustomClass>
+template <typename CustomClass>
+concept constructable_and_comparable =
+    comparable<CustomClass> && constructable<CustomClass>;
+
+template <constructable_and_comparable CustomClass>
 void MergeTwoSortedArrays(CustomClass* array_start, CustomClass* array_middle,
                           CustomClass* array_end) {
   size_t array_size = array_end - array_start;
@@ -48,7 +52,7 @@ void MergeTwoSortedArrays(CustomClass* array_start, CustomClass* array_middle,
   }
 }
 
-template <constructable CustomClass>
+template <constructable_and_comparable CustomClass>
 void MergeSort(CustomClass* array_start, CustomClass* array_end) {
   if ((array_end == array_start) || (array_end - array_start == 1)) return;
 
