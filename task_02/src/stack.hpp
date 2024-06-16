@@ -43,7 +43,7 @@ T Stack<T>::Pop() {
   if (size_ == 0) {
     throw std::underflow_error("Empty stack");
   }
-  T returning_value = top_->data;
+  T returning_value = std::move(top_->data);
   StackNode<T> *old_top = top_;
   top_ = top_->prev_ptr;
   delete old_top;

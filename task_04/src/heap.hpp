@@ -8,7 +8,7 @@ class BinaryHeap {
  public:
   BinaryHeap() : data_() {}
   BinaryHeap(std::initializer_list<T> _data) : data_(_data) {
-    for (int i = data_.size() - 1; i >= 0; i--) heapify(i);
+    for (int i = data_.size() - 1; i >= 0; i--) Heapify(i);
   }
   void Insert(T new_elem);
 
@@ -22,7 +22,7 @@ class BinaryHeap {
   int GetLefrChildIndex(int i) { return 2 * i + 1; }
   int GetRightChildIndex(int i) { return 2 * i + 2; }
 
-  void heapify(int i);
+  void Heapify(int i);
 };
 
 template <class T>
@@ -60,12 +60,12 @@ int BinaryHeap<T>::ExtractMin() {
   int root = data_[0];
   data_[0] = data_[data_.size() - 1];
   data_.pop_back();
-  heapify(0);
+  Heapify(0);
   return root;
 }
 
 template <class T>
-void BinaryHeap<T>::heapify(int i) {
+void BinaryHeap<T>::Heapify(int i) {
   int l = GetLefrChildIndex(i);
   int r = GetRightChildIndex(i);
   int smallest = i;
@@ -77,6 +77,6 @@ void BinaryHeap<T>::heapify(int i) {
   }
   if (smallest != i) {
     std::swap(data_[i], data_[smallest]);
-    heapify(smallest);
+    Heapify(smallest);
   }
 }

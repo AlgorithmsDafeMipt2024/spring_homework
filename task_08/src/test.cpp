@@ -4,7 +4,7 @@
 #include <string>
 #include <utility>
 
-#include "HashTable.hpp"
+#include "hash_table.hpp"
 
 TEST(HashTable, Simple) {
   HashTable<std::string, int> table;

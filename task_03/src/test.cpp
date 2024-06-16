@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 
-#include "WeatherReport.h"
+#include "weather_report.h"
 
 TEST(findNextGreater, Simple) {
   ASSERT_EQ(FindNextGreater(std::vector<int>{1}), (std::vector<int>{-1}));

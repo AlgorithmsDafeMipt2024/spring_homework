@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 
-#include "nStatistics.hpp"
+#include "n_statistics.hpp"
 
 TEST(NStatistic, Simple) {
   std::vector<int> empty;

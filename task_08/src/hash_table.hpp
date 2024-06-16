@@ -60,7 +60,7 @@ Value HashTable<Key, Value>::Get(const Key& key) {
       return pair.second;
     }
   }
-  throw std::logic_error("No such key in table");
+  throw std::out_of_range("No such key in table");
 }
 
 template <class Key, class Value>
@@ -88,10 +88,10 @@ size_t HashTable<Key, Value>::Size() const {
 template <class Key, class Value>
 void HashTable<Key, Value>::Rehash() {
   std::vector<std::list<std::pair<Key, Value>>> new_table(table_.size() * 2);
-  for (const auto& list : table_) {
-    for (const auto& pair : list) {
+  for (auto& list : table_) {
+    for (auto& pair : list) {
       size_t index = hash_(pair.first) % new_table.size();
-      new_table[index].emplace_back(pair);
+      new_table[index].emplace_back(std::move(pair));
     }
   }
   table_ = std::move(new_table);

@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 
-#include "MinCoins.hpp"
+#include "min_coins.hpp"
 
 TEST(Coins, Simple) {
   ASSERT_EQ(3, MinCoins(14, (std::vector<int>{1, 2, 5, 10})));

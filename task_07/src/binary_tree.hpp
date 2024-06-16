@@ -16,9 +16,9 @@ class BinaryTree {
   BinaryTree() : root_(nullptr) {}
   ~BinaryTree() { DestroyTree(root_); }
 
-  void insert(int value) { root_ = InsertRecursive(root_, value); }
+  void Insert(int value) { root_ = InsertRecursive(root_, value); }
 
-  bool search(int value) { return SearchRecursive(root_, value); }
+  bool Search(int value) { return SearchRecursive(root_, value); }
 
   std::vector<T> InorderTraversal();
   std::vector<T> PreorderTraversal();

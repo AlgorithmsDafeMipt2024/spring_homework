@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "QuickSort.hpp"
+#include "quick_sort.hpp"
 
 TEST(QuickSort, Simple) {
   std::vector<int> empty;
