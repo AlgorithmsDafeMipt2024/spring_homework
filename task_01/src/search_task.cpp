@@ -1,9 +1,9 @@
-#include "topology_sort.hpp"
+#include "search_task.hpp"
 
 #include <algorithm>
 #include <optional>
 
-std::optional<std::pair<LL, LL>> MySearch(std::vector<LL> list, LL n) {
+std::optional<std::pair<LL, LL>> SearchInList(std::vector<LL> list, LL n) {
   if (list.empty()) return std::nullopt;
   if (!std::is_sorted(list.cbegin(), list.cend())) return std::nullopt;
   LL left = 0;

@@ -6,4 +6,4 @@
 
 typedef long long LL;
 
-std::optional<std::pair<LL, LL>> MySearch(std::vector<LL> list, LL n);
+std::optional<std::pair<LL, LL>> SearchInList(std::vector<LL> list, LL n);
