@@ -50,7 +50,7 @@ template <class T>
 T NthElement(std::vector<T> data, std::size_t k) {
   std::size_t lastPivotPos = 0;
   std::size_t left = 0;
-  std::size_t right = data.size() - 1;
+  std::size_t right = data.size();
 
   while (left < right) {
     if ((lastPivotPos = Partition(data, left, right)) == k)
