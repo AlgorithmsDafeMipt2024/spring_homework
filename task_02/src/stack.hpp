@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <stdexcept>
 
 /// @brief Элемент стека
 template <typename T>
@@ -19,13 +20,13 @@ class Stack {
  public:
   explicit Stack() : top_(nullptr), size_{0} {}
 
-  size_t Size() const;
+  std::size_t Size() const;
   virtual void Push(T data);
   virtual T Pop();
   virtual T Top() const;
 
  private:
-  size_t size_;
+  std::size_t size_;
   std::shared_ptr<Element<T>> top_;
 };
 
@@ -42,12 +43,12 @@ class MinStack : public Stack<T> {
 
  private:
   Stack<T> minimums_stack_;
-  size_t size_;
+  std::size_t size_;
   std::shared_ptr<Element<T>> top_;
 };
 
 template <typename T>
-size_t Stack<T>::Size() const {
+std::size_t Stack<T>::Size() const {
   return size_;
 }
 

@@ -26,7 +26,7 @@ class BinaryMinHeap {
    * @return T: Значение элемента
    * @throw std::out_of_range: Индекс больше размера кучи
    */
-  T operator[](size_t index) const {
+  T operator[](std::size_t index) const {
     if (index > Size()) throw std::out_of_range("invalid index");
 
     return data_[index];
@@ -82,7 +82,7 @@ class BinaryMinHeap {
     return Data()[0];
   }
 
-  size_t Size() const { return data_.size(); }
+  std::size_t Size() const { return data_.size(); }
 
   bool Empty() const { return Size() == 0; }
 
@@ -90,28 +90,28 @@ class BinaryMinHeap {
   /**
    * @brief Возвращает индекс родителя
    * @param index: Индекс элемента
-   * @return size_t: Индекс родителя
+   * @return std::size_t: Индекс родителя
    */
-  size_t ParentIndex(size_t index) const { return (index - 1) / 2; }
+  std::size_t ParentIndex(std::size_t index) const { return (index - 1) / 2; }
 
   /**
    * @brief Возвращает индекс левого ребенка
    * @param index: Индекс элемента
-   * @return size_t: Индекс левого ребенка
+   * @return std::size_t: Индекс левого ребенка
    */
-  size_t LeftChildIndex(size_t index) const { return (2 * index + 1); }
+  std::size_t LeftChildIndex(std::size_t index) const { return (2 * index + 1); }
 
   /**
    * @brief Возвращает индекс правого ребенка
    * @param index: Индекс элемента
-   * @return size_t: Индекс правого ребенка
+   * @return std::size_t: Индекс правого ребенка
    */
-  size_t RightChildIndex(size_t index) const { return (2 * index + 2); }
+  std::size_t RightChildIndex(std::size_t index) const { return (2 * index + 2); }
 
   /// @brief Корректирует кучу после добавления элемента
   void SiftUp() {
     // начинаем с конца
-    size_t index = Size() - 1;
+    std::size_t index = Size() - 1;
 
     // меняем элемент с родителям местами, пока последний больше
     while (index > 0 && data_[ParentIndex(index)] > data_[index]) {
@@ -121,9 +121,9 @@ class BinaryMinHeap {
   }
 
   /// @brief Корректирует кучу после удаления элемента
-  void SiftDown(size_t index = 0) {
+  void SiftDown(std::size_t index = 0) {
     while (index < Size()) {
-      size_t smallest = index;  // индекс кореня поддерева
+      std::size_t smallest = index;  // индекс кореня поддерева
 
       // если левый ребенок существует и меньше текущего наименьшего элемента
       if (LeftChildIndex(index) < Size() &&

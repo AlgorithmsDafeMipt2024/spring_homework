@@ -2,4 +2,4 @@
 
 #include <vector>
 
-std::vector<size_t> DaysAmountBeforeWarming(std::vector<int> temperatures);
+std::vector<std::size_t> DaysAmountBeforeWarming(std::vector<int> temperatures);
