@@ -18,8 +18,8 @@ size_t Partition(std::vector<CustomClass>& data_array, size_t left_index,
 }
 
 template <comparable CustomClass>
-CustomClass nOrderStatistics(std::vector<CustomClass> data_array,
-                             size_t nth_statistics) {
+CustomClass NthOrderStatistics(std::vector<CustomClass> data_array,
+                               size_t nth_statistics) {
   if (nth_statistics >= data_array.size())
     throw std::logic_error(
         "nth_statistics is greater than the size of the array\n");
