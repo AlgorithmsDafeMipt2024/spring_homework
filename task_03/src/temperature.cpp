@@ -2,7 +2,7 @@
 
 #include <stack>
 
-std::vector<unsigned int> Solve(std::vector<int> temperature) {
+std::vector<unsigned int> TemperatureSolution(std::vector<int> temperature) {
   std::vector<unsigned int> result(temperature.size());
   std::stack<unsigned int> check_days;
   for (unsigned int day_index = 0; day_index < temperature.size();
