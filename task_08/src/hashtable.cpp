@@ -5,11 +5,12 @@
 #include <memory>
 #include <stdexcept>
 
-size_t HashTable::FirstHashFunc(std::size_t key) {
-  return floor(buf_size * ((key * hash_coef) - floor(key * hash_coef)));
+std::size_t HashTable::FirstHashFunc(std::size_t key) {
+  return floor(buf_size *
+               ((double(key) * hash_coef) - floor(double(key) * hash_coef)));
 }
 
-size_t HashTable::SecondHashFunc(std::size_t key) {
+std::size_t HashTable::SecondHashFunc(std::size_t key) {
   return (key * buf_size - 1) % buf_size;
 }
 
@@ -36,7 +37,7 @@ void HashTable::Rehash() {
 }
 
 bool HashTable::Contains(std::size_t value) {
-  size_t hash = FirstHashFunc(value) % buf_size;
+  std::size_t hash = FirstHashFunc(value) % buf_size;
   std::size_t count = 0;
   while (cell_states[hash] != State::Vacant) {
     if (data[hash] == value && cell_states[hash] == State::Occupied)
@@ -48,7 +49,7 @@ bool HashTable::Contains(std::size_t value) {
 }
 
 void HashTable::Insert(std::size_t value) {
-  size_t hash = FirstHashFunc(value) % buf_size;
+  std::size_t hash = FirstHashFunc(value) % buf_size;
   std::size_t count = 0;
   while (cell_states[hash] == State::Occupied) {
     if (data[hash] == value) return;
@@ -61,12 +62,12 @@ void HashTable::Insert(std::size_t value) {
   cells++;
   size++;
 
-  double cells_coefficient = double(cells) / buf_size;
+  double cells_coefficient = double(cells) / double(buf_size);
   if (cells_coefficient >= rehash_coef) Rehash();
 }
 
 void HashTable::Remove(std::size_t value) {
-  size_t hash = FirstHashFunc(value) % buf_size;
+  std::size_t hash = FirstHashFunc(value) % buf_size;
   std::size_t count = 0;
   while (cell_states[hash] != State::Vacant) {
     if (data[hash] == value && cell_states[hash] == State::Occupied) {
