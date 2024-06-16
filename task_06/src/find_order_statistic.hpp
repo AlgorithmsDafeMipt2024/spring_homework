@@ -1,39 +1,62 @@
-#include <cstddef>
-#include <stdexcept>
 #include <vector>
 
-#include "vector"
+template <class T>
+std::size_t Division(std::vector<T> data, std::size_t left, std::size_t right) {
+  std::size_t middle = (left + right - 1) / 2;
 
-template <typename T>
-size_t Partition(std::vector<T>& data, size_t left_index, size_t right_index) {
-  T separator = data[(left_index + right_index) / 2];
-  while (left_index <= right_index) {
-    while (data[left_index] < separator) ++left_index;
-    while (data[right_index] > separator) --right_index;
-    if (left_index >= right_index) break;
-    std::swap(data[left_index], data[right_index]);
-    if (data[left_index] != separator) ++left_index;
-    if (data[right_index] != separator) --right_index;
+  if (data[left] < data[middle]) {
+    if (data[right] < data[left])
+      return left;
+    else if (data[right] < data[middle])
+      return right;
+    return middle;
+  } else {
+    if (data[right] < data[middle])
+      return middle;
+    else if (data[right] < data[left])
+      return right;
+    return left;
   }
-  return right_index;
 }
 
-template <typename T>
-T FindOrderStatistic(std::vector<T> data, size_t k) {
-  if (k >= data.size())
-    throw std::runtime_error("k is greater then array size");
+template <class T>
+std::size_t Partition(std::vector<T>& data, std::size_t left,
+                      std::size_t right) {
+  std::size_t pivotPos = Division(data, left, right);
 
-  size_t left_index = 0;
-  size_t right_index = data.size() - 1;
-  while (true) {
-    size_t mid_index = Partition(data, left_index, right_index);
+  if (pivotPos != right - 1) {
+    std::swap(data[right - 1], data[pivotPos]);
+  }
 
-    if (mid_index == k) {
-      return data[mid_index];
-    } else if (k < mid_index) {
-      right_index = mid_index;
+  std::size_t left_index = left;
+  std::size_t right_index = left;
+  T pivot = data[right - 1];
+  while (right_index < right - 1) {
+    if (data[right_index] <= pivot) {
+      std::swap(data[left_index++], data[right_index]);
+    }
+    ++right_index;
+  }
+  if (left_index != right - 1) {
+    std::swap(data[left_index], data[right - 1]);
+  }
+  return left_index;
+}
+
+template <class T>
+T FindOrderStatistic(std::vector<T>& data, std::size_t k) {
+  std::size_t lastPivotPos = 0;
+  std::size_t left = 0;
+  std::size_t right = data.size();
+
+  while (left < right) {
+    if ((lastPivotPos = Partition(data, left, right)) == k)
+      return data[lastPivotPos];
+    else if (lastPivotPos > k) {
+      right = lastPivotPos;
     } else {
-      left_index = mid_index + 1;
+      left = lastPivotPos + 1;
     }
   }
+  return data[lastPivotPos];
 }
