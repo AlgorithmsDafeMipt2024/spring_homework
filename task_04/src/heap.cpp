@@ -1,7 +1,7 @@
 #include "heap.hpp"
 
 void Heap::SiftUp(int i) {
-  int half_i = i/2;
+  int half_i = i / 2;
   while (elements[i] < elements[half_i]) {
     std::swap(elements[i], elements[half_i]);
     i /= 2;
