@@ -2,13 +2,14 @@
 #include <gtest/gtest.h>
 
 #include <stack>
+#include <stdexcept>
 
 #include "stack.hpp"
 
 TEST(EmptyStack, Simple) {
   Stack<int> stack;
-  EXPECT_THROW(stack.Top(), std::runtime_error);
-  EXPECT_THROW(stack.Pop(), std::runtime_error);
+  EXPECT_THROW(stack.Top(), std::logic_error);
+  EXPECT_THROW(stack.Pop(), std::logic_error);
   stack.Push(1);
   EXPECT_NO_THROW(stack.Pop());
 }
