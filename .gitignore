@@ -13,3 +13,5 @@ _deps
 .cache/*
 .vscode/*
 build/*
+.clang-format
+.gitignore

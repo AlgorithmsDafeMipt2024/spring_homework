@@ -1,4 +1,3 @@
-
 #include <gtest/gtest.h>
 
 #include <stack>
@@ -6,7 +5,7 @@
 #include "stack.hpp"
 
 TEST(StackTest, Simple) {
-  Stack stack;
+  Stack<int> stack;
   stack.Push(1);              // Stack [1]
   ASSERT_EQ(stack.Pop(), 1);  // Stack []
   stack.Push(1);              // Stack [1]
@@ -22,7 +21,7 @@ TEST(StackTest, Simple) {
 }
 
 TEST(MinStackTest, Simple) {
-  MinStack stack;
+  MinStack<int> stack;
   stack.Push(1);  // Stack [1]
   ASSERT_EQ(stack.GetMin(), 1);
   ASSERT_EQ(stack.Pop(), 1);  // Stack []
