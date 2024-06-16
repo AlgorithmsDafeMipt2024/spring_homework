@@ -16,18 +16,18 @@ int partition(std::vector<T>& v, int low, int high) {
 }
 
 template <class T>
-int findNthStatistic(std::vector<T> v, int n) {
+int FindNthStatistic(std::vector<T> v, int n) {
   int low = 0;
   int high = v.size() - 1;
 
   while (low <= high) {
-    int partitionIdx = partition<T>(v, low, high);
-    if (partitionIdx == n) {
-      return v[partitionIdx];
-    } else if (partitionIdx >= n) {
-      high = partitionIdx - 1;
+    int partitionIndex = partition<T>(v, low, high);
+    if (partitionIndex == n) {
+      return v[partitionIndex];
+    } else if (partitionIndex >= n) {
+      high = partitionIndex - 1;
     } else
-      low = partitionIdx + 1;
+      low = partitionIndex + 1;
   }
 
   return -1;

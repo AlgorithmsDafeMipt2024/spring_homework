@@ -16,11 +16,11 @@ int partition(std::vector<T>& v, int low, int high) {
 }
 
 template <class T>
-void quickSort(std::vector<T>& v, int low = 0, int high = -1) {
+void QuickSort(std::vector<T>& v, int low = 0, int high = -1) {
   if (high == -1) high = v.size() - 1;
   if (low < high) {
-    int partitionIdx = partition<T>(v, low, high);
-    quickSort(v, low, partitionIdx - 1);
-    quickSort(v, partitionIdx + 1, high);
+    int partitionIndex = partition<T>(v, low, high);
+    QuickSort(v, low, partitionIndex - 1);
+    QuickSort(v, partitionIndex + 1, high);
   }
 }

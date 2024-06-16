@@ -11,93 +11,93 @@ template <class T>
 class StackNode {
  public:
   explicit StackNode(T _data, StackNode<T> *_prev = nullptr)
-      : data(_data), prevptr(_prev) {}
-  StackNode() : data(), prevptr(nullptr) {}
+      : data(_data), prev_ptr(_prev) {}
+  StackNode() : data(), prev_ptr(nullptr) {}
   T data;
-  StackNode<T> *prevptr;
+  StackNode<T> *prev_ptr;
 };
 
 template <class T>
 class Stack {
  public:
-  Stack() : top(nullptr), size(0) {}
-  void push(T value);
-  T pop();
-  T getTop();
-  int getSize();
+  Stack() : top_(nullptr), size_(0) {}
+  void Push(T value);
+  T Pop();
+  T GetTop();
+  int GetSize();
 
  private:
-  StackNode<T> *top;
-  int size;
+  StackNode<T> *top_;
+  int size_;
 };
 
 template <class T>
-void Stack<T>::push(T value) {
-  StackNode<T> *newElem = new StackNode<T>(value, top);
-  size++;
-  top = newElem;
+void Stack<T>::Push(T value) {
+  StackNode<T> *new_elem = new StackNode<T>(value, top_);
+  size_++;
+  top_ = new_elem;
 }
 
 template <class T>
-T Stack<T>::pop() {
-  if (size == 0) {
+T Stack<T>::Pop() {
+  if (size_ == 0) {
     throw std::underflow_error("Empty stack");
   }
-  T returningValue = top->data;
-  StackNode<T> *oldTop = top;
-  top = top->prevptr;
-  delete oldTop;
-  size--;
-  return returningValue;
+  T returning_value = top_->data;
+  StackNode<T> *old_top = top_;
+  top_ = top_->prev_ptr;
+  delete old_top;
+  size_--;
+  return returning_value;
 }
 
 template <class T>
-int Stack<T>::getSize() {
-  return size;
+int Stack<T>::GetSize() {
+  return size_;
 }
 
 template <class T>
-T Stack<T>::getTop() {
-  if (size == 0) {
+T Stack<T>::GetTop() {
+  if (size_ == 0) {
     throw std::underflow_error("Empty stack");
   }
-  return top->data;
+  return top_->data;
 }
 template <class T>
 class MinStack {
  public:
-  MinStack() : mainStack(), minStack() {}
-  void push(T value);
-  T pop();
-  T getMin();
-  int getSize();
+  MinStack() : main_stack_(), min_stack_() {}
+  void Push(T value);
+  T Pop();
+  T GetMin();
+  int GetSize();
 
  private:
-  Stack<T> mainStack;
-  Stack<T> minStack;
+  Stack<T> main_stack_;
+  Stack<T> min_stack_;
 };
 
 template <class T>
-void MinStack<T>::push(T value) {
-  mainStack.push(value);
-  if (minStack.getSize() == 0)
-    minStack.push(value);
+void MinStack<T>::Push(T value) {
+  main_stack_.Push(value);
+  if (min_stack_.GetSize() == 0)
+    min_stack_.Push(value);
   else
-    minStack.push(std::min(value, minStack.getTop()));
+    min_stack_.Push(std::min(value, min_stack_.GetTop()));
 }
 
 template <class T>
-T MinStack<T>::pop() {
-  minStack.pop();
-  return mainStack.pop();
+T MinStack<T>::Pop() {
+  min_stack_.Pop();
+  return main_stack_.Pop();
 }
 
 template <class T>
-T MinStack<T>::getMin() {
-  return minStack.getTop();
+T MinStack<T>::GetMin() {
+  return min_stack_.GetTop();
 }
 
 template <class T>
-int MinStack<T>::getSize() {
-  return mainStack.getSize();
+int MinStack<T>::GetSize() {
+  return main_stack_.GetSize();
 }

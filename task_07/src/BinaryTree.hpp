@@ -3,92 +3,99 @@
 
 template <class T>
 struct Node {
-  Node(T value) : data(value), leftptr(nullptr), rightptr(nullptr) {}
+  Node(T value) : data(value), left_ptr(nullptr), right_ptr(nullptr) {}
   T data;
-  Node* leftptr;
-  Node* rightptr;
+  Node* left_ptr;
+  Node* right_ptr;
+  int height;
 };
 
 template <class T>
 class BinaryTree {
  public:
-  BinaryTree() : root(nullptr) {}
-  ~BinaryTree() { destroyTree(root); }
+  BinaryTree() : root_(nullptr) {}
+  ~BinaryTree() { DestroyTree(root_); }
 
-  void insert(int value) { root = insertRecursive(root, value); }
+  void insert(int value) { root_ = InsertRecursive(root_, value); }
 
-  bool search(int value) { return searchRecursive(root, value); }
+  bool search(int value) { return SearchRecursive(root_, value); }
 
-  std::vector<T> inorderTraversal();
-  std::vector<T> preorderTraversal();
-  std::vector<T> postorderTraversal();
+  std::vector<T> InorderTraversal();
+  std::vector<T> PreorderTraversal();
+  std::vector<T> PostorderTraversal();
 
  private:
-  Node<T>* root;
-  Node<T>* insertRecursive(Node<T>* node, int value);
-  bool searchRecursive(Node<T>* node, int value);
-  void inorderTraversalRecursive(Node<T>* node, std::vector<T>& ans);
-  void preorderTraversalRecursive(Node<T>* node, std::vector<T>& ans);
-  void postorderTraversalRecursive(Node<T>* node, std::vector<T>& ans);
-  void destroyTree(Node<T>* node);
+  Node<T>* root_;
+  Node<T>* InsertRecursive(Node<T>* node, int value);
+  bool SearchRecursive(Node<T>* node, int value);
+  void InorderTraversalRecursive(Node<T>* node, std::vector<T>& ans);
+  void PreorderTraversalRecursive(Node<T>* node, std::vector<T>& ans);
+  void PostorderTraversalRecursive(Node<T>* node, std::vector<T>& ans);
+  void DestroyTree(Node<T>* node);
+  int GetHeight(Node<T>* node);
+  int GetBalance(Node<T>* node);
+  void UpdateHeight(Node<T>* node);
+  Node<T>* RotateRight(Node<T>* node);
+  Node<T>* RotateLeft(Node<T>* node);
+  Node<T>* Balance(Node<T>* node);
 };
 
 template <class T>
-std::vector<T> BinaryTree<T>::inorderTraversal() {
+std::vector<T> BinaryTree<T>::InorderTraversal() {
   std::vector<T> ans;
-  inorderTraversalRecursive(root, ans);
+  InorderTraversalRecursive(root_, ans);
   return ans;
 }
 
 template <class T>
-std::vector<T> BinaryTree<T>::preorderTraversal() {
+std::vector<T> BinaryTree<T>::PreorderTraversal() {
   std::vector<T> ans;
-  preorderTraversalRecursive(root, ans);
+  PreorderTraversalRecursive(root_, ans);
   return ans;
 }
 
 template <class T>
-std::vector<T> BinaryTree<T>::postorderTraversal() {
+std::vector<T> BinaryTree<T>::PostorderTraversal() {
   std::vector<T> ans;
-  postorderTraversalRecursive(root, ans);
+  PostorderTraversalRecursive(root_, ans);
   return ans;
 }
 
 template <class T>
-void BinaryTree<T>::inorderTraversalRecursive(Node<T>* node,
+void BinaryTree<T>::InorderTraversalRecursive(Node<T>* node,
                                               std::vector<T>& ans) {
   if (node == nullptr) {
     return;
   }
-  inorderTraversalRecursive(node->leftptr, ans);
+  InorderTraversalRecursive(node->left_ptr, ans);
   ans.push_back(node->data);
-  inorderTraversalRecursive(node->rightptr, ans);
+  InorderTraversalRecursive(node->right_ptr, ans);
 }
 
 template <class T>
-void BinaryTree<T>::preorderTraversalRecursive(Node<T>* node,
+void BinaryTree<T>::PreorderTraversalRecursive(Node<T>* node,
                                                std::vector<T>& ans) {
   if (node == nullptr) {
     return;
   }
   ans.push_back(node->data);
-  preorderTraversalRecursive(node->leftptr, ans);
-  preorderTraversalRecursive(node->rightptr, ans);
+  PreorderTraversalRecursive(node->left_ptr, ans);
+  PreorderTraversalRecursive(node->right_ptr, ans);
 }
 
 template <class T>
-void BinaryTree<T>::postorderTraversalRecursive(Node<T>* node,
+void BinaryTree<T>::PostorderTraversalRecursive(Node<T>* node,
                                                 std::vector<T>& ans) {
   if (node == nullptr) {
     return;
   }
-  postorderTraversalRecursive(node->leftptr, ans);
-  postorderTraversalRecursive(node->rightptr, ans);
+  PostorderTraversalRecursive(node->left_ptr, ans);
+  PostorderTraversalRecursive(node->right_ptr, ans);
   ans.push_back(node->data);
 }
 
 template <class T>
-bool BinaryTree<T>::searchRecursive(Node<T>* node, int value) {
+bool BinaryTree<T>::SearchRecursive(Node<T>* node, int value) {
   if (node == nullptr) {
     return false;
   }
@@ -98,34 +105,101 @@ bool BinaryTree<T>::searchRecursive(Node<T>* node, int value) {
   }
 
   if (value < node->data) {
-    return searchRecursive(node->leftptr, value);
+    return SearchRecursive(node->left_ptr, value);
   } else {
-    return searchRecursive(node->rightptr, value);
+    return SearchRecursive(node->right_ptr, value);
   }
 }
 
 template <class T>
-Node<T>* BinaryTree<T>::insertRecursive(Node<T>* node, int value) {
+Node<T>* BinaryTree<T>::InsertRecursive(Node<T>* node, int value) {
   if (node == nullptr) {
     return new Node(value);
   }
 
   if (value < node->data) {
-    node->leftptr = insertRecursive(node->leftptr, value);
+    node->left_ptr = InsertRecursive(node->left_ptr, value);
   } else if (value > node->data) {
-    node->rightptr = insertRecursive(node->rightptr, value);
+    node->right_ptr = InsertRecursive(node->right_ptr, value);
   }
-
-  return node;
+  return Balance(node);
 }
 
 template <class T>
-void BinaryTree<T>::destroyTree(Node<T>* node) {
+void BinaryTree<T>::DestroyTree(Node<T>* node) {
   if (node == nullptr) {
     return;
   }
 
-  destroyTree(node->leftptr);
-  destroyTree(node->rightptr);
+  DestroyTree(node->left_ptr);
+  DestroyTree(node->right_ptr);
   delete node;
+}
+
+template <class T>
+int BinaryTree<T>::GetHeight(Node<T>* node) {
+  if (node == nullptr) return 0;
+  return node->height;
+}
+
+template <class T>
+int BinaryTree<T>::GetBalance(Node<T>* node) {
+  if (node == nullptr) return 0;
+  return GetHeight(node->left_ptr) - GetHeight(node->right_ptr);
+}
+
+template <class T>
+void BinaryTree<T>::UpdateHeight(Node<T>* node) {
+  node->height =
+      std::max(GetHeight(node->left_ptr), GetHeight(node->right_ptr)) + 1;
+}
+
+template <class T>
+Node<T>* BinaryTree<T>::RotateRight(Node<T>* node) {
+  Node<T>* l_child = node->left_ptr;
+  Node<T>* lr_child = l_child->right_ptr;
+
+  l_child->right_ptr = node;
+  node->left_ptr = lr_child;
+
+  UpdateHeight(node);
+  UpdateHeight(l_child);
+
+  return l_child;
+}
+
+template <class T>
+Node<T>* BinaryTree<T>::RotateLeft(Node<T>* node) {
+  Node<T>* r_child = node->right_ptr;
+  Node<T>* rl_child = r_child->left_ptr;
+
+  r_child->left_ptr = node;
+  node->right_ptr = rl_child;
+
+  UpdateHeight(node);
+  UpdateHeight(r_child);
+
+  return r_child;
+}
+
+template <class T>
+Node<T>* BinaryTree<T>::Balance(Node<T>* node) {
+  UpdateHeight(node);
+
+  int balance = GetBalance(node);
+
+  if (balance > 1) {
+    if (GetBalance(node->left_ptr) < 0) {
+      node->left_ptr = RotateLeft(node->left_ptr);
+    }
+    return RotateRight(node);
+  }
+  if (balance < -1) {
+    if (GetBalance(node->right_ptr) > 0) {
+      node->right_ptr = RotateRight(node->right_ptr);
+    }
+    return RotateLeft(node);
+  }
+
+  return node;
 }

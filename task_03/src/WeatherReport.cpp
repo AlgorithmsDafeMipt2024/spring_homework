@@ -3,7 +3,7 @@
 #include <stack>
 #include <vector>
 
-std::vector<int> findNextGreater(std::vector<int> v) {
+std::vector<int> FindNextGreater(std::vector<int> v) {
   std::vector<int> res(v.size(), -1);
   std::stack<int> stack;
 

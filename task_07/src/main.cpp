@@ -1,3 +1,6 @@
+#include <algorithm>
 #include <iostream>
 
-int main() { return 0; }
+using namespace std;
+
+int main(void) { return 0; }
