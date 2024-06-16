@@ -21,5 +21,5 @@ class MinStack {
 
  private:
   std::vector<std::pair<int, int>> data_;
-  int current_minimum_;
+  int current_minimum_ = 1e9;
 };

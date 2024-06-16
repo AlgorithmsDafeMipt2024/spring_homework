@@ -12,7 +12,7 @@ int Stack::Pop() {
 
 void MinStack::Push(int value) {
   std::pair<int, int> new_element;
-  if (current_minimum_ == NULL) {
+  if (current_minimum_ == 1e9) {
     new_element = {value, value};
   } else if (value < current_minimum_) {
     new_element = {value, value};
@@ -27,7 +27,7 @@ int MinStack::Pop() {
   int result = data_[data_.size() - 1].first;
   data_.pop_back();
   if (data_.size() == 0) {
-    current_minimum_ = NULL;
+    current_minimum_ = 1e9;
   } else {
     current_minimum_ = data_[data_.size() - 1].second;
   }
