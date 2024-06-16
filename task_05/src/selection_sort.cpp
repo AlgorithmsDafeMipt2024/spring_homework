@@ -1,4 +1,4 @@
-#include "selection_sort.h"
+#include "selection_sort.hpp"
 
 int SearchMin(std::vector<int> massive) {
   int min = massive[0];

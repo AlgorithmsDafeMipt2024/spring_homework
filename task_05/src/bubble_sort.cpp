@@ -1,4 +1,4 @@
-#include "bubble_sort.h"
+#include "bubble_sort.hpp"
 
 // O(n^2)
 std::vector<int> BubbleSort(std::vector<int> massive) {

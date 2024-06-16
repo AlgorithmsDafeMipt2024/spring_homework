@@ -1,4 +1,4 @@
-#include "merge_sort.h"
+#include "merge_sort.hpp"
 
 std::vector<int> Merge(std::vector<int> part1, std::vector<int> part2) {
   std::vector<int> result;
@@ -30,7 +30,10 @@ std::vector<int> Merge(std::vector<int> part1, std::vector<int> part2) {
 }
 
 // O(NlogN)
-std::vector<int> MergeSort_topbottom(std::vector<int> massive) {
+std::vector<int> MergeSortTopBottom(std::vector<int> massive) {
+  if (massive.size() == 0) {
+    return massive;
+  }
   std::vector<int> part1;
   std::vector<int> part2;
   if (massive.size() != 1) {
@@ -50,8 +53,8 @@ std::vector<int> MergeSort_topbottom(std::vector<int> massive) {
   else {
     return massive;
   }
-  part1 = MergeSort_topbottom(part1);
-  part2 = MergeSort_topbottom(part2);
+  part1 = MergeSortTopBottom(part1);
+  part2 = MergeSortTopBottom(part2);
 
   std::vector<int> result = Merge(part1, part2);
 
@@ -59,7 +62,10 @@ std::vector<int> MergeSort_topbottom(std::vector<int> massive) {
 }
 
 // O(NlogN)
-std::vector<int> MergeSort_bottomup(std::vector<int> massive) {
+std::vector<int> MergeSortBottomUp(std::vector<int> massive) {
+  if (massive.size() == 0) {
+    return massive;
+  }
   std::vector<std::vector<int>> parts;
   for (int i = 0; i < massive.size(); i++) {
     parts.push_back(std::vector<int>{massive[i]});

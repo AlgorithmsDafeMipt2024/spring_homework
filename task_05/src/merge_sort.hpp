@@ -11,6 +11,6 @@
 std::vector<int> Merge(std::vector<int> part1, std::vector<int> part2);
 
 // O(NlogN)
-std::vector<int> MergeSort_topbottom(std::vector<int> massive);
+std::vector<int> MergeSortTopBottom(std::vector<int> massive);
 // O(NlogN)
-std::vector<int> MergeSort_bottomup(std::vector<int> massive);
+std::vector<int> MergeSortBottomUp(std::vector<int> massive);

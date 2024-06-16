@@ -1,4 +1,4 @@
-#include "bogo_sort.h"
+#include "bogo_sort.hpp"
 
 int Search(std::vector<int> massive, int num) {
   for (int i = 0; i < massive.size(); i++) {
@@ -46,6 +46,9 @@ bool IsSorted(std::vector<int> massive) {
 
 // O(n!)
 std::vector<int> BogoSort(std::vector<int> massive) {
+  if (massive.size() == 0) {
+    return massive;
+  }
   if (IsSorted(massive)) {
     return massive;
   } else {
