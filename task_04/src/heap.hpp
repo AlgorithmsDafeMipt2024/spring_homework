@@ -11,6 +11,6 @@ class Heap {
   int Size();
 
  private:
-  std::vector<int> a;
+  std::vector<int> elements;
   int n = 0;
 };
