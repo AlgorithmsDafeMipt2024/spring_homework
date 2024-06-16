@@ -1,6 +1,8 @@
 
 #include <gtest/gtest.h>
 
+#include <vector>
+
 #include "days_till_warming.hpp"
 
 TEST(DaysTillWarming, Simple) {
@@ -11,4 +13,12 @@ TEST(DaysTillWarming, Simple) {
                                  0, 2, 1, 0}));
   ASSERT_EQ((DaysTillWarming(std::vector<double>{-12, -5, -9, 0, +2, +1})),
             (std::vector<size_t>{1, 2, 1, 1, 0, 0}));
+  ASSERT_EQ((DaysTillWarming(std::vector<double>{0, +1})),
+            (std::vector<size_t>{1, 0}));
+  ASSERT_EQ((DaysTillWarming(std::vector<double>{0})),
+            (std::vector<size_t>{0}));
+}
+
+TEST(DaysTillWarming, Empty) {
+  ASSERT_EQ((DaysTillWarming(std::vector<double>{})), (std::vector<size_t>{}));
 }
