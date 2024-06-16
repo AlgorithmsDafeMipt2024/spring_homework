@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 
-#include "topology_sort.hpp"
+#include "task.hpp"
 
 // BinSearch tests
 TEST(BinSearch, Simple) {
