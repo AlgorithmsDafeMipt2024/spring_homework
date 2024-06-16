@@ -2,7 +2,8 @@
 
 #include <stack>
 
-std::vector<std::size_t> DaysAmountBeforeWarming(std::vector<int> temperatures) {
+std::vector<std::size_t> DaysAmountBeforeWarming(
+    std::vector<int> temperatures) {
   std::vector<std::size_t> result(temperatures.size());
   std::stack<std::size_t> remaining_days;
   for (std::size_t i = 0; i < temperatures.size(); ++i) {

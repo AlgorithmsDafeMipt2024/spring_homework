@@ -99,14 +99,18 @@ class BinaryMinHeap {
    * @param index: Индекс элемента
    * @return std::size_t: Индекс левого ребенка
    */
-  std::size_t LeftChildIndex(std::size_t index) const { return (2 * index + 1); }
+  std::size_t LeftChildIndex(std::size_t index) const {
+    return (2 * index + 1);
+  }
 
   /**
    * @brief Возвращает индекс правого ребенка
    * @param index: Индекс элемента
    * @return std::size_t: Индекс правого ребенка
    */
-  std::size_t RightChildIndex(std::size_t index) const { return (2 * index + 2); }
+  std::size_t RightChildIndex(std::size_t index) const {
+    return (2 * index + 2);
+  }
 
   /// @brief Корректирует кучу после добавления элемента
   void SiftUp() {
