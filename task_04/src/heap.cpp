@@ -5,7 +5,7 @@
 #include <vector>
 
 void Heap::SiftUp(int index) {
-  while (heap_[index] < heap_[(index - 1) / 2]) {
+  while (index >= 0 && heap_[index] < heap_[(index - 1) / 2]) {
     std::swap(heap_[index], heap_[(index - 1) / 2]);
     index = (index - 1) / 2;
   }
