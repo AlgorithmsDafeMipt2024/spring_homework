@@ -1,11 +1,17 @@
 
 #include <gtest/gtest.h>
 
+#include <vector>
+
 #include "coin_exchange.hpp"
 
 TEST(ChangeCoinsTest, Simple) {
   std::vector<int> coins = {1, 2, 5};
   EXPECT_EQ(ChangeCoins(11, coins), 3);
+}
+TEST(ChangeCoinsTest, Normal) {
+  std::vector<int> coins = {1, 2, 5, 7, 10};
+  EXPECT_EQ(ChangeCoins(14, coins), 2);
 }
 
 TEST(ChangeCoinsTest, Impossible) {

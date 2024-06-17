@@ -26,6 +26,9 @@ TEST(StackTest, PushAndPop) {
 TEST(StackTest, PopFromEmptyStack) {
   Stack<int> stack;
   ASSERT_THROW(stack.Pop(), std::out_of_range);
+  stack.Push(10);
+  stack.Pop();
+  ASSERT_THROW(stack.Pop(), std::out_of_range);
 }
 
 TEST(StackTest, TopFromEmptyStack) {
@@ -57,11 +60,6 @@ TEST(MinStackTest, PushAndPop) {
   ASSERT_EQ(stack.GetMin(), 3);
   ASSERT_EQ(stack.Pop(), 3);
   ASSERT_EQ(stack.Size(), 0);
-}
-
-TEST(MinStackTest, PopFromEmptyStack) {
-  MinStack<int> stack;
-  ASSERT_THROW(stack.Pop(), std::out_of_range);
 }
 
 TEST(MinStackTest, TopFromEmptyStack) {
