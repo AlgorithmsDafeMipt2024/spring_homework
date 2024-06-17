@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <avl_tree.hpp>
-#include <vector>
+#include "avl_tree.hpp"
 
 TEST(AVLTree, Simple) {
   AVLTree<short> tree;
