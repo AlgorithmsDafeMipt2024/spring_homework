@@ -5,18 +5,37 @@
 
 template <typename T>
 struct AVLTreeNode {
+  /**
+   * @brief Инициализирует новый экземпляр AVLTreeNode
+   * @param key: ключ, который будет храниться в узле
+   */
   AVLTreeNode(T key = T()) : key{key} {}
 
+  /**
+   * @brief Инициализирует новый экземпляр AVLTreeNode
+   * @param key: ключ, который будет храниться в узле
+   * @param left: указатель на левого потомка
+   * @param right: указатель на правого потомка
+   */
   AVLTreeNode(T key, AVLTreeNode* left, AVLTreeNode* right)
       : key{key}, left{left}, right{right} {}
 
+  /// @brief Ключ, хранящийся в узле
   T key;
 
+  /// @brief Высота поддерева, корнем которого является этот узел
   size_t height = 1;
 
+  /// @brief Указатель на левого потомка
   AVLTreeNode* left = nullptr;
+
+  /// @brief Указатель на правого потомка
   AVLTreeNode* right = nullptr;
 
+  /**
+   * @brief Вычисляет высоту поддерева, корнем которого является этот узел
+   * @return Высота поддерева
+   */
   size_t SubtreeHeight() { return this ? this->height : 0; }
 
   ~AVLTreeNode() {
