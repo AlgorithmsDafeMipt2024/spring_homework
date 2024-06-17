@@ -27,7 +27,7 @@ class BinaryMinHeap {
    * @throw std::out_of_range: если индекс больше размера кучи
    */
   T operator[](size_t index) const {
-    if (index > Size) throw std::out_of_range("invalid index");
+    if (index > Size()) throw std::out_of_range("invalid index");
 
     return data_[index];
   }
