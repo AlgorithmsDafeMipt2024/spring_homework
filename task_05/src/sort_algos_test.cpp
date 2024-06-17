@@ -7,9 +7,9 @@
 #include <gtest/gtest.h>
 
 // sort algos:
-#include <heap_sort.hpp>
-#include <merge_sort.hpp>
-#include <quick_sort.hpp>
+#include "heap_sort.hpp"
+#include "merge_sort.hpp"
+#include "quick_sort.hpp"
 
 // my libs:
 #include <util.hpp>
