@@ -2,6 +2,8 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <list>
+#include <vector>
 
 template <typename T>
 struct AVLTreeNode {
@@ -51,23 +53,47 @@ class AVLTree {
   AVLTree() : root{nullptr} {}
 
   /**
+   * @brief Инициализирует новый экземпляр AVLTree
+   * @param vec: вектор
+   */
+  AVLTree(const std::vector<T>& vec) {
+    for (const T& elem : vec) Push(elem);
+  }
+
+  /**
+   * @brief Инициализирует новый экземпляр AVLTree
+   * @param list: список инициализации
+   */
+  AVLTree(const std::initializer_list<T>& list) {
+    for (const T& elem : list) Push(elem);
+  }
+
+  /**
+   * @brief Инициализирует новый экземпляр AVLTree
+   * @param list: двусвязный список
+   */
+  AVLTree(const std::list<T>& list) {
+    for (const T& elem : list) Push(elem);
+  }
+
+  /**
    * @brief Проверяет, содержится ли ключ k в AVL-дереве
    * @param k: ключ, который нужно найти
    * @return true, если ключ найден, иначе false
    */
-  bool Contains(int k) const { return FindNodeByKey(root, k) ? true : false; }
+  bool Contains(int k) const { return FindNodeByKey(root, k) != nullptr; }
 
   /**
    * @brief Вставляет ключ k в AVL-дерево
    * @param k: ключ, который нужно вставить
    */
-  void Push(int k) { root = InsertedTree(root, k); }
+  void Push(T k) { root = InsertedTree(root, k); }
 
   /**
    * @brief Удаляет ключ k из AVL-дерева
    * @param k: ключ, который нужно удалить
    */
-  void Pop(int k) { root = RemovedTree(root, k); }
+  void Pop(T k) { root = RemovedTree(root, k); }
 
   ~AVLTree() { delete root; }
 
