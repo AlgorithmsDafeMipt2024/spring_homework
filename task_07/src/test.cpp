@@ -654,3 +654,33 @@ TEST(set, contains3) {
   ASSERT_EQ(s21set.contains(-1000), false);
   ASSERT_EQ(s21set.contains(1000), false);
 }
+
+TEST(set, iterator_eq) {
+  s21::set<int> s21set1 = {0, -100, 100, -50, 50, -75, 75};
+  s21::set<int> s21set2 = {0, -100, 100, -50, 50, -75, 75};
+  auto iter1 = s21set1.begin();
+  auto iter2 = s21set2.begin();
+  ASSERT_EQ(s21set1.size(), s21set2.size());
+  for (; iter1 != s21set1.end(); ++iter1, ++iter2) {
+    ASSERT_TRUE(*iter1 == *iter2);
+    ASSERT_FALSE(iter1 == iter2);
+  }
+  ASSERT_FALSE(iter1 == iter2);  //указывают на end
+}
+
+TEST(map, iterator_eq) {
+  s21::map<int, double> s21map1 = {{0, 0.3},     {-100, -100.3}, {100, 100.3},
+                                   {-50, -50.3}, {50, 50.3},     {-75, -75.3},
+                                   {75, 75.3}};
+  s21::map<int, double> s21map2 = {{0, 0.3},     {-100, -100.3}, {100, 100.3},
+                                   {-50, -50.3}, {50, 50.3},     {-75, -75.3},
+                                   {75, 75.3}};
+  auto iter1 = s21map1.begin();
+  auto iter2 = s21map2.begin();
+  ASSERT_EQ(s21map1.size(), s21map2.size());
+  for (; iter1 != s21map1.end(); ++iter1, ++iter2) {
+    ASSERT_TRUE(*iter1 == *iter2);
+    ASSERT_FALSE(iter1 == iter2);
+  }
+  ASSERT_FALSE(iter1 == iter2);  //указывают на end
+}
