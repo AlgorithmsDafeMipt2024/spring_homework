@@ -34,7 +34,7 @@ struct AVLTreeNode {
 
   /**
    * @brief Вычисляет высоту поддерева, корнем которого является этот узел
-   * @return Высота поддерева
+   * @return size_t: высота поддерева
    */
   size_t SubtreeHeight() { return this ? this->height : 0; }
 
@@ -47,40 +47,82 @@ struct AVLTreeNode {
 template <typename T>
 class AVLTree {
  public:
+  /// @brief Инициализирует новый экземпляр AVLTree
   AVLTree() : root{nullptr} {}
 
-  bool Contains(int k) const { return Find(root, k) ? true : false; }
+  /**
+   * @brief Проверяет, содержится ли ключ k в AVL-дереве
+   * @param k: ключ, который нужно найти
+   * @return true, если ключ найден, иначе false
+   */
+  bool Contains(int k) const { return FindNodeByKey(root, k) ? true : false; }
 
-  void Push(int k) { root = Insert(root, k); }
+  /**
+   * @brief Вставляет ключ k в AVL-дерево
+   * @param k: ключ, который нужно вставить
+   */
+  void Push(int k) { root = InsertedTree(root, k); }
 
-  void Pop(int k) { root = Remove(root, k); }
+  /**
+   * @brief Удаляет ключ k из AVL-дерева
+   * @param k: ключ, который нужно удалить
+   */
+  void Pop(int k) { root = RemovedTree(root, k); }
 
   ~AVLTree() { delete root; }
 
  private:
+  /// @brief Указатель на корень дерева
   AVLTreeNode<T>* root;
 
+  /**
+   * @brief Выполняет правый поворот поддерева
+   * @param n: узел поддерева, вокруг которого выполняется поворот
+   * @return AVLTreeNode<T>*: новый корень поддерева после поворота
+   */
   AVLTreeNode<T>* RotateRight(AVLTreeNode<T>* n) {
     AVLTreeNode<T>* l = n->left;
     n->left = l->right;
     l->right = n;
+
     UpdateHeight(n);
     UpdateHeight(l);
 
     return l;
   }
 
+  /**
+   * @brief Выполняет левый поворот поддерева
+   * @param n: узел поддерева, вокруг которого выполняется поворот
+   * @return AVLTreeNode<T>*: новый корень поддерева после поворота
+   */
   AVLTreeNode<T>* RotateLeft(AVLTreeNode<T>* n) {
     AVLTreeNode<T>* r = n->right;
     n->right = r->left;
     r->left = n;
+
     UpdateHeight(r);
     UpdateHeight(n);
 
     return r;
   }
 
+  /**
+   * @brief Выполняет балансировку поддерева
+   * @param n: узел поддерева, которое нужно сбалансировать
+   * @return AVLTreeNode<T>*: новый корень поддерева после балансировки
+   */
   AVLTreeNode<T>* Balance(AVLTreeNode<T>* n) {
+    /**
+     * @brief Вычисляет фактор балансировки поддерева
+     * @param n: корень поддерева, для которого нужно вычислить фактор
+     * @return long long: фактор балансировки поддерева
+     */
+    std::function<long long(AVLTreeNode<T>*)> BalanceFactor =
+        [this](AVLTreeNode<T>* n) {
+          return n->right->SubtreeHeight() - n->left->SubtreeHeight();
+        };
+
     UpdateHeight(n);
 
     switch (BalanceFactor(n)) {
@@ -97,53 +139,82 @@ class AVLTree {
     }
   }
 
-  AVLTreeNode<T>* Insert(AVLTreeNode<T>* n, T k) {
+  /**
+   * @brief Вставляет ключ в поддерево
+   * @param n: корень поддерева, в который нужно вставить ключ
+   * @param k: ключ, который нужно вставить
+   * @return AVLTreeNode<T>*: новый корень поддерева после вставки
+   */
+  AVLTreeNode<T>* InsertedTree(AVLTreeNode<T>* n, T k) {
     if (!n) return new AVLTreeNode(k);
 
     if (k < n->key)
-      n->left = Insert(n->left, k);
+      n->left = InsertedTree(n->left, k);
     else
-      n->right = Insert(n->right, k);
+      n->right = InsertedTree(n->right, k);
 
     return Balance(n);
   }
 
-  AVLTreeNode<T>* FindMin(AVLTreeNode<T>* n) {
-    return n->left ? FindMin(n->left) : n;
-  }
-
-  AVLTreeNode<T>* RemoveMin(AVLTreeNode<T>* n) {
-    if (!n->left) return n->right;
-
-    n->left = RemoveMin(n->left);
-    return Balance(n);
-  }
-
-  AVLTreeNode<T>* Remove(AVLTreeNode<T>* n, T k) {
+  /**
+   * @brief Удаляет узел с ключем k из поддерева
+   * @param n: корень поддерева, из которого нужно удалить ключ
+   * @param k: ключ, который нужно удалить
+   * @return AVLTreeNode<T>*: новый корень поддерева после удаления ключа
+   */
+  AVLTreeNode<T>* RemovedTree(AVLTreeNode<T>* n, T k) {
     if (!n) return nullptr;
 
     if (k == n->key) {
       if (!n->right) return n->left;
 
-      FindMin(n->right)->right = RemoveMin(n->right);
-      FindMin(n->right)->left = n->left;
-      return Balance(FindMin(n->right));
+      FindMinKeyNode(n->right)->right = RemovedMinKeyNode(n->right);
+      FindMinKeyNode(n->right)->left = n->left;
+      return Balance(FindMinKeyNode(n->right));
     }
 
-    k < n->key ? n->left = Remove(n->left, k) : n->right = Remove(n->right, k);
+    k < n->key ? n->left = RemovedTree(n->left, k)
+               : n->right = RemovedTree(n->right, k);
     return Balance(n);
   }
 
-  AVLTreeNode<T>* Find(AVLTreeNode<T>* n, T k) const {
+  /**
+   * @brief Удаляет узел с минимальным ключом из поддерева
+   * @param n: корень поддерева, из которого нужно удалить минимальный узел
+   * @return AVLTreeNode<T>*: новый корень поддерева после удаления
+   */
+  AVLTreeNode<T>* RemovedMinKeyNode(AVLTreeNode<T>* n) {
+    if (!n->left) return n->right;
+
+    n->left = RemovedMinKeyNode(n->left);
+    return Balance(n);
+  }
+
+  /**
+   * @brief Находит узел с ключом k в поддереве
+   * @param n: корень поддерева, в котором нужно найти ключ
+   * @param k: ключ, который нужно найти
+   * @return AVLTreeNode<T>*: указатель на узел с ключом k (если нету - nullptr)
+   */
+  AVLTreeNode<T>* FindNodeByKey(AVLTreeNode<T>* n, T k) const {
     if (n == nullptr || n->key == k) return n;
 
-    return k < n->key ? Find(n->left, k) : Find(n->right, k);
+    return k < n->key ? FindNodeByKey(n->left, k) : FindNodeByKey(n->right, k);
   }
 
-  long long BalanceFactor(AVLTreeNode<T>* n) {
-    return n->right->SubtreeHeight() - n->left->SubtreeHeight();
+  /**
+   * @brief Находит узел с минимальным ключом в поддереве
+   * @param n: корень поддерева, в котором нужно найти минимальный узел
+   * @return AVLTreeNode<T>*: указатель на узел с минимальным ключом
+   */
+  AVLTreeNode<T>* FindMinKeyNode(AVLTreeNode<T>* n) {
+    return n->left ? FindMinKeyNode(n->left) : n;
   }
 
+  /**
+   * @brief Обновляет высоту поддерева
+   * @param n: корень поддерева, высоту которого нужно обновить
+   */
   void UpdateHeight(AVLTreeNode<T>* n) {
     n->height =
         std::max(n->left->SubtreeHeight(), n->right->SubtreeHeight()) + 1;
