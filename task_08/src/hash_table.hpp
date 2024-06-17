@@ -146,6 +146,8 @@ class HashTable {
     throw std::out_of_range("Key not found.");
   }
 
+  auto Size() { return table.size(); }
+
  private:
   /// @brief Массив указателей на элементы хэш-таблицы
   std::vector<HashNode<V>*> table;

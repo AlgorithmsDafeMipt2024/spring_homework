@@ -3,7 +3,7 @@
 
 using std::cout, std::endl;
 
-#include "hashtable.hpp"
+#include "hash_table.hpp"
 
 int main() {
   HashTable<int> ht(10);
