@@ -62,3 +62,43 @@ TEST(AVLTreeTest, PopAndContains) {
   tree.Pop(3);
   ASSERT_FALSE(tree.Contains(3));
 }
+
+TEST(AVLTreeTest, CanStoreStrings) {
+  AVLTree<std::string> tree;
+  tree.Push("apple");
+  tree.Push("banana");
+  tree.Push("cherry");
+  ASSERT_TRUE(tree.Contains("apple"));
+  ASSERT_TRUE(tree.Contains("banana"));
+  ASSERT_TRUE(tree.Contains("cherry"));
+}
+
+TEST(AVLTreeTest, CanStoreFloats) {
+  AVLTree<float> tree;
+  tree.Push(3.14f);
+  tree.Push(2.71f);
+  tree.Push(1.41f);
+  ASSERT_TRUE(tree.Contains(3.14f));
+  ASSERT_TRUE(tree.Contains(2.71f));
+  ASSERT_TRUE(tree.Contains(1.41f));
+}
+
+TEST(AVLTreeTest, CanStoreLargeKeys) {
+  AVLTree<long long> tree;
+  tree.Push(123456789LL);
+  tree.Push(987654321LL);
+  tree.Push(456789123LL);
+  ASSERT_TRUE(tree.Contains(123456789LL));
+  ASSERT_TRUE(tree.Contains(987654321LL));
+  ASSERT_TRUE(tree.Contains(456789123LL));
+}
+
+TEST(AVLTreeTest, CanStoreNegativeKeys) {
+  AVLTree<int> tree;
+  tree.Push(-10);
+  tree.Push(-5);
+  tree.Push(0);
+  ASSERT_TRUE(tree.Contains(-10));
+  ASSERT_TRUE(tree.Contains(-5));
+  ASSERT_TRUE(tree.Contains(0));
+}

@@ -82,7 +82,7 @@ class AVLTree {
    * @param k: ключ, который нужно найти
    * @return true, если ключ найден, иначе false
    */
-  bool Contains(int k) const { return FindNodeByKey(root, k) != nullptr; }
+  bool Contains(T k) const { return FindNodeByKey(root, k) != nullptr; }
 
   /**
    * @brief Вставляет ключ k в AVL-дерево
