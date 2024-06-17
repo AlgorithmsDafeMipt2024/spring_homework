@@ -35,12 +35,6 @@ struct AVLTreeNode {
   /// @brief Указатель на правого потомка
   AVLTreeNode* right = nullptr;
 
-  /**
-   * @brief Вычисляет высоту поддерева, корнем которого является этот узел
-   * @return size_t: высота поддерева
-   */
-  size_t SubtreeHeight() { return this ? this->height : 0; }
-
   ~AVLTreeNode() {
     delete left;
     delete right;
@@ -147,7 +141,7 @@ class AVLTree {
      */
     std::function<long long(AVLTreeNode<T>*)> BalanceFactor =
         [this](AVLTreeNode<T>* n) {
-          return n->right->SubtreeHeight() - n->left->SubtreeHeight();
+          return SubtreeHeight(n->right) - SubtreeHeight(n->left);
         };
 
     UpdateHeight(n);
@@ -239,11 +233,16 @@ class AVLTree {
   }
 
   /**
+   * @brief Вычисляет высоту поддерева, корнем которого является этот узел
+   * @return size_t: высота поддерева
+   */
+  size_t SubtreeHeight(AVLTreeNode<T>* n) { return n ? n->height : 0; }
+
+  /**
    * @brief Обновляет высоту поддерева
    * @param n: корень поддерева, высоту которого нужно обновить
    */
   void UpdateHeight(AVLTreeNode<T>* n) {
-    n->height =
-        std::max(n->left->SubtreeHeight(), n->right->SubtreeHeight()) + 1;
+    n->height = std::max(SubtreeHeight(n->left), SubtreeHeight(n->right)) + 1;
   }
 };
