@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
 
-TEST(TopologySort, Simple) {
+TEST(Test, Simple) {
   ASSERT_EQ(1, 1);  // Stack []
 }
