@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <iostream>
 #include <list>
 #include <vector>
 
@@ -56,7 +57,7 @@ class AVLTree {
    * @brief Инициализирует новый экземпляр AVLTree
    * @param vec: вектор
    */
-  AVLTree(const std::vector<T>& vec) {
+  AVLTree(const std::vector<T>& vec) : root{nullptr} {
     for (const T& elem : vec) Push(elem);
   }
 
@@ -64,7 +65,7 @@ class AVLTree {
    * @brief Инициализирует новый экземпляр AVLTree
    * @param list: список инициализации
    */
-  AVLTree(const std::initializer_list<T>& list) {
+  AVLTree(const std::initializer_list<T>& list) : root{nullptr} {
     for (const T& elem : list) Push(elem);
   }
 
@@ -72,7 +73,7 @@ class AVLTree {
    * @brief Инициализирует новый экземпляр AVLTree
    * @param list: двусвязный список
    */
-  AVLTree(const std::list<T>& list) {
+  AVLTree(const std::list<T>& list) : root{nullptr} {
     for (const T& elem : list) Push(elem);
   }
 
