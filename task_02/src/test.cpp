@@ -6,7 +6,7 @@
 #include "stack.hpp"
 
 TEST(StackTest, Simple) {
-  Stack stack;
+  Stack<int> stack;
   stack.Push(1);              // Stack [1]
   ASSERT_EQ(stack.Pop(), 1);  // Stack []
   stack.Push(1);              // Stack [1]
@@ -22,7 +22,7 @@ TEST(StackTest, Simple) {
 }
 
 TEST(MinStackTest, Simple) {
-  MinStack stack;
+  MinStack<int> stack;
   stack.Push(1);  // Stack [1]
   ASSERT_EQ(stack.GetMin(), 1);
   ASSERT_EQ(stack.Pop(), 1);  // Stack []
@@ -39,4 +39,19 @@ TEST(MinStackTest, Simple) {
   ASSERT_EQ(stack.GetMin(), 1);
   ASSERT_EQ(stack.Pop(), 3);  // Stack [1]
   ASSERT_EQ(stack.Pop(), 1);  // Stack []
+}
+
+TEST(StackTest, Empty) {
+  Stack<double> stack;
+  EXPECT_THROW(stack.Pop(), std::out_of_range);
+}
+
+TEST(MinStackTest, Empty) {
+  MinStack<int> stack;
+  EXPECT_THROW(stack.Pop(), std::out_of_range);
+}
+
+TEST(MinStackTest, Empty_2) {
+  MinStack<int> stack;
+  EXPECT_THROW(stack.GetMin(), std::out_of_range);
 }

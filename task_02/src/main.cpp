@@ -1,3 +1,8 @@
 #include <iostream>
 
-int main() { return 0; }
+#include "stack.hpp"
+
+int main() {
+  MinStack<int> stack;
+  stack.Push(1);
+}
