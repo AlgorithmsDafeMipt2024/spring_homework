@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <iostream>
 #include <vector>
 
 /**
@@ -11,18 +10,29 @@
  * @return индекс опорного элемента после разбиения
  */
 template <typename T>
-size_t Partition(std::vector<T>& data, size_t left, size_t right) {
-  T pivot = data[right];
-  size_t i = left;
+static size_t Partition(std::vector<T>& data, size_t left, size_t right) {
+  size_t mid = (left + right) / 2;
 
-  for (size_t j = left; j < right; j++)
-    if (data[j] < pivot) {
-      std::swap(data[i], data[j]);
-      i++;
-    }
+  std::swap(data[mid], data[left + 1]);
 
-  std::swap(data[i], data[right]);
-  return i;
+  if (data[left] > data[right]) std::swap(data[left], data[right]);
+  if (data[left + 1] > data[right]) std::swap(data[left + 1], data[right]);
+  if (data[left] > data[left + 1]) std::swap(data[left], data[left + 1]);
+
+  size_t i = left + 1, j = right;
+  const T cur = data[left + 1];
+  while (true) {
+    while (data[++i] < cur)
+      ;
+    while (data[--j] > cur)
+      ;
+
+    if (i > j) break;
+    std::swap(data[i], data[j]);
+  }
+
+  std::swap(data[left + 1], data[j]);
+  return j;
 }
 
 /**
@@ -33,22 +43,28 @@ size_t Partition(std::vector<T>& data, size_t left, size_t right) {
  * @return n-я порядковая статистика в векторе
  */
 template <typename T>
-T FindNOrderStatistic(std::vector<T>& data, size_t n) {
-  size_t k = data.size();
-  size_t left = 0, right = k - 1;
+T FindNOrderStatistic(std::vector<T> data, size_t n) {
+  if (data.empty()) throw std::runtime_error("Vector is empty.");
 
-  while (left <= right) {
-    size_t pivot_index = Partition(data, left, right);
+  if (n >= data.size()) throw std::runtime_error("Wrong N value.");
 
-    if (pivot_index == n - 1)
-      return data[pivot_index];
+  for (size_t left = 0, right = data.size(); /* nothing */;) {
+    if (right <= left + 1) {
+      if (right == left + 1 && data[right] < data[left])
+        std::swap(data[left], data[right]);
 
-    else if (pivot_index > n - 1)
-      right = pivot_index - 1;
+      return data[n];
+    }
+
+    size_t pivot = Partition(data, left, right);
+
+    if (pivot == n)
+      return data[n];
+
+    else if (pivot > n)
+      right = pivot - 1;
 
     else
-      left = pivot_index + 1;
+      left = pivot + 1;
   }
-
-  return T();
 }
