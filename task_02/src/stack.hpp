@@ -1,23 +1,22 @@
-#pragma once
-
-#include <stack>
+#ifndef STACK_HPP
+#define STACK_HPP
+#include <exception>
+#include <stdexcept>
 #include <vector>
 
+template <class T>
 class Stack {
  public:
-  void Push(int value);
-  int Pop();
+  void push(T value) { data_.push_back(value); }
+  T pop() {
+    if (data_.empty()) throw std::runtime_error("stack is empty");
+    int result = data_.back();
+    data_.pop_back();
+    return result;
+  }
 
  private:
-  std::stack<int> data_;
+  std::vector<T> data_;
 };
 
-class MinStack {
- public:
-  void Push(int value);
-  int Pop();
-  int GetMin();
-
- private:
-  std::vector<int> data_;
-};
+#endif
